@@ -1,0 +1,497 @@
+\section{PSPACE-completeness of $\alpha$-3SAT}\label{sec:hard_3sat}
+
+
+\begin{theorem}\label{th:fpn-3sat}
+\begin{enumerate}
+\item
+1-FPN-3SAT is in NSPACE(n).
+\item
+There is a $\theta(n)$ size 
+quasi linear time reduction from the membership problem
+for  non-deterministic linearly space bounded machine (LBA) 
+to the problem 1-FPN-3SAT. 
+Thus 1-FPN-3SAT is {\sf PSPACE}-complete. 
+\end{enumerate}
+\end{theorem}
+
+\noindent
+{\bf Proof:}\\
+{\em Part (1):}
+We first show that the problem is in {\sf NSPACE($n$)}.
+Observe that given a {\sf 1-FPN}-specification 
+$\Gamma = (G(V,E), m)$, a Turing machine 
+needs to maintain at any given time $t$ 
+only assignments to variables at time $t$ and time $t+1$. 
+Hence a non deterministic {\sf LBA}
+can verify that the instance of {\sf 1-FPN-3SAT} is satisfiable as follows. At 
+each step $t$ it guesses an assignment to the variables at grid point $t+1$.
+It also remembers the assignment to the variables at grid point $t$. Using
+these values it verifies that the clauses at time $t$ are indeed satisfied.
+The number of time steps  $m$ can be kept track of using a counter of size
+$O(m)$ (since $m$ is specified as a binary numeral). 
+This proves that given an instance $\Gamma$ 
+of {\sf 1-FPN-3SAT}, we can recognize in 
+non-deterministic {\em linear } space (i.e in space $O(size(\Gamma))$) 
+if the formula $G^m$ is satisfiable.
+
+\noindent
+{\em Part (2):}
+Next, we prove {\sf 1-FPN-3SAT} is {\sf PSPACE}-hard. 
+Given a non-deterministic {\sf LBA},
+$M$, with input $x$ (where $|x| = n$), 
+we construct an instance of {\sf 1-FPN-3SAT} $F(x)$ such that
+$size(F(x)=  O(n)$,
+and $x$ is accepted by $M$ if and only if $F(x,t,t+1)$ is satisfiable.
+The reduction consists of two phases. 
+
+\noindent
+{\bf Phase 1:}
+In the first phase, we
+start with the given {\sf LBA} $M$ with input 
+$x = (x_1, \ldots, x_n)$ and construct
+a new {\sf LBA} $M_1$ which simulates $M$ on $x$ with the
+following additional properties that
+\begin{enumerate}
+\item
+if the {\sf LBA} $M$ does not accept $x$ then
+each computation of $M_1$ on $x$ halts within $2^{c_0n}$ moves, and 
+\item
+if the {\sf LBA} $M$ accepts $x$ then $M_1$ has a cycling computation,
+where the length of an ID never exceeds $O(|x|)$.
+
+\end{enumerate}
+
+
+
+$M_1$ can be constructed easily by adding an auxiliary  clock to serve 
+as a counter. $M_1$ now just simulates $M$.  
+If $M$ enters a final configuration, then $M_1$ repeats this
+configuration. Its clear that 
+$M_1$ accepts $x$
+if and only if $M$ accepts $x$ and their number of
+accepting computations is the same. Moreover it is easy to see that
+$M_1$ has the two desired properties above.
+
+
+
+\noindent
+{\bf Phase 2:}
+The second phase consists of constructing an instance 
+$\Gamma = (F, M)$ of 
+{\sf 1-FPN-3SAT} by a polynomial time reduction from $M_1$. 
+Now we know that each ID of the Turing machine $M_1$ is 
+of length $O(n)$, where $n$ is the size of the input.
+Since $M_1$ is non-deterministic {\sf LBA}
+we need to consider only $2^{Dn}$ different ID's for
+our reduction. (Here $D$ is an appropriately chosen constant.)  
+We can choose
+an encoding of states and symbols of $M_1$ into words in $\{0,1\}^*$ so
+that every ID of $M_1$ will consist of $c_1 \cdot n$ boolean variables where
+$n=|x|$ and $c_1$ is a constant independent of $x$. Let $ID(t)$ denote
+the {\sf ID} of the Turing machine at time $t$. We also have 
+a set of $Dn+1$ boolean variables encoding a counter $\gamma(t)$. The counter
+values range from $0$ to $2^{Dn}$. 
+$F(x, t,t+1) = f_1(x,t,t+1) \wedge f_2(x,t,t+1) \wedge f_3(x, t, t+1)$. 
+We discuss each of the three formulas $f_i(t,t+1)$, $1 \leq i \leq 3$.
+
+\begin{enumerate}
+\item 
+The formula $f_1(x, t, t+1)$ encodes a counter which is given by 
+\[\gamma(t + 1) =  (\gamma(t) + 1) \pmod{2^{Dn} +1}.\]
+The intended meaning of the equation is  
+that the counter resets to 0 after every $2^{Dn} +1$ time units.
+It is easy to see that the counter 
+can be simulated by a {\sf CNF} formula, in which each clause
+has variables  that are no more than one time unit apart.
+We briefly discuss how to simulate a counter here.  Let $q = Dn$
+We use boolean
+variables $d_q, d_{q-1}, \ldots d_0$ to simulate a counter.
+The variable $d_0$ encodes the lowest order bit and the bit $d_q$ denotes the
+highest order bit. We also use  boolean
+variables $c_q, c_{q-1}, \ldots c_0$ to keep track of the carry bits 
+required to do the addition. Let $d_i(t)$ denote
+the copy of the variable $d_i$ at time unit $t$.
+The set of narrow {\sf CNF} 
+clauses needed to simulate the  counter  consist of the following.
+The formula $f_1$ is expressed as follows:
+\[f_1(x,t, t+1) \equiv (g_1 \Rightarrow h_1) \wedge (\overline{g_1} \Rightarrow h_2).\]
+
+We describe each of the subformulas $g_1$, $h_1$ and $h_2$ in the 
+following.
+$g_1$ checks to see if the counter needs to be reset. If $g_1$ is true then
+$h_1$ merely resets the counter; else $h_2$ increments it by one.
+Hence $g_1$ is given by 
+\[g_1  \equiv [(d_0(t) \wedge d_1(t) \wedge \ldots \wedge d_q(t) )\] 
+
+The condition that counter resets to 0 after $2^{Dn}$ time units can now
+be written using a CNF  formula $h_1$ as follows:
+\[ h_1 \equiv (\overline{d_0(t+1)} \wedge \overline{d_1(t+1)} \wedge  
+\ldots \wedge \overline{d_q(t+1)})].\]
+
+As mentioned  earlier,
+we have $q+1$ carry bits to do the addition. Let the carry bits
+corresponding to the counter $\gamma(t)$ be $c_q, \ldots c_0$. Now the second 
+part of the conjunct can be expressed as follows. $h_2$ is now defined
+as a conjunction of the following clauses
+
+\[\left(d_0(t+1) = \overline{d_0(t)} \right) \wedge
+\bigwedge_{i= 1 }^{i = q} 
+\left((d_i(t+1) = [\overline{d_i(t)} \wedge c_i(t+1)]+
+               [d_i(t) \wedge \overline{c_i(t+1)}]) \right)\bigwedge \]
+\[\left( c_0(t+1) = d_0(t) \right) \wedge  \bigwedge_{i =1}^{ i = q}  
+\left(c_{i+1}(t+1) = d_i(t) \wedge c_i(t+1) \right) \]
+
+Observe that we have $O(n)$ boolean variables encoding the counter.
+Therefore, the size of each of the formulas $g_1, h_1$ and $h_2$ is linear
+in the size of the input.
+Furthermore each of the formulas $g_1$, $h_1$ and $h_2$ contain a linear
+(in the number of boolean variables used to simulate the counter)  number
+of clauses.  As a result, the implications 
+$ (g_1 \Rightarrow h_1)$ and $(\overline{g_1} \Rightarrow h_2)$ can be written
+in equivalent {\sf 3CNF} form using additional temporary variables.
+The size of each {\sf 3CNF} formula is linear in original size of
+the implications. 
+Hence the size of $f_1(x,t,t+1)$ is also linear
+in the size of the input. 
+
+
+\item 
+The formula $f_2(x, t, t+1)$ enforces the condition that when the
+counter value is 0, the variables $X(t)$ encode the starting ID of the
+Turing machine.
+Here, $start(ID(t))$ denotes a  {\sf CNF} 
+formula which checks if $ID(t)$ is the initial ID of the machine.
+Thus $f_2(t, t+1)$  is a {\sf 3CNF} formula which
+encodes the  implication $(\gamma(t) =0) \Rightarrow start(ID(t))$.\\ 
+Again, we can verify that $f_2(x, t, t+1)$ 
+can be written as a {\sf 3CNF} formula in polynomial time. Again by standard
+techniques it follows that the formula $f_2(x,t, t+1)$ is of size $O(n)$. 
+
+
+
+\item
+The formula $f_3(x, t, t+1)$ is needed to ensure that starting at 
+the second ID, each subsequent ID
+of $M_1$ follows from the previous ID by using the
+transition function of $M_1$.
+(Recall that the notation $(X {\vdash}_M^j Y)$ means that machine $M$, 
+starting with ID $X$, can produce the ID $Y$ in exactly $j$ steps.) 
+Thus $f_3(t)$ is a {\sf 3CNF} formula encoding the following implication. 
+\[(1 \leq \gamma(t) \leq 2^{Dn}) \Rightarrow (ID(t-1) {\vdash}_M ID(t)) \]
+The function ($ID(t) {\vdash}_M ID(t+1)$) can be expressed
+by {\sf 3CNF} formula whose sizes are linear in $n$ as shown in \cite{Hu73a}.
+Moreover the {\sf 3CNF} formula depends on the current value of the counter. 
+Hence the {\sf CNF} formula $f_3(x, t, t+1)$ is  
+narrow periodic formula, since the clauses  at time $t$  would contain
+variables only from times $t$ and $t+1$.
+
+
+\end{enumerate}
+
+\noindent
+The expanded finite periodic {\sf 3SAT} 
+instance is $\bigwedge_{t =0}^N F(x,t, t+1)$,
+where $N = 2^{2Dn}$.
+
+We now prove the correctness of our reduction.
+If the Turing machine $M$ accepts $x$ then we know that 
+$M_1$ has a cycling computation. 
+Hence by setting $d_t =0$, we can  ensure that $f_2(0)$ is satisfied.
+The consistency condition now forces the formula to be satisfiable 
+Conversely, assume that the formula is satisfiable. 
+Since $D$ ( and hence $N$) are 
+suitably large integers, it is  guaranteed that the  simulation
+must be carried out for enough steps so that the Turing machine $M_1$
+goes through the sequence $d_t =0, d_t = 1, d_t = 2, \cdots d_t = 2^{Dn}$. 
+This implies that  the formulas $f_2(t)$ and $f_3(t)$
+would be true from then on 
+and therefore the  Turing machine $M$ accepts $x$.\QED
+
+
+
+\begin{corollary}\label{th:l3sathard}
+\begin{enumerate}
+\item
+The problem 1-FPN(BC)-3SAT is in NSPACE(n).
+There is a quasi-linear
+time linear size reduction from the membership problem for non-deterministic
+LBA to 1-FPN(BC)-3SAT.
+Thus the  problem 1-FPN(BC)-3SAT is PSPACE-complete. 
+\item
+The problem L-3SAT is in DSPACE(n).
+There is a square time
+square size reduction from the membership problem for non-deterministic
+LBA to L-3SAT. Thus the  problem L-3SAT is PSPACE-complete 
+\end{enumerate}
+\end{corollary}
+
+
+\noindent
+{\bf Proof:} The {\sf PSPACE}-hardness of {\sf 1-FPN-3SAT(BC)} follows 
+immediately from Theorem \ref{th:fpn-3sat}.
+By arguments similar to those
+presented in the proof of Theorem \ref{th:fpn-3sat}, 
+the problem {\sf 1-FPN(BC)-3SAT}  is seen to be in {\sf NSPACE(n)}.
+
+
+The {\sf PSPACE}-hardness of  the problem {\sf L-3SAT} follows
+from Theorem \ref{th:fpn-3sat} and the Translation theorem. Specifically,
+there is a $O(n^2)$ size reduction from the membership problem for a  
+non-deterministic {\sf LBA} to the problem  {\sf L-3SAT}.
+We now show that {\sf L-3SAT} is solvable in {\sf DSPACE(n)}
+by using backtracking. 
+Let $\displaystyle{F_i(X^i)=(\bigwedge_{1 \leq j \leq  l_i} 
+F_{i_j}(X^i_j,Z^i_j)) \bigwedge f_i(X^i,Z^i)}$.
+Here $0 \leq i_j <i$.
+Given an assignment of $X^i$, 
+we evaluate $F_i(X^i)$ as follows:
+For each assignment of $Z^i$:
+For $1 \leq j \leq  l_i$, 
+check if $F_{i_j}(X^i_j,Z^i_j)$ is true and store the values of 
+$F_{i_j}(X^i_j,Z^i_j)$.
+These values require space linear in $l_i$. Finally evaluate $f_i(X^i,Z^i)$.
+This evaluation can be carried out in deterministic space linear in the size of
+$f_i$ since it is a {\sf CNF} formula.
+If no such assignment to $Z^i$ is found, 
+$F_i(X^i)$ is false. Otherwise, $F_i(X^i)$ is true.
+Thus, if $F_k$ for $k < i$, can be solved in space linear in their
+representation, $F_i$ can be solved in space linear in its representation,
+since the space needed to $F_i$ in the space to store the values of
+$X^i$, $Z^i$ and the intermediate results $F_{i_j}(X^i_j,Z^i_j)$. This
+allows us to do the backtracking in {\sf DSPACE(n)}.
+$F_1$ can be solved in {\sf DSPACE(n)}  since it is a {\sf CNF} formula.
+Hence by induction on the number of levels in the hierarchy, membership of
+the problem {\sf L-3SAT} in {\sf DSPACE(n)} follows.\QED
+
+The results yield a tight lower and upper bound (under certain complexity 
+theoretic assumptions)
+on the space required for solving the problem {\sf L-3SAT}. To see this, 
+observe that if the transformation from {\sf 1-FPN}-specifications to
+{\sf L}-specifications yielded instances smaller than $O(n^2)$ size,  or
+if {\sf L-3SAT} could be solved in time less than {\sf DSPACE(n)}, 
+then it would immediately imply that {\sf NSPACE(n)} can be simulated  in 
+deterministic space les than $O(n^2)$. 
+This would improveme Savitch's \cite{Sa70} 
+result concerning simulating  non-deterministic space bounded 
+Turning machines by deterministic space bounded Turning machines.
+
+
+
+
+
+
+
+
+\begin{corollary}\label{th:pn3sat}
+The problem 1-PN-3SAT is in NSPACE(n).
+There is a quasi-linear
+time linear size reduction from the membership problem for non-deterministic
+LBA to 1-FPN(BC)-3SAT.
+Thus the  problem 1-PN-3SAT is PSPACE-complete. 
+\end{corollary}
+
+\noindent
+{\bf Proof:}
+Orlin \cite{Or82a} and Papadimitriou \cite{Pa94} have shown that
+the problem {\sf 1-PN-3SAT} is in {\sf NSPACE(n)}. 
+We only prove that the problem is {\sf PSPACE}-hard by a linear size
+reduction from the membership problem for a non-deterministic {\sf LBA}.
+(In contrast, The reduction in \cite{Or82a} is a square size reduction.)  
+Observe that if an instance of {\sf 1-PN-3SAT} has a solution
+then the assignment to the variables is periodic. If there are $n$ variables
+in the static formula we can have no more than $2^{2n}$ distinct assignments to
+the variables to consider. 
+Hence starting from  an instance of {\sf 1-FPN-3SAT} 
+$(F(U,C(i, i+1)),m)$ where $n = |U|$   and $m = 2^{2n}$ we  see that 
+$F^m$ is satisfiable if and only if $F^{\infty}$ is satisfiable.
+This completes the proof that the problem {\sf 1-PN-3SAT} is 
+{\sf PSPACE}-complete.\QED
+
+
+\noindent
+{\bf Remark 1:}
+The basic technique underlying the proof of {\sf PSPACE}-hardness of 
+{\sf 1-FPN-3SAT}
+is the ability to use a counter to implicitly make sure that there is a
+sequence of formulas which check if the TM starts right. 
+
+
+
+\noindent
+{\bf Remark 2:} 
+The above results show the basic ideas underlying the 
+{\sf PSPACE}-hardness results in both Lengauer and Wagner \cite{LW92} 
+and in Orlin 
+\cite{Or82a}. Specifically, our results show that a very simple form 
+repetitive structure that can be represented  
+by {\sf 1-PN} as well as the {\sf L}-specification 
+makes the problems {\sf PSPACE}-hard.  
+
+
+
+
+
+
+
+As our next corollary shows, {\sf 1-FPN-3SAT} is {\sf PSPACE}-hard 
+even when restricted to formulas with bandwidth $O(\log {\cal N})$. 
+Recall that ${\cal N}$ denotes the size of the encoding of the expanded formula
+using standard encodings.
+
+\begin{corollary}
+There is a quasi-linear
+time linear size reduction from the membership problem for non-deterministic
+LBA to 1-FPN-3SAT even when restricted to formulas with bandwidth
+$O(\log {\cal N})$.
+Thus the  problem 1-FPN-3SAT is PSPACE-complete even when restricted
+to formulas with bandwidth $O(\log {\cal N})$. 
+\end{corollary}
+
+\noindent
+{\bf Proof:}
+The proof follows by observing that the following numbering
+scheme yields a $O(\log {\cal N})$ bandwidth layout. 
+Let $C(i, i+1)$ have $p$ clauses.
+Then number the clauses at time $t$ using numbers from $pt$ to $(p+1)t$.
+The numbering of clauses at a given time $t$ can be carried out in
+any arbitrary order.\QED
+
+
+\noindent
+{\bf Remark 3:} The above corollary in conjunction with local replacement
+type reductions between problems specified using standard specifications
+can be used to prove that several classical graph problems are 
+{\sf PSPACE}-hard even for $O(\log {\cal N})$ bandwidth bounded graphs
+specified using {\em either}  {\sf 1-FPN}-specifications or
+strongly 1-level-restricted {\sf L}-specifications (since the 
+{\sf L}-specification obtained by the translation theorem represents an
+isomorphic graph (formula)). 
+
+
+
+Next, we discuss the {\sf PSPACE}-hardness of the problems 
+{\sf 1-FPN(BC)-3SATWP}, {\sf 1-FPN(BC)-3SATWP} and 
+{\sf 1-FPN(BC)-3SAT(S)}, such that every relation in {\sf S} is 
+weakly positive or every relation in {\sf S} is weakly negative.
+Recall that, a logical relation $R$ is {\bf weakly negative} if
+$R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
+most one unnegated variable in each conjunct. Alos recall that,
+{\sf 1-FPN-3SATWP} (problem 3SATWP specified using 
+{\sf 1-FPN}-specifications)  is the problem of determining if a 3CNF formula
+$F^{M}(U^{M}, C^{M})$ which contains at most one negated 
+literal per clause and is specified by $\Gamma= (U,C(i),M)$ is satisfiable.
+
+
+
+\begin{theorem}\label{th:fpn3satwnhard}
+There is a quasi-linear
+time linear size reduction from the membership problem for deterministic
+LBA to problems 1-FPN(BC)-3SATWN and  1-FPN(BC)-3SATWP.
+Thus the problems 1-FPN(BC)-3SATWN and  1-FPN(BC)-3SATWP PSPACE-complete
+\end{theorem}
+
+
+
+\noindent
+{\bf Proof:} \\
+Part (1):
+We prove  this part for the problem {\sf 1-FPN(BC)-3SATWN}. 
+The proof for {\sf 1-FPN(BC)-3SATWP} is similar.
+
+
+The membership of the problem {\sf 1-FPN(BC)-3SATWN} in {\sf NSPACE(n)} 
+follows since the problem {\sf 1-FPN(BC)-3SAT} is in {\sf NSPACE(n)}.  
+To prove that {\sf 1-FPN(BC)-3SATWN} is {\sf PSPACE}-hard we give a linear size
+reduction from the acceptance problem of a {\bf deterministic} {\sf LBA}.
+Let $ID(t)$ denote the  instantaneous description of a
+a deterministic {\sf LBA} $M$ at time time $t$.
+Given $M$ and input $x$ such that $|x| = n$ we create
+an instance $(F(x,t,t+1),m)$ of {\sf 1-FPN(BC)-3SATWN}, such that 
+$\wedge_{t = 0}^{t = N} F(x, t, t+1)$ is 
+satisfiable if and only if $M$ accepts $x$. 
+The reduction is similar to one presented for  {\sf 1-FPN-3SAT}. 
+The formulas encoding $(ID(t) \vdash ID(t+1))$, and $start(ID(t))$
+can  be represented by a weakly negative formula
+as in the {\sf P}-hardness of {\sf UNIT} given in \cite{JL77}. 
+By negating all literals, we can 
+obtain a weakly positive formula proving the {\sf PSPACE}-hardness of 
+{\sf L-3SATWP}. Let $a \in \{ \# \} \cup T \cup  (S \times T)$, where 
+$T$ denotes the tape symbols and $S$ denotes the set of states. 
+Let $P^a_i(t)$ be a boolean variable which means that the contents
+of $i^{th}$ tape cell at time $t$ is $a$. Observe that for a given value of $t$
+the number of variables $P^a_i(t)$ is $O(n)$. 
+The formula $g(x,0)$ is now represented as
+\[g(x, 0) \equiv 
+\left( P_{1}^{(q_0,a_1)}(0) \wedge P_{2}^{a_2}(0),\ldots \wedge 
+P_{n}^{a_n}(0) \right) \bigwedge_{i} \left(\bigwedge_{a \neq b} 
+(~\overline{P_{i}^a(0)} \vee  ~\overline{P_{i}^b(0)}) \right)\]
+The first part represents the condition that the first ID corresponds to the
+input and the second part represents the condition that one position
+cannot contain two distinct symbols. Hence, the above formula represents the
+condition that the first $ID$ is correct.  Also observe that since the number 
+of tape symbols are constant, the size of $g(x,0)$ is linear in the size of 
+the input.
+
+Next, we represent  $(ID(t) {\vdash}_M ID(t+1))$
+as follows:
+Let $f:(T \cup (S \times T))^3 \rightarrow T \cup (S \times T)$ be the finite
+function such that if positions $i-1$, $i$ and $i+1$ of the $ID(t)$ 
+contain $a$, $b$ and $c$ respectively, then position $i$ of the $ID(t+1)$ 
+must contain $f(a,b,c)$. The determinism of $M$ ensures that
+$f$ is single valued. We express the requirement that $ID(t+1)$ 
+is appropriately  determined by $ID(t)$ as follows:
+
+
+\[g(x, t,t+1) \equiv  \bigwedge_{i =1}^{ i = n} ~~~ \bigwedge_{a,b,c \in T} 
+\left(\left(~P_{i-1}^{a}(t) \wedge P_{i}^{b}(t) \wedge 
+P_{i+1}^{c}(t) \right) \Rightarrow ~P_{i}^{f(a,b,c)}(t+1) \right) \]
+which can be written as an equivalent weakly negative formula as follows:
+
+\[g(x, t,t+1) \equiv  \bigwedge_{i =1}^{ i = n} ~~~ \bigwedge_{a,b,c \in T} 
+\left(~\overline{P_{i-1}^{a}(t)} \vee \overline{P_{i}^{b}(t)}
+\vee \overline{P_{i+1}^{c}(t)}  \vee ~P_{i}^{f(a,b,c)}(t+1) \right) \]
+
+Now, each four literal clauses replaced by equivalent three literals clauses
+by adding new auxiliary variables $T^{f(a,b,c)}_{i}(t)$. Therefore
+$g(x, t,t+1)$  is rewritten as 
+
+\[ \bigwedge_{i =1}^{ i = n} ~~~ \bigwedge_{a,b,c \in T} 
+\left(
+\left(~\overline{P_{i-1}^{a}(t)} \vee \overline{P_{i}^{b}(t)}
+\vee T_{i}^{f(a,b,c)}(t) \right)
+\wedge 
+\left( \overline{T_{i}^{f(a,b,c)}(t)} \vee
+\overline{P_{i+1}^{c}(t)}  \vee ~P_{i}^{f(a,b,c)}(t+1) \right)\right) \]
+
+
+$F(x,t,t+1) = g(x, 0) \cup g(x,t, t+1)$. Let $N = 2^{2Dn}$.
+The instance output by the reduction is $(F(x,t, t+1), N)$
+The corresponding expanded formula is given as 
+\[ F^N(x) = g(x, 0) \wedge \bigwedge_{t = 0}^{N}g(x, t, t+1). \] 
+Again observe that since the number of tape symbols are constant and $i$ 
+varies  from $1$ to $n$,  
+the size of the formula $g(x, t, t+1)$ is linear in the size of the input.
+Also, observe that representation of $N$ is of size $O(n)$. Therefore
+the size of the instance obtained as a result of the reduction is $O(n)$.
+Here, 
+$N$ is suitably chosen large integer so that the simulation can be carried 
+out for enough number of steps. This completes the proof of the 
+first part.\QED
+
+
+
+\noindent
+{\bf Remark 5:}
+The above result serves as a useful starting point for proving 
+{\sf PSPACE}-hardness of several {\sf L}-specified 
+and {\sf 1-FPN(BC)}-specified 
+problems whose corresponding non-succinct versions are $\log$-complete
+for {\sf P}. For example, we get a direct proof of the {\sf PSPACE}-hardness
+of {\sf L-MCVP} and {\sf 1-FPN(BC)-MCVP}; 
+the circuit value problem for {\sf L}-specified and {\sf 1-FPN(BC)}-specified
+circuits.
+
+
+Although, we have a linear size reduction from the membership problem for
+a deterministic {\sf LBA}, we do not know how to solve the problem in 
+{\sf DSPACE(n)}.

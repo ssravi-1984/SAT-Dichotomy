@@ -1,0 +1,1391 @@
+\section{Polynomial time solvable subcases}\label{sec:poly}
+
+We now consider those  cases for which the problems 
+{\sf L-SAT(S)} are polynomial time solvable.
+By the Translation theorem this implies that the corresponding 
+problems {\sf 1-FPN-SAT(S)} and  {\sf 1-FPN(BC)-SAT(S)} 
+are also polynomial time solvable.
+Recall that a logical relation $R$ is {\bf bijunctive} if
+$R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
+most two literals in each conjunct.
+Also recall that, 
+a logical relation $R$ is {\bf affine} if $R(x_1,x_2,\ldots)$ is logically 
+equivalent to some system of linear equations over the two-element field $Z_2$.
+
+\subsection{Basic technique}
+We use a variation of the {\it Bottom Up}
+method for processing hierarchicall specified graphs discussed 
+in \cite{LW87a,Le88,Le89,Wi90}
+for designing efficient algorithms for hierarchically specified  graphs. 
+Given a {\sf L}-specification $G = (G_1, \ldots, G_n)$ of  a graph $E(G)$,
+the bottom up method processes the non-terminal $G_i$ in the $ith$ iteration
+and aims at finding a small graph $G_i^{b}$ called the 
+{\it burnt graph} which can replace $E(\Gamma_i)$ 
+(recall  that $ \Gamma_i = (G_1, \ldots, G_i)$) 
+in such a way that $E(\Gamma_i)$ and $G_i^{b}$ behave 
+identically with respect to the problem
+under consideration.
+The bottom up method should produce such burnt graphs efficiently.
+In this paper, we will consider polynomial time alorithms for solving
+various satisfiability problems specified using {\sf L}- or 
+{\sf 1-FPN}-specifications. As in the case of {\sf L}-specified graphs, 
+our algorithms process the speification in a bottom up fashion. Specifically,
+given a {\sf L}-specification $F = (F_1, \ldots, F_n)$ of a {\sf CNF}
+formula, the algorithm processes nonterminal $F_i$ in iteration $i$. At the end
+of the iteration, the algorithm produces a {\em burnt formula} which will
+be used in place of the formula $E(F_i)$ in all the subsequent calls to $F_i$.
+
+
+
+
+
+\subsection{Affine relations}
+We consider the case when every relation in {\sf S} are affine. 
+Algorithm~\ref{laffinesat:alg} gives the method for solving this problem in 
+polynomial time.
+
+
+\smallspacing
+
+{\small
+\begin{figure}[tbp]
+\rule{10cm}{0.01in}
+
+\noindent
+{\bf Algorithm ALG-AFFINESAT} 
+
+\noindent
+{\bf Input:} {\it An L-specification} $F = (F_1, \ldots , F_n)$
+{\it of an affine formula } $E(F)$.  
+
+\noindent
+{\bf Output:} {\bf Yes} {\it if and only if $E(F)$ is satisfiable}. 
+
+\begin{enumerate}
+
+\item
+Repeat the following steps for $1 \leq i \leq n$.
+
+\begin{enumerate}
+
+\item
+Replace each explicit clause in $F_i$ by an equivalent equation over 
+{\bf Z}$_2$.
+
+
+\item
+Let $F_{i_1}, \ldots, F_{i_{r_i}}$ denote the non-terminals called in $F_i$.
+Replace each of the $F_{i_j}$ by the smaller set of equations $F^b_{i_j}$
+that has been already computed.\\
+{\bf Remark:} The sizes of $F_{i_j}$, $ 1 \leq j \leq r_i$ is $O(n_{i_j}^2)$.
+Observe that $F_1$ does not call any non-terminals.
+
+\item 
+Let $G_i(X^i)$ represent the set of equations  over $X^i \cup Z^i$
+obtained as a result of substitution. Here $X^i$ is the set of pin variables of $G_i$ 
+and $Z^i$ is the set of explicit variables of $G_i$.
+
+
+\item
+Using Gaussian elimination, eliminate all the variables which are not
+in $X^i$, to obtain a set of equations $F^b_i$ only using variables in $X^i$.\\
+{\bf Remark:}The number of independent equations obtained 
+is no more than $|X^i|$ and
+each equation can have at most all the variables in $X^i$.
+Hence the size of $F^b_i$ is $O(n_i^2)$.
+
+\item
+Check if $F^b_i$ is satisfiable. If not then output {\bf unsatisfiable} and 
+Stop.
+
+\end{enumerate}
+
+%Venky if you have a satisfying assignment say how you can construct a 
+% hierarchical specification of the assignment.
+
+\item
+F is satisfiable if $F_n^b$ is consistent.
+
+\end{enumerate}
+\refstepcounter{xalgcount}\label{laffinesat:alg}
+\begin{center}
+Algorithm~\ref{laffinesat:alg}: Details of the algorithm to solve {\sf L-SAT(S)
+when every relation in {\sf S} is affine.}
+\end{center}
+\vspace*{-.2in}
+\rule{10cm}{0.01in}
+\end{figure}
+}
+
+\newspacing
+
+
+\subsubsection{Proof of correctness and running time}
+
+\begin{theorem}\label{th:haffineeasy}
+Given an instance $F = (F_1, \ldots, F_n)$ of the problem L-SAT(S), where
+each relation in S is affine, the algorithm ALG-AFFINESAT decides if $F$ is 
+satisfiable. Moreover, the running time of the algorithm is $O(N^3)$.
+\end{theorem}
+
+
+\noindent
+{\bf Proof:}
+The correctness of Algorithm \ref{laffinesat:alg} 
+follows in a straightforward fashion by induction on the number of 
+non-terminals in the specification.
+
+In the $i^{th}$ iteration,
+Step 1(a) takes $O(n_i^2)$ time since the size of each 
+$F_{i_j}$ is $O(p_{i_j}^2)$.
+The number of nonterminals in $G_i$ is $r_i$. Hence the time 
+required for Step 1(a) is
+\[ \sum_{j=1}^{r_i} F_{i_j} = 
+\sum_{j=1}^{r_i} O(p_{i_j}^2) = \sum_{j=1}^{r_i} n_i^2 = O(n_i^3)\]
+In the $i^{th}$ iteration, Step 1(b) takes less time than Step 1(a).
+In the $i^{th}$ iteration, Step 1(c) takes $O(n_i^3)$ time.
+In the $i^{th}$ iteration, Step 1(d) takes $O(n_i^3)$ time.
+Hence the $i^{th}$ iteration takes $O(n_i^3)$ time. Hence the algorithm takes
+\[ \sum_{i=1}^n n_i^3 = O(N^3) \]
+Hence the algorithm runs in $O(N^3)$ time.\QED
+
+
+
+
+\subsection{Solvability of $\alpha$-2SAT,
+$\alpha$-{\sf 3SAT1WN} and $\alpha$-{\sf 3SAT1WP}}
+
+We discuss the polynomial time solvability of the problems 
+$\alpha$-{\sf 2SAT},$\alpha$-{\sf 3SAT1WN} and $\alpha$-{\sf 3SAT1WP} 
+and $\alpha$-{\sf SAT(S)} 
+when every relation in {\sf S} is bijunctive or weakly positive or 
+weakly negative.
+Our algorithms are based on the work of Davis and Putnam \cite{DP},
+who gave a polynomial time algorithm to solve the problem {\sf 2SAT}.
+
+
+We first review the method of Davis and Putnam\cite{DP} to eliminate clauses
+and variables. These rules can be used on any {\sf 3CNF}  formula and 
+are described  in the procedure \ref{dp:alg}.
+
+\smallspacing
+{\small
+\begin{figure}[tbp]
+\rule{10cm}{0.01in}
+
+\noindent
+{\bf Procedure Clause-Elimination} 
+
+\noindent
+{\bf Input:} {\it A 3CNF formula } $F$ {\em such that one of the conditions
+in Lemma \ref{le:putback} hold.}
+
+\noindent
+{\bf Output:} {\bf Yes} {\em if and only if $F$ is satisfiable}.
+\begin{enumerate}
+\item
+Set  {\em flag = false} and {\em satisfy = 0}
+\item
+
+{\bf While} $F$ is empty or {\em flag = false} {\bf do}
+
+\begin{enumerate}
+\item
+{\bf If} $F$ contains one literal clauses {\bf then} {\bf do}
+\begin{enumerate}
+\item
+{\bf If} a formula $F$ in {\sf CNF} 
+contains a variable $v$ as a one literal clause and
+also contains $\overline{v}$ as a one literal clause, 
+then  set {\em flag = done}.
+
+\noindent
+{\bf Remark:} It is easy to see that in this case $F$ is unsatisfiable. 
+
+\item 
+If case (a) does not apply, and a variable $v$ appears as a clause in a 
+{\sf CNF}
+formula, then modify $F$ by deleting all clauses that contain $v$
+unnegated, and deleting all occurrences of $\overline{v}$ from the remaining
+clauses, to obtain a new formula $F_1$.
+
+\noindent
+{\bf Remark:} $F_1$ is satisfiable if and only if  $F$ is satisfiable. 
+
+\item
+Set $F = F_1$.
+
+\item
+{\bf If} $F$ is empty then set {\em flag = done}; {\em satisfy = 1}.
+
+\item
+If case (a) does not apply, and  $\overline{v}$ appears as a clause 
+in a {\sf CNF}
+formula, then modify $F$ by deleting all clauses that contain 
+$\overline{v}$
+unnegated, and deleting all occurrences of $v$ from the remaining
+clauses, to obtain a new formula $F_1$ 
+
+\noindent
+{\bf Remark:} $F_1$ is satisfiable if and only if $F$ is satisfiable.
+
+\item
+Set $F = F_1$.
+
+\item
+{\bf If} $F$ is empty then set {\em flag = done}; {\em satisfy = 1}.
+\end{enumerate}
+
+\item
+If a variable $v$ occurs only unnegated in a formula $F$ or if $v$ occurs 
+only negated, then  delete all clauses containing the literal  $v$ to
+obtain $F_1$. 
+
+\item
+If $F_1$ empty, then set {\em flag = done} and {\em satisfy = 1}. 
+Else  set $F = F_1$.
+
+
+\noindent
+{\bf Remark:} $F_1$ is satisfiable if and only if  $F$ is satisfiable.
+If $F_1$ empty, then $F$ is satisfiable.
+
+\item
+Eliminating variables: 
+\begin{enumerate}
+\item
+Let $A_1$ denote the formula which is a conjunction of clauses in $F$ 
+which contain $v$. Then $A$ is obtained from $A_1$ by deleting $v$ from each
+clause in $A_1$. Similarly, $B$ be the formula which is obtained after 
+deleting from each clause in $B_1$ the occurrence of $\overline{v}$. 
+
+\item
+Let $R$ be a conjunction of clauses which contain neither $v$ nor 
+$\overline{v}$. 
+
+\noindent
+{\bf Remark:} 
+Then the original formula $F$ can be put in the form:
+$(A \vee v) \wedge (B \vee \overline{v}) \wedge R$.
+$F$ is satisfiable if and only if  $(A \vee B) \wedge R$ is satisfiable.
+
+\item
+Convert  $(A \vee B) \wedge R$ into an equivalent 3CNF formula $F_1$ as
+outlined in Lemma \ref{le:putback}.
+
+\noindent
+{\bf Remark:}
+The formula $(A \vee B) \wedge R$ can be converted back into {\sf 3CNF} 
+by using the distributive law provided that
+the formula $F$ only contains 2 literal clauses or if $F$ is 1-weakly positive
+or if $F$ is 1-weakly negative as shown in Lemma~\ref{le:putback}. 
+
+\item
+Set $F = F_1$.
+\end{enumerate}
+\end{enumerate}
+
+\item
+{\bf If} {\em satisfy = 1} {\bf then} {\bf return Yes}\\
+{\bf else} {\bf return no}.
+\end{enumerate}
+\refstepcounter{xalgcount}\label{dp:alg}
+\begin{center}
+Algorithm~\ref{dp:alg}: Details of the Davis Putnam algorithm to eliminate
+variables from a {\sf 3CNF} formula in which the conditions of Lemma
+\ref{le:putback} hold.
+\end{center}
+\vspace*{-.2in}
+\rule{10cm}{0.01in}
+\end{figure}
+}
+
+\newspacing
+
+
+\begin{lemma}\label{le:putback}
+Let Step (3) in Algorithm \ref{dp:alg} be applied to eliminate 
+a variable $v$ in a  3CNF formula $F$ of one of the following types
+to obtain a new formula $F'$: \\
+(a) the formula $F$ only contains 2 literal clauses, \\
+(b) $F$ is 1-weakly positive 3CNF formula, \\
+(c) $F$ is 1-weakly negative 3CNF formula. 
+Then, 
+$F'$ can be converted in polynomial time 
+into an equivalent 3CNF formula of the {\bf same} type as the original formula
+$F$. 
+\end{lemma}
+
+\noindent
+{\bf Proof:}
+Given the {\sf 3CNF} formula $F(C,V)$ with the variable $v$, let
+$A_v$ be  the clauses in which $v$ appears negated,
+$B_v$ be the clauses in which $v$ appears unnegated and 
+$R$ be  the clauses in which $v$ does not appear. Let $A$ and $B$  
+be the clauses 
+obtained by deleting $v$ from each clause in $A_v$ and 
+$\overline{v}$ from each clause in $B_v$ respectively.
+Thus $F=(A \vee v) \wedge (B \vee \overline{v}) \wedge R$, 
+where $A$, $B$, and $R$ 
+are CNF formulae which are free of $v$. 
+Then $F$ is satisfiable if and only if 
+$F'=(A \vee B) \wedge R$ is satisfiable.
+We now consider three cases in which $F'$ can be expressed as an
+equivalent 3CNF formula in polynomial time.
+
+\noindent
+{\bf Case 1:} {\em $F$ is a {\sf 2CNF} formula.}\\
+Since we obtained $A$ and $B$ from $A_v$ and $B_v$ respectively by deleting 
+a variable it follows that  $A$ and $B$ are {\sf CNF} formulas 
+in which each clause has 1 literal.
+Let $A= u_1 \wedge u_2 \wedge \ldots \wedge u_k$ and
+$B=v_1 \wedge v_2 \wedge \ldots \wedge v_l$ where $u_i$ and $v_i$ are literals.
+Then $(A \vee B)$ can be expressed as a {\sf 2CNF} formula with all clauses of
+the form $(u_i \vee v_j),1 \leq i \leq k, 1 \leq j \leq l$. Hence
+$F'$ can also be expressed as a {\sf 2CNF} formula.
+
+\noindent
+{\bf Case 2:}  {\em $F$ is a 1-weakly positive formula.}\\
+In this case, $A$ is a {\sf CNF} formula in which each clause 
+either has at most 2 unnegated literals or 1 negated literal.
+Similarly, $B$ is a {\sf CNF} formula in which each clause has 
+either has at most 1 unnegated literal and has no negated literals.
+Let $A= c_1 \wedge c_2 \wedge \ldots \wedge c_k$ and
+$B=c'_1 \wedge c'_2 \wedge \ldots \wedge c'_l$ where each
+$c_i$ is of the form $(u_i \vee u_i')$ or $\overline{u_i}$, and each $c'_i$ is 
+of the form $v_i$. Here $u_i$, $u_i'$ and $v_i$ are variables.
+Then $(A \vee B)$ can be expressed as a 1-weakly positive {\sf 3CNF} 
+formula with all clauses of
+either of the form $(\overline{u_i} \vee v_j)$ or of the form
+$(u_i \vee u'_i \vee v_j)$ for $1 \leq i \leq k, 1 \leq j \leq l$. Hence
+$F'$ can also be expressed as a 1-weakly positive {\sf 3CNF} formula.\\
+
+\noindent
+{\bf Case 3:}  $F$ is a 1-weakly negative formula.\\
+This case can be handled similar to Case 2 except that each clause in $A$
+has either at most 1 negated literals and no unnegated
+literals, and each clause in $B$ has at most 2 negated literals or at most
+1 unnegated literal.\QED
+
+
+\subsubsection*{Solving $\alpha$-2SAT}
+We now prove the polynomial time solvability of the problems {\sf L-2SAT}and
+{\sf L-SAT$_c$(S)}, when every relation in $S$ is bijunctive. 
+The procedure is described in Algorithm~\ref{l2sat:alg}.
+
+
+
+\smallspacing
+{\small
+\begin{figure}[tbp]
+\rule{10cm}{0.01in}
+
+\noindent
+{\bf Algorithm ALG-L2SAT} 
+
+\noindent
+{\bf Input:} {\it An L-specification} $F = (F_1, \ldots , F_n)$
+{\it of a 2SAT formula } $E(F)$.  
+
+\noindent
+{\bf Output:} {\bf Yes} {\it if and only if $E(F)$ is satisfiable.} 
+
+\begin{enumerate}
+
+\item
+Repeat the following steps for $1 \leq i \leq n$.
+
+\begin{enumerate}
+
+
+\item
+Let $F_{i_1}, \ldots, F_{i_k}$ denote the non-terminals called in $F_i$.
+Replace each of the $F_{i_j}$ by the smaller set of equations $F^b_{i_j}$
+that has been already computed.
+
+\noindent
+{\bf Remark:} Observe that $F_1$ does not calll any non-teminal. 
+The sizes of $F_{i_j}$, $ 1 \leq j \leq k$ is $O(n_{i_j}^2)$, since
+there can be only $O(n^2)$ distinct {\sf 2CNF}  that can be formed
+from a set of $n$ variables. 
+
+
+\item 
+Let $G_i(X^i)$ represent the set of 2CNF clauses   over $X^i \cup Z^i$
+obtained as a result of substitution.
+
+
+\item
+{\bf If} ( $ i < n  $) {\bf do}
+\begin{itemize}
+\item
+Eliminate the variables which are not input variables to $F_i$ 
+using  Algorithm \ref{dp:alg} to
+remove one literal and two literal clauses to obtain $F^b_i$.
+
+\noindent
+{\bf Renmark:} The variables of $F^b_i$ are the input variables of $F_i$
+and the size of $F^b_i$ is bounded by $O(n_i^2)$, where $n_i$ represent
+the temporary variables in the specification of $F_i$.
+
+\end{itemize}
+{\bf else}
+\begin{itemize}
+\item
+Output {\bf Yes} if and only if the formula $G_n$ is satisfiable.
+\end{itemize}
+
+\end{enumerate}
+
+\end{enumerate}
+\refstepcounter{xalgcount}\label{l2sat:alg}
+\begin{center}
+Algorithm~\ref{l2sat:alg}: Details of the algorithm to solve {\sf L-2SAT}.
+\end{center}
+\vspace*{-.2in}
+\rule{10cm}{0.01in}
+\end{figure}
+}
+\newspacing
+
+
+
+\subsubsection*{Proof of Correctness}
+
+
+
+
+\begin{theorem}\label{th:h2satseasy}
+\begin{enumerate}
+\item
+Given an instance $F = (F_1, \ldots, F_n)$ of the problem L-2SAT, 
+the algorithm ALG-L-2SAT decides 
+in polynomial time if $F$ is satisfiable. 
+\item
+There is a polynomial time algorithm for solving the problem L-SAT(S)
+when every relation in S is bijunctive.
+\end{enumerate}
+\end{theorem}
+
+\noindent
+{\bf Proof:}
+Part (1): 
+Consider an instance of {\sf L-2SAT}.
+Let the formula be of the form $F = (F_1,...,F_n)$ where each
+$F_i$ is a formula consisting of calls to $F_j (1 \leq j < i)$ and a
+{\sf 2CNF} formula $f_i$. 
+For each $F_i$, the  {\sf 2CNF} formula $F^b_i$, 
+obtained in Step 1(c) of the Algorithm~\ref{l2sat:alg} 
+has the following properties.
+\begin{enumerate}
+\item
+$F_i$ is satisfiable if and only if  $F^b_i$ is satisfiable.
+
+\item
+$F'_i$ is a {\sf 2CNF} formula which depends only on its input variables
+$X^i$.
+
+\item
+The size of $F^b_i$ is polynomial in the size of the input specification.
+\end{enumerate}
+Now by an induction on the number of non-terminals in the definition of 
+$F$ we can show that the formula $E(F)$ is satisfiable if and only the 
+algorithm outputs Yes. This completes the proof of Part (1).
+
+
+\noindent
+Part (2): If every relation in {\sf S} 
+is bijunctive, then at the start of iteration $i$ of the Repeat loop, 
+we replace all the explicit clauses in $F_i$ by equivalent {\sf 2CNF} clauses.
+Such a replacement can be done in polynomial time.
+This observation along with the proof of Part (1) suffices to prove this part
+of the theorem.\QED
+
+
+We now consider the problems $\alpha$-{\sf 3SAT1WN}, $\alpha$-{\sf 3SAT1WP} and
+those $\alpha$-{\sf 3SAT(S)}, for which 
+every relation in {\sf S} is 1-weakly positive or
+every relation in {\sf S} is 1-weakly negative. We first prove a technical
+lemma about representing every 1-weakly postive or 1-weakly negative relation
+as a 1-weakly postive or a 1-weakly negative formula respectively.
+
+\begin{lemma}\label{le:satwnto3wn}
+Every 1-weakly positive relation can be expressed as an existentially
+quantified 3CNF formula
+in which each clause is 1-weakly positive.
+Every 1-weakly negative relation can be expressed as an existentially
+quantified  3CNF formula
+in which each clause is 1-weakly negative.
+\end{lemma}
+
+
+\noindent
+{\bf Proof:}
+We consider the case of a 1-weakly positive relation. This relation can be
+expressed as a {\sf CNF} formula in which each clause has at most one negated
+literal. Moreover, any such clause with a negated literal has no more than 
+1 unnegated literal.
+Observe that by preceeding discussion it is clear that 
+each clause with more than 3 literals only has unnegated
+literals. For each such clause (with at least 3 literals),
+$c=(v_1 \vee v_2 \vee \ldots \vee v_k)$, 
+we replace $c$ with a existentially  quantified formula
+$f_c$ defined as 
+\[f_c \equiv \left((v_1 \vee y_1) \wedge (\overline {y_1} \vee v_2 \vee y_2)
+\wedge (\overline {y_2} \vee v_3 \vee y_3) \ldots
+\wedge (\overline {y_{k-2}} \vee v_{k-1} \vee y_{k-1}) 
+\wedge (\overline {y_{k-1}} \vee v_{k}) \right)\]
+such that the $y_i$ are existentially quantified.
+By direct inspection, we get that
+given an assignment to the variables $v_i$, $1 \leq i \leq k$, 
+this assignment satisfies $c$ if and only if
+the assignment can be extended to an assignment to the existentially 
+quantified  variables $y_i$ which satisfy the formula $f$. 
+
+A 1-weakly negative {\sf 3CNF} formula can be obtained in a similar fashion
+from a 1-weakly negative relation. This completes the proof of the lemma.\QED
+
+\smallspacing
+{\small
+\begin{figure}[tbp]
+\rule{16.4cm}{0.01in}
+
+\noindent
+{\bf Algorithm ALG-L3SAT1WP} 
+
+\noindent
+{\bf Input:} {\it An L-specification} $F = (F_1, \ldots , F_n)$
+{\it of a 3SAT1WP formula } $E(F)$.  
+
+\noindent
+{\bf Output:} {\bf Yes} {\it if and only if $E(F)$ is satisfiable.} 
+
+\noindent
+Repeat the following steps for $1 \leq i \leq n$.
+
+\begin{enumerate}
+\item
+Let $F_{i_1}, \ldots, F_{i_k}$ denote the non-terminals called in $F_i$.
+Replace each of the $F_{i_j}$ by the smaller set of equations $F^b_{i_j}$
+that has been already computed.
+
+\noindent
+{\bf Remark:} The sizes of $F_{i_j}$, $ 1 \leq j \leq k$ is $O(n_{i_j}^3)$.
+This is because the total number of distinct {\sf 3CNF} clauses that can be
+constructed from a set of $n$ variables is $O(n^3)$.
+Also note that, formula resulting by substituting each non-terminal with 
+its correpsonding burnt formula is a 1-weakly positive {\sf CNF} formula 
+whose size is polynomial in the original representation of $F_i$.
+
+\item 
+Let $G_i(X^i)$ represent the set of clauses  over $X^i \cup Z^i$
+obtained as a result of substitution.
+
+\item
+{\bf If} ( $ i < n  $) {\bf do}
+\begin{itemize}
+\item
+Eliminate the variables which are
+not input variables to $F_i$ 
+using the method given in Algorithm \ref{dp:alg}.
+The 1-weakly positive {\sf 3CNF} formula obtained after this step is $F^b_i$.
+
+\noindent
+{\bf Remark:} The variables of $F^b_i$ are the input variables of $F_i$
+and the size of $F^b_i$ is $O(n_i^3)$, where $n_i$ is the number of temporary
+variables occurring in the definition of $F_i$.
+
+\end{itemize}
+{\bf else}
+\begin{itemize}
+\item
+Output {\bf Yes} if and only if the formula $G_n$ is satisfiable.
+\end{itemize}
+\end{enumerate}
+
+
+\refstepcounter{xalgcount}\label{l3sat1wp:alg}
+\begin{center}
+Algorithm~\ref{l3sat1wp:alg}: Details of the algorithm to solve 
+{\sf L-3SAT1WP}.
+\end{center}
+\vspace*{-.2in}
+\rule{16.4cm}{0.01in}
+\end{figure}
+}
+
+\morespacing
+
+\begin{theorem}\label{th:h3sat1wneasy}
+\begin{description}
+\item{1}
+The problems L-3SAT1WN and L-3SAT1WP are in P. 
+\item{2}
+The problems L-SAT(S) and L-SAT$_c$(S) are in P if every relation in S is
+1-weakly positive or every relation in S is 1-weakly negative.
+\end{description}
+\end{theorem}
+
+
+
+\noindent
+{\bf Proof:}
+
+\noindent
+{\bf Part (1):} 
+It is easy to see that Algorithm \ref{l3sat1wp:alg} indeed decides
+in polynomial time whether an instance of {\sf L-3SAT1WP} is satisfiable. This
+is because we are merely mimicking the algorithm outlined for the same problem
+when instances are specified using standard specifications. The formal proof
+now follows by an induction on the depth of the hierarchy tree.
+
+
+
+\noindent
+{\bf Part (2):}  
+If every relation in $S$ is 1-weakly positive, then any instance of 
+{\sf L-SAT(S)} or {\sf L-SAT$_c$(S)} can be expressed as an instance of 
+{\sf L-3SAT1WP} using 
+Lemma~\ref{le:satwnto3wn}. Moreover this transformation can be carried out
+locally, so that starting from an {\sf L}-specification $F$ 
+of a {\sf L-SAT(S)} 
+formula, we obtain an {\sf L}-specification $F_1$ of an equivalent 
+{\sf 3SAT1WP} formula in polynomial time.
+We then use Algorithm \ref{l3sat1wp:alg} to solve the resulting formula.
+Clearly $E(F)$ is satisfiable if and only if $E(F_1)$ is satisfiable.
+
+Similarly, if every relation in $S$ is 1-weakly negative, 
+then any instance of {\sf L-SAT(S)} or {\sf L-SAT$_c$(S)} 
+can be expressed as an instance of {\sf L-3SAT1WN} using 
+Lemma~\ref{le:satwnto3wn}.\QED
+
+
+
+
+\subsection{Solving {\sf 1-PN-3SATWP} and  {\sf 1-PN-3SATWN}}
+Next, we consider the problems {\sf 1-FPN-3SATWN}, {\sf 1-FPN-3SATWP}
+{\sf 1-PN-3SATWN} and  {\sf 1-PN-3SATWP}. In contrast to the hardness results
+for {\sf 1-FPN(BC)-3SATWP}, we show that
+these problems have a polynomial
+time algorithm. The result shows one difference between these variants
+of periodic specifications. We first consider the problem {\sf 1-PN-3SATWP}.
+Recall that a relation $R$ is weakly positive if $R$ is equivalent to some
+{\sf CNF} formula having at most one negated variable in each conjunct. 
+Given an instance $F$ of {\sf 1-FPN(BC)-3SATWP}, we assume that each clause
+contains no more than one negated literal. Algorithm \ref{1pn3satwp:alg}
+gives the details to solve the problem. In describing the algorithm and its
+proof, we use $v[x_i(t)]$ to denote the value assigned to the variable 
+$x_i(t)$.
+
+\smallspacing
+{\small
+\begin{figure}[tbp]
+\rule{16.4cm}{0.01in}
+
+\noindent
+{\bf Algorithm ALG-1-PN-3SATWP} 
+
+\noindent
+{\bf Input:} {\it A 1-PN-specification} $(F(U,C(t, t+1))$
+{\it of a 3SATWP formula } $F^{\infty}$.  Here $U = \{ x_1, \ldots, x_n \}$
+denotes the set of variables in the static graph.
+
+\noindent
+{\bf Output:} {\bf Yes} {\it if and only if $F^m$  is satisfiable.} 
+
+\begin{enumerate}
+
+\item
+{\em flag = 0,} {\em satisfy = -1}, $r = \{ t, t+1 \}$ and $ j = 0$
+\item
+{\bf Repeat until} {\em flag =1 }
+
+\begin{enumerate}
+
+\item
+If $x_i(r) \in C(t, t+1)$  and $\overline{x_i(r)} \in C(t, t+1)$, 
+then set {\em flag = 1} and {\em satisfy = 0}. Go to Step 3.
+
+\noindent
+{\bf Remark:} 
+For each of the four possibilities depending on the value of $r$, we have
+that $\forall t \in {\bf Z}, x_i(t), ~~ \overline{x_i(t)} \in C^{\infty}$.
+Hence $F^{\infty}$ is not satisfiable.
+
+
+
+\item
+{\bf If} all clauses in $C(t,t+1)$ contain a positive literal {\bf or}
+all clauses in $F$ contain a negative literal {\bf then} {\em satisfy = 1}
+and {\em flag = 1}. Go to Step 3.
+
+\noindent
+{\bf Remark:} 
+An assignment of the form 
+$\forall x_i \in C(t, t+1), ~~ t \leq r \leq t+1, ~~   v[x_i(r)] = 1$ 
+satisfies the formula.
+
+\item 
+{\bf else}
+
+\begin{enumerate}
+
+
+
+\item
+Pick a single literal clause $\overline{x_i(r)}$, $1 \leq i \leq n$.
+
+
+\noindent
+{\bf Remark:} Existence of such a clause follows from 
+(i) the definition of 3CNF weakly postive formula, and 
+(ii) Conditions for executing Step 2(b) are not satisfied.
+
+
+
+\item
+$t \leq r \leq t+1$, set $v[x_i(r)] = 0$.
+
+\noindent
+{\bf Remark:}
+Existence of a clause $\overline{x_i}$ 
+implies that for the formula $F^{\infty}$ to be true, 
+$\forall t \in {\bf Z},~~ v[x_i(t)] = 0$.
+
+\item
+Let $N_{x_i}(t, t+1) \subseteq C(t, t+1)$ denote the set of clauses 
+containing $\overline{x_i(r)}$. Also, let 
+$P_{x_i}(t, t+1) \subseteq C(t, t+1)$ denote the set of clauses containing 
+$x_i(r)$. Modify $P_{x_i}(t, t+1)$ by deleting the literal 
+$x_i(r)$ from each of the clauses in $P_{x_i}(t, t+1)$. 
+Let $P'_{x_i}(t, t+1)$ denote the resulting set of clauses.
+
+
+\item $C(t,t+1) = \left( C(t, t+1) - N_{x_i}(t, t+1) - P_{x_i}(t, t+1) \right) 
+\cup P'_{x_i}(t, t+1).$
+
+\noindent
+{\bf Remark:}
+Delete all clauses containing  the occurrence of the variable 
+$\overline{x_i(r)}$ and for all clauses which contain
+$x_i(r)$ delete it from the clause. 
+
+
+\item
+$ j = j+1$
+
+\noindent
+{\bf Remark:}
+The formula $F^{\infty}$ as a result
+of modification can be given by 
+\[ F_j^{\infty} = F_{j-1}^{\infty}(v[x_i(t)] = 0) 
+- \left(\bigwedge_{t}P_{x_i}(t, t+1) \bigwedge_{t}N_{x_i}(t, t+1) \right) 
+\bigcup \left(\bigwedge_{t}P'_{x_i}(t, t+1) \right) \]
+
+
+\end{enumerate}
+
+\item
+If the formula $C(t,t+1) = \phi$ then set {\em satisfy = 1} and {\em flag = 1}.
+
+\end{enumerate}
+
+\item
+Output {\bf Yes} if and only if {\em satisfy = 1}.
+
+\end{enumerate}
+\refstepcounter{xalgcount}\label{1pn3satwp:alg}
+\begin{center}
+Algorithm~\ref{1pn3satwp:alg}: 
+Details of the algorithm to solve an instance of  {\sf 1-PN-3SAT1WP}.
+\end{center}
+\vspace*{-.2in}
+\rule{16.4cm}{0.01in}
+\end{figure}
+}
+
+\newspacing
+
+
+First observe that our algorithm works on the static formula $F$ representing
+$F^{\infty}$. Since each iteration assigns a value to a variable which has
+not been previously assigned a value, the algorithm will terminate
+in polynomial time. Specifically, since there are $n$ variables in the static
+formula the Repeat loop is executed no more than $n$ times. Each iteration
+of the repeat loop takes polynomial time and hence the whole algorithm 
+can be executed in polynomial time. We also can give a succinct specification
+of the satisfying assignment in case the formula $F^{\infty}$ is satisfiable.
+The specification simply consists of the variables $x_1, \ldots, x_n$ together
+with their associated values. 
+
+To prove the correctness of the algorithm, it is useful to observe the
+execution of the algorithm on the expanded formula $F^{\infty}$. 
+First observe that if at any stage the algorithm  outputs {\bf Yes}, 
+then clearly $F^{\infty}$ is satisfiable. Moreover, the satisfying assignment
+assigns to each distinct variable in the static formula the same value in
+each time period; i.e.  
+\[ 1 \leq i \leq n, ~~ \forall t \in {\bf Z}, ~~ v[x_i(t)] = v[x_i(t+1)] \]
+In the rest of the discussion, we only consider
+the case when the algorithm outputs {\bf No}.  
+Let $F^{\infty}(1)$ denote the formula obtained after executing the first
+iteration of our algorithm.
+
+Let the algorithm execute for $k$ steps before terminating.
+By an induction  on $k$, we show that
+$F^{\infty}$ is  satisfiable if only if
+$F^{\infty}(k)$ is satisfiable. We prove the basis case. The induction step
+follows a similar argument and is left to the reader.
+Consider   the first iteration. 
+We consider the possible cases depending on the Steps 
+2(a), 2(b) or 2(c) exceuted by the algorithm.
+
+\begin{enumerate}
+
+
+\item
+{\em If Step 2(a) is  executed:}
+Then, depending on the value of $r$ we have four different cases:
+(1) $ x_i(t), ~~ \overline{x_i(t)} \in C(t, t+1)$,
+(2) $ x_i(t), ~~ \overline{x_i(t+1)} \in C(t, t+1)$, 
+(3) $ x_i(t+1), ~~ \overline{x_i(t)} \in C(t, t+1)$ and 
+(4) $ x_i(t+1), ~~ \overline{x_i(t+1)} \in C(t, t+1)$.
+For each of the cases, it is easy to see that
+$\forall t \in {\bf Z}, ~~  x_i(t), ~~ \overline{x_i(t)} \in C^{\infty}.$
+Thus the formula $F^{\infty}$ is unsatisfiable.
+
+\item
+{\em If Step 2(b) is  executed:}
+In this case the formula is satisfied with the assignment mentioned in the 
+remark following the step.
+
+\item
+{\em Step 2(c) is executed:} 
+Clearly in this case either
+$x_i(t)$ or $x_i(t+1) \in C(t, t+1)$. But in either case
+$\forall t \in {\bf Z}, ~~~  \overline{x_i(t)} \in C^{\infty}$. 
+Hence  $~\forall t, ~ v[x_i(t)] = 0$. But this implies that 
+$\forall t, ~ \overline{x_i(t)} = 1$. 
+Thus, $\forall t$ if  $x_i(t)$
+appears in a clause then it cannot satisfy the clause and hence
+can be deleted from the clause. Similarly
+any clause containing $\overline{x_i(t)}$ 
+can be deleted from the formula since the 
+clause is satisfiable. 
+Hence the new formula $F^{\infty}(1)$ obtained as a
+result of the transformation is satisfiable if and only if the original
+formula $F^{\infty}$ is satisfiable.
+
+
+
+\iffalse******
+\begin{enumerate}
+\item
+The single literal clause is $x_i(t)$. Then, clearly 
+$\forall t \in {\bf Z}, ~~~  x_i(t) \in C^{\infty}$. Hence 
+$\forall t, ~~~ x_i(t) = 1$. But this implies that 
+$\forall t, ~~~ \overline{x_i(t)} = 0$. 
+Thus, if $\forall t \overline{x_i(t)}$
+appears in a clause then it cannot satisfy the clause and hence
+can be deleted from the clause. Similarly
+any clause containing $x_i(t)$ can be deleted from the formula since the 
+clause is satisfiable. Hence the new formula $F^{\infty}(1)$ obtained as a
+result of the transformation is satisfiable if and only if the original
+formula $F^{\infty}$ is satisfiable.
+
+
+\item
+
+The single literal clause is $x_i(t+1)$. 
+Then by arguments similar to the ones given for Case 1, we get that
+the new transformed formula is satisfiable if and only if the original formula
+is satisfiable.
+\end{enumerate}
+
+***************
+\fi
+
+\end{enumerate}
+
+The above argument implies that $F^{\infty}$ is  satisfiable if only if
+$F^{\infty}(1)$ is satisfiable. Now by similar arguments we can prove the
+induction Step.
+Thus we have shown that the $F^{\infty}$ is satisfiable
+if and only if the Algorithm \ref{1pn3satwp:alg} outputs {\bf Yes}.
+A similar algorithm can be designed for {\sf 1-PN-3SATWN} problem.
+Thus we have the following theorem.
+
+\begin{theorem}\label{th:pn3satwneasy}
+The problems 1-PN-3SATWN and  1-PN-3SATWP are  in P.
+\end{theorem}
+
+
+\iffalse**********
+We need some additional notation before we prove Theorem \ref{th:pn3satwneasy}.
+Given a static 1-PN specification $ F = (U, C(t,t+1))$, we obtain a new
+set of formula $F'(C',U')$ as follows: 
+Replace each variable $x_i(t)$ and $x_i(t+1)$
+by the same variable $x_i$. This basically implies that 
+we construct a set of clauses in which 
+occurrence of copy of the variable $x_i$ point $t$ and $t+1$ is not
+differentiated.  Observe that if $C(t, t+1)$ is a conjunction
+of Horn clauses with no more than 3 literals, 
+then $C'$ is also a conjunction of Horn clauses with no more than 3 literals.
+We now prove the following lemma, basically implies that if an instance
+of {\sf 1-PN3SATWP} is satisfiable then there always exists a 
+satisfying assignment which assigns the same value to all copies of a given
+variable in the static graph.
+
+
+\begin{claim}
+The formula $F^m$ is satisfiable if and only if the formula $F'$ 
+is satisfiable.
+\end{claim}
+
+\noindent
+{\bf Proof of Claim:} Let the formula $F^m(i)$ denote the formula $F^m$ 
+which is obtained by assigning values to the variables according the 
+algorithm. Then we show that $\forall i$ $F^m(i)$ is satisfiable if and
+only $F^m$ is satisfiable. We then show that $F$ is satisfiable if and
+only if $\forall i$ $F^m(i)$ is satisfiable.
+
+Consider the first loop of the algorithm. Clearly if there is a variable which
+occurs as a single literal postive as well as negative clause, then the
+formula $F^m(1)$ as well as the problem $F'$ is unsatisfiable.
+
+Now for induction step assume that after $i$ iteration, we have a formula
+$F^m(i)$ which has partially assigned variables. We also have that $F^m(i)$ is
+satisfiable if and only if $F^m$ is satisfiable. We also have that $F(i)$ is
+satisfiable if and only if $F$ is satisfiable. Now if $F'(i+1)$ is
+satisfiable then $F^m(i+1)$ and thus $F^m$ is satisfiable. Now we prove that
+if $F'(i+1)$ is not satisfiable then $F^m(i)$ is unsatisfiable; hence $F^m$
+is unsatisfiable. Since $F'(i+1)$ is unsatisfiable we know that 
+there is a clause of the form $x_i$ and a clause of the form $\overline{x_i}$  
+We have to consider the following cases.
+
+\begin{enumerate}
+\item
+When both $x_i$ and $\overline{x_i}$ represent $x_i(t)$. In this case,
+we know that since these clauses appear at each time unit, they cannot be
+simultaneously satisfied.
+
+\item
+When $x_i$ represents $x_i(t)$ and $\overline{x_i}$ represent $x_i(t+1)$.
+ Clearly, by our convention of expanding
+the static graph, we know that we will have clauses of the form
+$\ldots, x_i(-1), x_i(0), x_i(1), \ldots$ and we will also have clauses
+$\ldots, \overline{x_i(-1)}, \overline{x_i(0)}, \overline{x_i(1)}, \ldots$.
+Hence the expanded formula is not satisfiable.
+
+\item
+When both $x_i$ and $\overline{x_i}$ represent $x_i(t+1)$. Similar to Case 1.
+
+\item
+When $x_i$ represents $x_i(t+1)$ and 
+$\overline{x_i}$ represent $x_i(t)$.  Similar to case 2.
+\end{enumerate}
+This completes the proof of the lemma.\QED
+
+*************
+\fi
+
+
+
+
+
+\subsection{Solving {\sf 1-FPN-3SATWN} and  {\sf 1-FPN-3SATWP}}
+Next, consider the problems {\sf 1-FPN3SATWP} and {\sf 1-FPN3SATWN}. 
+As in the previous section, we will discuss the method for solving 
+{\sf 1-FPN-3SATWP}. The algorithm for solving {\sf 1-FPN-3SATWN} is 
+similar and is omitted.
+
+
+\iffalse
+%%%%
+The algorithm for solving {\sf 1-FPN-3SATWP} 
+is little more subtler then solving an
+instance of {\sf 1-PN-3SATWP}. To see this observe that  in case
+of {\sf 1-PN-3SATWP}, whenever we have a clause of the form $x_i(t)$ or
+$x_i(t+1)$, we have that all the copies of the variable $x_i$ are set to
+true (A  similar argument applies for negated clauses). But in the
+case of finite instances while a clause of  the form $x_i(t)$  implies that
+$x_i$ is set to true for time periods, it is not necessarily true if there
+is a clause of the form $x_i(t+1)$. Such a clause does not say anything 
+about the value that has to be assigned to the variable $x_i(0)$. In fact, the 
+following example shows that the only way the expanded formula is satisfied
+is to assign different values to the copy of a particular variable.
+%%%%%
+\fi
+
+
+
+	 
+\noindent
+{\bf Example 5:}
+Let $F= (U,C(t,t+1),2)$
+be an instance of  1-FPN-3SAT where the set of static clauses are given by
+$(x_1(t) + x_2(t+1))  \wedge 
+(\overline{x_2(t)}) \wedge (x_2(t) + x_1(t+1))$.
+The set of variables are $U = \{ x_1, x_2, x_3 \}$.
+The formula $F^1(U^2,C^2)$ denoted by $\Gamma$ is given by 
+\[(\overline{x_1(0)} + x_2(1)) \wedge (\overline{x_2(0)}) 
+\wedge (x_1(1) + x_2(0)) \bigwedge \]
+\[(\overline{x_1(1)} + x_2(2)) \wedge (\overline{x_2(1)}) 
+\wedge (x_1(2) + x_2(1)) \bigwedge \]
+\[(\overline{x_2(2)}) \]
+
+By inspection it is clear that whenever $v[x_1(0)] = v[x_1(1)] = v[x_1(2)]$ and
+$v[x_2(0)] = v[x_2(1)] = v[x_2(2)]$ cannot satisfy the formula $F^2$. But,
+$v[x_2(0)] = v[x_2(1)] = v[x_2(2)] =0$ , $v[x_1(0)] = 1$ and 
+$v[x_1(1)] = v[x_1(2)] = 0$  satisfies the formula $F^2$.\QED 
+
+
+
+
+Example  5 suggests that any polynomial time  algorithm for
+solving {\sf 1-FPN-3SATWP} should distinguish the between a copy of the
+variable at time 0 and the copies of the same variable at time units greater
+than 0.  
+Algorithm~\ref{1fpn3satwp:alg} outlines the method to solve the problem.
+
+
+
+
+\tinyspacing
+
+{\footnotesize
+\begin{figure}[tbp]
+\rule{16.4cm}{0.01in}
+
+\noindent
+{\bf Algorithm ALG-1-FPN-3SATWP} 
+
+\noindent
+{\bf Input:} {\it A 1-FPN-specification} $(F(U, C(t,t+1),m)$
+{\it of a 3SATWP formula } $F^m$.  Here $U = \{ x_1, \ldots, x_n \}$
+denotes the set of variables in the static formula.
+
+\noindent
+{\bf Output:} {\bf Yes} {\it if and only if $F^m$  is satisfiable.} 
+
+\begin{enumerate}
+
+\item
+{\em flag = 0} and {\em satisfy = -1}. Let ${\cal D}(t) = \phi$. Also let 
+$ r = \{ t, t+1 \}$ and $j =0$.
+
+\item
+{\bf Repeat until} {\em flag =1 }
+
+\begin{enumerate}
+
+\item
+If $x_i(r) \in C(t, t+1)$  and $\overline{x_i(r)} \in C(t, t+1)$, 
+then set {\em flag = 1} and {\em satisfy = 0}. Go to Step 4.
+
+
+\item
+If $x_i(t+1) \in C(t, t+1)$  and $\overline{x_i(t+1)} \in C(t, t+1)$, 
+then set {\em flag = 1} and {\em satisfy = 0}. Go to Step 4.
+
+
+
+\item
+{\bf If} all clauses in $F$ contain a positive literal {\bf or}
+all clauses in $F$ contain a negative literal {\bf then} {\em satisfy = 1}
+and {\em flag = 1}. Go to Step 3.
+
+
+\noindent
+{\bf Remark:} 
+An assignment of the form 
+$v[x_i(r)] = 1$, $\forall x_i \in C(t, t+1), ~~ t \leq r \leq t+1$
+satisfies the clauses in $\wedge_{t =1}^{t = m} C(t, t+1)$.  Therefore,
+we only need to verify that ${\cal D}(t)$ is satisfiable. 
+
+
+\item 
+{\bf else}
+
+\begin{enumerate}
+
+\item
+{\bf If} there is a single literal clause $\overline{x_i(t)}$, 
+$1 \leq i \leq n$ then {\bf do}
+
+\begin{enumerate}
+
+\item
+$t \leq r \leq t+1$, set $v[x_i(r)] = 0$.
+
+\item
+If there is a clause in ${\cal D}(t)$ 
+that contains $\overline{x_i(r)}$, then delete the clause.
+Similarly, delete all occurrences of $x_i(r)$ from all the clauses
+in ${\cal D}(t)$.
+
+\end{enumerate}
+
+
+\item
+{\bf else}
+
+\begin{enumerate}
+\item
+Pick a single literal clause $\overline{x_i(t+1)}$.
+
+\noindent
+{\bf Remark:} Existence of such a clause follows from 
+(i) the definition of 3CNF weakly positive formula, and 
+(ii) Conditions for executing Steps 2(c) and 2(d) are not satisfied.
+
+\item
+Set $v[x_i(t+1)] = 0$.
+
+\noindent
+{\bf Remark:}
+Existence of a clause $\overline{x_i(t+1)}$ 
+implies that for the formula $F^{\infty}$ to be true, 
+$0 \leq t \leq m,~~ v[x_i(t+1)] = 0$. This does not force an assignment for
+$x_i(0)$.
+
+
+\item
+Set ${\cal D}(t) = {\cal D}(t) \cup Cl_{x(t)}$, where $Cl_{x(t)}$ denotes the
+set of clauses containing $x(t)$.
+If there is a clause in ${\cal D}(t)$ that contains $\overline{x_i(t+1)}$, 
+then delete the clause.
+Similarly, delete all occurrences of $x_i(t+1)$ 
+from all the clauses in ${\cal D}(t)$.
+
+\noindent
+{\bf Remark:} $0 \leq t \leq m,~~~ \overline{x_i(t+1)} \in C^{\infty}$ 
+implies that if $F^{\infty}$ is satisfiable,  then
+$1 \leq t \leq m , ~~ v[x_i(t)] = 0$.
+\end{enumerate}
+
+
+\item
+Let $N_{x_i}(t, t+1) \subseteq C(t, t+1)$ denote the set of clauses 
+containing $\overline{x_i(r)}$. Also, let 
+$P_{x_i}(t, t+1) \subseteq C(t, t+1)$ denote the set of clauses containing 
+$x_i(r)$. Modify $P_{x_i}(t, t+1)$ by deleting the literal 
+$x_i(r)$ from each of the clauses in $P_{x_i}(t, t+1)$. 
+Let $P'_{x_i}(t, t+1)$ denote the resulting set of clauses.
+
+
+
+\item $C(t,t+1) = \left( C(t, t+1) - N_{x_i}(t, t+1) - P_{x_i}(t, t+1) \right) 
+\cup P'_{x_i}(t, t+1).$
+
+\noindent
+{\bf Remark:}
+Delete all clauses containing  the occurrence of the variable 
+$\overline{x_i(r)}$ and for all clauses which contain
+$x_i(r)$ delete it from the clause. 
+
+
+
+\item
+$ j = j+1$
+
+\noindent
+{\bf Remark:} The formula $F^{\infty}$ as a result
+of modification is given by 
+\[ F_j^{\infty} = F_{j-1}^{\infty}(v[x_i(t)] = 1,~ 1 \leq t \leq m) 
+\bigcup {\cal D}(t) - \left(\bigwedge_{t}N_{x_i}(t, t+1) 
+\bigwedge_{t}P_{x_i}(t, t+1) \right) 
+\bigcup \left(\bigwedge_{t}N'_{x_i}(t, t+1) \right) \]
+
+
+\end{enumerate}
+
+\item
+If the formula $F = \phi$, then set {\em satisfy = 1} and {\em flag = 1}.
+
+\end{enumerate}
+
+\item
+Instantiate $t = 0$ for all the variables in the clauses in ${\cal D}(t)$.
+Check if the clauses in ${\cal D}(0)$ are satisfiable. 
+If ${\cal D}(0)$ is satisfiable then {\em satisfy = 1} else {\em satisfy = 0}.
+
+\noindent
+{\bf Remark:} All the clauses in ${\cal D}(0)$ contain variables only 
+from time 0. The satisfiability of ${\cal D}(0)$  can be tested using the
+procedure given in \cite{Pa94} for {\sf 3SATWP} formulas specified using
+standard specification.
+
+
+\item
+Output {\bf Yes} if and only if {\em satisfy = 1}.
+
+
+\end{enumerate}
+\refstepcounter{xalgcount}\label{1fpn3satwp:alg}
+\begin{center}
+Algorithm~\ref{1fpn3satwp:alg}: 
+Details of the algorithm to solve an instance of 
+{\sf 1-FPN-3SAT1WP}.
+\end{center}
+\vspace*{-.2in}
+\rule{16.4cm}{0.01in}
+\end{figure}
+}
+
+
+\newspacing
+
+
+\subsubsection{Proof of Correctness}
+\begin{theorem}\label{th:fpn3satwneasy}
+The problems 1-FPN-3SATWN and  1-FPN-3SATWP are  in P.
+\end{theorem}
+
+
+Before, we discuss the proof we point out the intuitive differrence between the
+two algorithms. In the
+two way infinite periodic case, when we found a clause of type 
+$\overline{x_i(t+1)}$
+we could delete all the clauses containing 
+$\overline{x_i(t)}$ as $\forall t$, $v[x_i(t)]$ had to be 0.
+In the case of finite formulas though, the clause of the form 
+$\overline{x_i(t+1)}$ does 
+not force us to assign 0 to the variable $x_i(0)$. As a result, in the expanded
+formula, we need to maintain the clauses containing $x_i(0)$ separately.
+This is precisely what the set ${\cal D}(t)$ is used for. 
+It keeps a copy of all such clauses
+whose remaining variables  have not been forced an assignment and in the end
+checks whether the formula is satisfiable.
+
+
+
+\noindent
+{\bf Proof:} As in the proof of the previous theorem, it will be useful to
+imagine the execution of the algorithm on the expanded formula $F^m$.
+The basic idea behind the proof as similar to that discussed in the proof
+of Theorem \ref{th:pn3satwneasy}. Hence we only point out the essential
+differences here. The difference is when we find a single literal clause
+of type $\overline{x_i(t+1)}$ (or $x_i(t+1)$). In such a case we maintain
+the clauses containing the variable $\overline{x_i(t)}$ (or $x_i(t)$).
+Hence the theorem is proved.\QED
+
+
+
+
+
+\iffalse*************
+\begin{claim}
+The formula $F^m$ is satisfiable if and only if the formula $F$ is satisfiable.
+\end{claim}
+
+\noindent
+{\bf Proof of Claim:} Let the formula $F^m(i)$ denote the formula $F^m$ 
+which is obtained by assigning values to the variables according the 
+algorithm. Then we show that $\forall i$ $F^m(i)$ is satisfiable if and
+only $F^m$ is satisfiable. We then show that $F$ is satisfiable if and
+only if $\forall i$ $F^m(i)$ is satisfiable.
+
+Consider the first loop of the algorithm. Clearly if there is a variable which
+occurs as a single literal postive as well as negative clause, then the
+formula $F^m(1)$ as well as the problem $F$ is unsatisfiable.
+
+Now for induction step assume that after $i$ iteration, we have a formula
+$F^m(i)$ which has partially assigned variables. We also have that $F^m(i)$ is
+satisfiable if and only if $F^m$ is satisfiable. We also have that $F(i)$ is
+satisfiable if and only if $F$ is satisfiable. Now we have to consider the 
+following conditions.
+
+\begin{enumerate}
+\item
+If there is a single literal clause of the form $x_i(r)$ and there is a clause
+of the form $\overline{x_i(r)}$ then clearly since for all time units
+$t \geq 2$ each of 
+the clause $x_i(t)$ and $\overline{x_i(t)}$ is present.
+Therefore, we must have that the formulas $F(i)$ and  
+$F^m(i)$ are  unsatisfiable. Therefore, $F^m$ is unsatisfiable.
+
+
+
+\item
+When we pick a single literal clause containing $x_i(r)$, we 
+delete all clauses containing
+the occurrence of the variable $x_i(r)$ and for all clauses which contain
+$\overline{x_i}$ delete it from the clause. Clearly $F(i+1)$ is satisfiable
+if and only if $F(i)$ is satisfiable. Also, $F^m(i+1)$ in which all the single
+literal clauses $x_i(t)$ have to be set to true. Similarly the negative
+occurrences have to be set to false. Now $F^m(i+1)$ is satisfiable if and
+only if $F^m(i)$ is satisfiable.
+
+
+
+\end{enumerate}
+
+******************
+\fi
+
+
+
+\iffalse*******
+Clearly if $F$ is satisfiable then  it is easy to see that 
+$F^m$ is satisfiable. Therefore in the remaining we prove the converse.
+Suppose at some stage in the execution of the algorithm, it is found that
+$F$ is unsatisfiable. We prove the claim by induction. Formally, let
+$F(i)$ denote the formula obtained starting from $F$ in $i$ steps. We claim
+that $F(i)$ is satisfiable if and only if $F(i-1)$ is satisfiable. 
+We prove this by induction. 
+
+\noindent
+{\bf Basis:} $F$ is satisfiable if and only if $F(1)$ is  satisfiable.
+The only way that $F(1)$ is unsatisfiable is by Step (1a). But this would imply
+that $F^m$ is also unsatisfiable.
+
+
+
+For proving the statement we need to consider the following cases.
+
+\begin{enumerate}
+\item
+If there is a single literal clause of the form $x_i(r)$ and there is a clause
+of the form $\overline{x_i(r)}$ then clearly since for all time units
+$t \geq 2$ each of 
+the clause $x_i(t)$ and $\overline{x_i(t)}$ is present.
+Therefore, we must have that the formula $F^m$ is unsatisfiable.
+
+\item
+When we pick a single literal clause containing $x_i(r)$, we 
+delete all clauses containing
+the occurrence of the variable $x_i(r)$ and for all clauses which contain
+$\overline{x_i}$ delete it from the clause.
+\end{enumerate}
+*********
+\fi
+
+
+ 
+
+
+
+
+
+
+
+
+The intuitive reson for this contrast is to do with the semantics of 
+{\em implication}. 
+A chain of implications of the form $A_1 \rightarrow A_2 \ldots A_m$ 
+holds when $A_1 = 0$ and $ A_i = \{0,1\}$, $ 1 \leq i \leq m$.  
+This means that given a {\sf 1-FPN-3SATWN} 
+we can make the formula true by using the Algorithm \ref{dp:alg}.
+In the case of {\sf 1-FPN(BC)-3SATWN} formula by encoding the starting ID 
+of the 
+machine as a boundary condition we have already assigned values to some 
+variable. As a result one cannot give a trivial satisfying assignment to
+all the variables thereafter.
+
+
+The above theorem contrasts the relative hardness of problems when specified
+using {\sf 1-FPN} or 
+{\sf 1-FPN(BC)} specifications. In particular, while the
+problems {\sf 1-FPN(BC)-3SATWN} and 
+{\sf 1-FPN(BC)-3SATWP} are {\sf PSPACE}-hard the problems
+{\sf 1-FPN-3SATWN} and {\sf 1-FPN-3SATWP} are in {\sf P}.

@@ -1,0 +1,319 @@
+\documentclass{svproc}
+
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% to typeset URLs, URIs, and DOIs
+\usepackage{url}
+\def\UrlFont{\rmfamily}
+
+% choose options for [] as required from the list
+% in the Reference Guide
+
+\usepackage{mathptmx}       % selects Times Roman as basic font
+\usepackage{helvet}         % selects Helvetica as sans-serif font
+\usepackage{courier}        % selects Courier as typewriter font
+\usepackage{type1cm}        % activate if the above 3 fonts are
+                            % not available on your system
+%
+\usepackage{makeidx}         % allows index generation
+\usepackage{graphicx}        % standard LaTeX graphics tool
+                             % when including figure files
+\usepackage{multicol}        % used for the two-column index
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+
+
+
+\newcommand{\partg}{\mbox{$\Pi_{G}$}}
+\newcommand{\pgone}{\mbox{$\Pi_{G_1}$}}
+\newcommand{\pgtwo}{\mbox{$\Pi_{G_2}$}}
+
+
+\def\myendofproof{\vbox{\hrule\hbox{%
+   \vrule height1.3ex\hskip0.8ex\vrule}\hrule}\par}
+\newcommand{\set}[1]{\{ #1 \}}
+
+
+\newcommand{\order}[1]{$\mbox{O}\left(#1\right)$}                   
+
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\lbound}[1]{$\Omega\left(#1\right)$}
+\newcommand{\mod}[1]{\left| #1 \right|}
+\newcommand{\abs}[1]{\mod{#1}}
+\newcommand{\belongs}{$\in$}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\ith}{$i$th}
+\newcommand{\npdt}{$\mbox{{\em NP}} 
+                    \subseteq \mbox{{\em DTIME}}(n^{\log\log{n}})$}
+
+\newcommand{\cals}{{\cal S}}
+\newcommand{\calr}{{\cal R}}
+\newcommand{\lp}[2]{
+ \ \\
+ \begin{tabular}{l} #1 \end{tabular}
+
+ subject to constraints:
+
+ \begin{tabular}{rcll} #2 \end{tabular}
+ \ \\
+}
+\newcommand{\constraint}[4]{$#1$ & $#2$ & $#3$ &$#4$}
+%  MACROS FOR ALGORITHMS OR PROGRAMS
+\newcommand{\narrow}{\renewcommand{\baselinestretch}{.8}}
+\newcommand{\wide}{\renewcommand{\baselinestretch}{1}}
+\newcounter{program}
+\newcounter{proglab}
+\newcounter{proglabb}
+\newcommand{\startstring}{}
+\renewcommand{\theproglab}{\startstring\arabic{proglab}}
+\renewcommand{\theproglabb}{\startstring\alph{proglabb}}
+
+\setlength{\leftmarginii}{.4\leftmarginii}
+\setlength{\leftmarginiii}{.4\leftmarginiii}
+\setlength{\leftmarginiv}{.4\leftmarginiv}
+\setlength{\leftmarginv}{.4\leftmarginv}
+
+\newlength{\leftmarginsumii}
+\newlength{\leftmarginsumiii}
+\newlength{\leftmarginsumiv}
+\newlength{\leftmarginsumv}
+\setlength{\leftmarginsumii}{\leftmargini}
+\addtolength{\leftmarginsumii}{\leftmarginii}
+\setlength{\leftmarginsumiii}{\leftmarginsumii}
+\addtolength{\leftmarginsumiii}{\leftmarginiii}
+\setlength{\leftmarginsumiv}{\leftmarginsumiii}
+\addtolength{\leftmarginsumiv}{\leftmarginiv}
+\setlength{\leftmarginsumv}{\leftmarginsumiv}
+\addtolength{\leftmarginsumv}{\leftmarginv}
+
+\newlength{\itemindentvalue}
+\setlength{\itemindentvalue}{0em}
+\newenvironment{programi}%
+{\narrow\begin{list}{\theproglab\hfill}{\usecounter{proglab}
+		   \setlength{\topsep}{0pt}
+		   \setlength{\itemsep}{0pt}
+		   \setlength{\labelsep}{0pt}
+		   \setlength{\labelwidth}{\leftmargini}
+		   \setlength{\listparindent}{0pt}
+		   \setlength{\itemindent}{\itemindentvalue}
+		   \setlength{\leftmargin}{\leftmargini}}
+ \setcounter{program}{0}
+ \setcounter{proglab}{\value{program}}}%
+{\end{list}\wide}
+
+\newenvironment{programI}%
+{\narrow\begin{list}{\theproglabb\hfill}{\usecounter{proglabb}
+		   \setlength{\topsep}{0pt}
+		   \setlength{\itemsep}{0pt}
+		   \setlength{\labelsep}{0pt}
+		   \setlength{\listparindent}{0pt}
+		   \setlength{\labelwidth}{\leftmargini}
+		   \setlength{\itemindent}{\itemindentvalue}
+		   \setlength{\leftmargin}{\leftmargini}}
+ \setcounter{program}{0}
+ \setcounter{proglabb}{\value{program}}}%
+{\end{list}\wide}
+
+\newenvironment{programii}%
+{\narrow\begin{list}{\theproglab\hfill}{\usecounter{proglab}
+		   \setlength{\topsep}{0pt}
+		   \setlength{\itemsep}{0pt}
+		   \setlength{\labelsep}{0pt}
+		   \setlength{\listparindent}{0pt}
+		   \setlength{\labelwidth}{\leftmarginsumii}
+		   \setlength{\itemindent}{\itemindentvalue}
+		   \setlength{\leftmargin}{\leftmarginii}}
+ \setcounter{proglab}{\value{program}}}%
+{\end{list}\wide}
+
+\newenvironment{programiii}%
+{\narrow\begin{list}{\theproglab\hfill}{\usecounter{proglab}
+		   \setlength{\topsep}{0pt}
+		   \setlength{\itemsep}{0pt}
+		   \setlength{\labelsep}{0pt}
+		   \setlength{\listparindent}{0pt}
+		   \setlength{\labelwidth}{\leftmarginsumiii}
+		   \setlength{\itemindent}{\itemindentvalue}
+		   \setlength{\leftmargin}{\leftmarginiii}}
+ \setcounter{proglab}{\value{program}}}%
+{\end{list}\wide}
+
+\newenvironment{programiv}%
+{\narrow\begin{list}{\theproglab\hfill}{\usecounter{proglab}
+		   \setlength{\topsep}{0pt}
+		   \setlength{\itemsep}{0pt}
+		   \setlength{\listparindent}{0pt}
+		   \setlength{\labelsep}{0pt}
+		   \setlength{\labelwidth}{\leftmarginsumiv}
+		   \setlength{\itemindent}{\itemindentvalue}
+		   \setlength{\leftmargin}{\leftmarginiv}}
+\setcounter{proglab}{\value{program}}}%
+{\end{list}\wide}
+
+\newenvironment{programv}%
+{\narrow\begin{list}{\theproglab\hfill}{\usecounter{proglab}
+		   \setlength{\topsep}{0pt}
+		   \setlength{\itemsep}{0pt}
+		   \setlength{\listparindent}{0pt}
+		   \setlength{\labelsep}{0pt}
+		   \setlength{\labelwidth}{\leftmarginsumv}
+		   \setlength{\itemindent}{\itemindentvalue}
+		   \setlength{\leftmargin}{\leftmarginv}}
+\setcounter{proglab}{\value{program}}}%
+{\end{list}\wide}
+
+\newcommand{\progitem}{\addtocounter{program}{1}\item}
+\newcommand{\calb}{{\cal B}}
+\newcommand{\calc}{{\cal C}}
+\newcommand{\calp}{{\cal P}}
+
+
+% box for end of proof
+\newcommand{\QED}{~~ \rule{2mm}{2mm}}
+
+\newcommand{\n}{$n \,$}
+\newcommand{\G}{$G \,$}
+\newcommand{\Gi}{$G_i \,$}
+\newcommand{\Gj}{$G_j \,$}
+\newcommand{\Gz}{$G_0 \,$}
+\newcommand{\Gn}{$G_n \,$}
+\newcommand{\Go}{$G_1 \,$}
+\newcommand{\Gt}{$G_2 \,$}
+\newcommand{\Gth}{$G_3 \,$}
+\newcommand{\Gnl}{$G_{n-1} \,$}
+\newcommand{\Gil}{$G_{i-1} \,$}
+
+
+\newcommand{\Hi}{$H_i \,$}
+\newcommand{\Fi}{$F_i \,$}
+\newcommand{\Fj}{$F_j \,$}
+\newcommand{\Fz}{$F_0 \,$}
+\newcommand{\Fk}{$F_k \,$}
+\newcommand{\Fo}{$F_1 \,$}
+\newcommand{\Ft}{$F_2 \,$}
+\newcommand{\Fth}{$F_3 \,$}
+\newcommand{\Fkl}{$F_{k-1} \,$}
+\newcommand{\Fnl}{$F_{n-1} \,$}
+\newcommand{\Fn}{$F_n \,$}
+
+
+\newcommand{\fj}{$f_j \,$}
+
+\newcommand{\ol}{ 1-level}
+\newcommand{\kl}{$k$-level}
+\newcommand{\hcally}{hierarchically \,}
+\newcommand{\hcal}{hierarchical \,}
+\newcommand{\CPSPACE}{PSPACE \,}
+%\newcommand{\belongs}{$\in$}
+%\newcommand{\ith}{$i$th}
+
+
+
+\newcommand{\smallspacing}{\baselineskip = 0.7\normalbaselineskip}
+\newcommand{\tinyspacing}{\baselineskip = 0.5\normalbaselineskip}
+\newcommand{\morespacing}{\baselineskip = 1.1\normalbaselineskip}
+
+
+% Commands for stacking.
+\newcommand{\RMAX}{\max_{\stackrel{\{x,y\},x \neq y}{x,y \in P}}}
+\newcommand{\RSUM}{\sum_{\stackrel{\{x,y\},x \neq y}{x,y \in P}}\!}
+
+
+\newcounter{xalgcount}
+
+\newcommand{\newspacing}{\baselineskip=1.1\normalbaselineskip}
+\newcommand{\oldspacing}{\baselineskip= 1.0\normalbaselineskip}
+
+\newspacing
+
+\begin{document}
+
+% ************ end of program macros *********************************
+\title{Dichotomy Theorems for Hierarchical and 1-Dimensional Periodically Specified Boolean Constraint Satisfaction Problems}
+\titlerunning{Dichotomy Theorems} 
+% Use \titlerunning{Short Title} for an abbreviated version of
+% your contribution title if the original one is too long
+\authorrunning{Marathe~et~al.}
+
+\author{ Madhav V. Marathe 
+       \and{~} S. S. Ravi
+       \and{~} Harry B. Hunt III
+       \and  {~}Daniel J. Rosenkrantz
+        \and {\newline}  Richard E. Stearns
+        \and {~}Venkatesh Radhakrishnan,   %%{\vspace*{-1.7in}}
+}
+\institute{
+           Madhav V. Marathe: University of Virginia. 
+            \email{marathe@virginia.edu}.  \and
+           H.B. Hunt III, S. S. Ravi, Daniel J. Rosenkrantz, Richard E. Stearns: 
+           University of Virginia and University at Albany -- SUNY.~
+           \email{\{hunt,ssravi0,~drosenkrantz,~thestearns2,venky\}@gmail.com}.~
+}
+
+
+\maketitle
+
+
+
+\begin{abstract}
+We study the complexity of various combinatorial and satisfiability problems
+when instances are specified using one of the following succinct 
+specifications:
+(1) the 1-dimensional finite periodic narrow specifications (denoted 
+{\sf 1-FPN}-specifications)  of  
+ Ford  et al. and Wanke \cite{FF58,Wa93};
+(2) the 1-dimensional finite periodic narrow specifications with explicit
+boundary conditions (denoted 
+{\sf 1-FPN(BC)}-specifications) of Gale \cite{Ga59}; 
+and  
+(3) the hierarchical specifications (denoted {\sf L}-specifications)
+ of Lengauer et al. \cite{LW87a}.
+
+
+First, we prove that there is a polynomial time algorithm that,
+given a {\sf 1-FPN}- or {\sf 1-FPN(BC)}-specification of a graph 
+(or a {\sf CNF} formula), constructs a level-restricted {\sf L}-specification
+of an isomorphic graph (or formula). Second assuming {\sf P} $\neq$
+ {\sf PSPACE},  we characterize completely the polynomial time 
+solvability of the generalized {\sf CNF} satisfiability problems of 
+Schaefer \cite{Sc78}, when instances are specified succinctly
+as in (1), (2), (3) or (4) above.
+\end{abstract}
+
+
+\input{intro}
+
+\input{summary}
+
+\input{definitions}
+
+\input{translation}
+
+\input{hard_3sat}
+
+\input{poly_time_cases}
+
+\input{characterization}
+
+\input{conclusions}
+
+\vspace*{.2in}
+
+\noindent
+{\bf Acknowledgement:} We thank
+Professors Ken Regan (SUNY-Buffalo) and Eric Allender (Rutgers University)
+for constructive suggestions on an earlier draft of this paper.
+We also thank Ashish Naik (University of Chicago) and 
+Sandeep Shukla (SUNY-Albany) for their help and suggestions during the course
+of writing this paper.
+
+
+\newpage
+
+\input{bibliography}
+
+\end{document}
+
+
+
+
+

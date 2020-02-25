@@ -1,0 +1,334 @@
+\section{Definitions and Preliminaries}\label{sec:def}
+Subsections  \ref{sec:other_def} through \ref{sec:fpn_spec} give
+ basic
+definitions used here, 
+including the definitions of the generalized {\sf CNF} satisfiability 
+problems  of \cite{Sc78} and the kinds of 
+succinct specifications considered. We illustrate these definitions with  
+several examples.
+
+
+\subsection{The Problems {\sf SAT(S)}}\label{sec:other_def}
+We first review some basic definition  from Schaefer \cite{Sc78}.
+
+\begin{definition}\label{s-formulas:def}(Schaefer \cite{Sc78})\\
+Let S $= \{R_1,R_2, \cdots, R_m \}$ be a finite 
+set of finite arity boolean
+relations. (A boolean relation is defined to be 
+any subset of $\{0,1 \}^p$ for some integer $p \geq 1$. 
+The integer $p$ is called the  {\bf rank} of the relation.)
+An S-{\it formula} is a conjunction of clauses each of the form 
+$\hat{R}_i(\xi_1, \xi_2, \cdots)$, where $\xi_1, \xi_2, \cdots$ are distinct, 
+unnegated variables whose number matches the 
+rank of $R_i, i \in \{ 1, \cdots m \}$ and $\hat{R}_i$ is the relation symbol
+representing the relation $R_i$.
+The  S-{\it satisfiability problem} (denoted by SAT(S)) 
+is the problem of deciding 
+whether a given S-formula is satisfiable.
+
+The problem {\sf SAT$_c$(S)} is the variant of the problem 
+{\sf SAT(S)} in which the constants $0$ and $1$ are also allowed
+to occur in {\sf S-}formulas. 
+\end{definition}
+
+
+The 
+generalized {\sf CNF} satisfiability problems {\sf SAT(S)} and 
+{\sf SAT$_c$(S)} generalize  the problem  {\sf 3SAT} and its variants
+studied in the literature \cite{GJ79}. For example,
+let $R(x,y,z)$ be the ternary logical relation  given by
+$\{(1,0,0), (0,1,0), (0,0,1) \}$. Then, the problem 
+{\sf 1-3SAT}  is the same as the problem {\sf SAT(\{R\})}. 
+
+\iffalse
+Similarly, {\sf NAE3SAT} is the problem of determining if
+a {\sf 3CNF} formula, has a satisfying assignment in which all the literals
+in any clause are not simultaneously true. 
+\fi
+
+
+
+\begin{definition}\label{def:affine}
+
+\begin{enumerate}
+\item
+The logical relation $R$ is {\bf 0-valid} if $(0, \ldots, 0) \in R$.
+\item
+The logical relation $R$ is {\bf 1-valid} if $(1, \ldots, 1) \in R$.
+\item
+The logical relation $R$ is {\bf weakly positive} if
+$R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
+most one negated variable in each conjunct.
+\item
+The logical relation $R$ is {\bf weakly negative} if
+$R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
+most one unnegated variable in each conjunct.
+\item
+The logical relation $R$ is {\bf bijunctive} if
+$R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
+most two literals in each conjunct.
+\item
+The logical relation $R$ is {\bf affine} if $R(x_1,x_2,\ldots)$ is logically 
+equivalent to some system of linear equations over the two-element field 
+${\bf Z}_2$.
+\item
+The logical relation $R$ is {\bf complementive} 
+if it is closed under component-wise
+complement, that is, for all $(a_1,\ldots,a_m)$, if $(a_1,\ldots,a_m) \in R$, 
+then $(1-a_1,\ldots,1-a_m) \in R$.
+\item
+The logical relation $R$ is {\bf 1-weakly positive} if
+$R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
+most one negated variable in each conjunct, such that any clause with
+a negated literal has no more than 1 unnegated literal.
+\item
+The logical relation $R$ is {\bf 1-weakly negative} if
+$R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
+most one unnegated variable in each conjunct, such that any clause with
+an unnegated literal has no more than 1 negated literal.
+\end{enumerate}
+\end{definition}
+
+
+
+\begin{definition}\label{def:rep}
+If $A$ is a formula, then we denote the 
+logical relation defined by $A$ as {\bf $[A]$},
+when the variables are taken in ascending order.
+
+{\sf $Gen(S)$} is the set of existentially quantified $S$-formulas with
+constants.
+
+{\sf $Rep(S)$} is the set of relations that are representable by existentially 
+quantified $S$-formulas with constants.
+
+{\sf $Rep_{NC}(S)$} is the set of relations that are 
+representable by existentially quantified $S$-formulas without constants.
+\end{definition}
+
+
+
+
+
+
+
+\subsection{The L-Specified Formulas}\label{sec:lspec}
+We define the terminology for {\sf L-}specified generalized {\sf CNF} formulas used here. 
+
+%\subsubsection{L-specified S formulas}\label{sec:hsat_def}
+Let $S$ be a finite nonempty set of finite-arity Boolean 
+relations. The definitions of L-specification of an S-formula, the 
+S-formulas specified by such specifications, and the problems 
+{\sf L-SAT(S)} and {\sf L-SAT}$_c${\sf (S)}are closely analogous to Definitions
+3.5, 3.6 and 3.1, respectively.
+
+\begin{definition}
+Let $X$ be a vector of Boolean variables and the constants $0$ and $1$. Then
+$\hat{X}$ is the set of all variables occurring in $X.$
+\end{definition}
+
+\begin{definition}\label{hsats:def}
+An {\sf L-}specification $F(X) = (A_1(X_1),\ldots, A_n(X_n))\, (n \geq 1)$ 
+of an S-formula (or of an S-formula with constants) is a finite nonempty 
+sequence of assignment statements $A_i(X_i)$ of the form 
+\[ F_i(X_i) \leftarrow 
+(\bigwedge_{1 \leq k \leq  l_i} F_{i_k}(X_{i_k},Z_{i_k})) \bigwedge 
+f_i(X_i,Z_i), \]
+where, for $1 \leq i_k \leq l_i$,\\
+(1) $1 \leq i_k < i,$ \\
+(2) $X_i, X_{i_k}, Z_i$ and $Z_{i_k}$ are vectors of Boolean variables(or are 
+vectors of Boolean variables, $0$, and $1$, respectively. and \\
+(3) $X = \hat{X}, \, \hat{X}_{i_k} \subseteq \hat{X_i},$ and $ \hat{Z_{i_k}} 
+\subseteq \hat{Z_i}$. 
+
+\noindent
+For $1 \leq i \leq n$ letting $\lambda_i$ be the number of occurrences of
+literals in the statement $A_i$, the {\em size} of $F(X)$ denoted 
+{\em size($F(X))$}, equals $\sum_{i=1}^{n} \lambda_i + n$.
+\end{definition}
+
+Given Definition \ref{hsats:def}, the definition of the 
+{\sf S-formula} (or of the {\sf S}-formula with constants) 
+$E(F(X))$ specified
+by such an  L-specification $F(X)$ very closely follows Definition 3.6 and 
+is not repeated here. 
+
+
+
+
+
+\begin{example}
+Let $F= (F_1(x_1,x_2),F_{2}(x_3,x_4), F_3)$
+be an instance of {\sf L-3SAT} where each $F_i$ is defined as follows:
+\[F_1(x_1,x_2) = (x_1 + x_2 + z_1) \wedge (z_2 + z_3) \]
+\[F_2(x_3,x_4) = F_1(x_3, z_4) \wedge F_1(z_4, z_5) \wedge
+                               (z_4 + z_5 + x_4)   \]
+\[F_3 = F_2(z_8,z_7) \wedge  F_1(z_7,z_6) \]
+The formula $E(F)$ denoted by $F$ is given by 
+$ (z_7 + z_6 + z_1^1) \wedge (z_2^1 + z_3^1) \wedge
+(z_8 + z_4 + z_1^2) \wedge (z_2^2 + z_3^2) \wedge $
+$(z_4 + z_5 + z_1^3) \wedge (z_2^3 + z_3^3) \wedge (z_4 + z_5 + z_7)$. 
+
+\end{example}
+
+
+\begin{definition}
+The problem {\sf L-SAT(S)} (or {\sf L-SAT}$_c${\sf (S)}) is the
+problem of determining, given an L-specification $F(X)$ of the S-formula(or of
+the S-formula with constants), if ${\cal F}(F(X))$ is satisfiable.
+\end{definition}
+ 
+
+
+
+
+
+
+\subsection{Periodic Specifications }\label{sec:fpn_spec}
+Next, we recall the definition of one dimensional periodic specifications 
+due to  Orlin \cite{Or82a}, Wanke \cite{Wa93} and 
+H\"ofting and Wanke \cite{HW92}. 
+For the rest of the paper {\bf N} and {\bf Z} is used to 
+denote the sets of non-negative integers and of integers respectively.
+
+
+
+\subsubsection{Periodically Specified Formulas}
+In Section \ref{sec:hsat_def}, we extended
+the definition of satisfiability problems when instances are specified
+by standard specifications so as to apply to 
+{\sf L}-specified satisfiability problems. Orlin \cite{Or82a} 
+defined the problem {\sf 1-PN-3SAT}; the problem {\sf 3SAT} when 
+instances are specified using {\sf 1-PN}-specifications.
+Here we define {\sf 1-FPN}- and {\sf 1-PN}-specified generalized satisfiability
+problems.
+
+
+
+
+Let $U = \{u_1, \ldots, u_n \}$  be a finite set of variables (referred to
+as static variables).
+$U^{\infty} =  \{u_k(i): ~ 1 \leq k \leq n, ~ i \in {\bf Z}\}$. 
+$U^{M} =  \{u_k(i): ~ 1 \leq k \leq n, ~ i \in \{0,1, 2, \cdots, M\}\}$. 
+(In our proofs, variable $u_k(i)$
+denotes the variable $u_k$ at time unit $i$.) 
+A literal of $U$ is an element of 
+$\{u_1, \ldots, u_n, \overline{u_1}, \ldots, \overline{u_n} \}$.
+If $w$ is a literal of $U$, then $w(i)$, 
+is a literal of $U^{\infty}$.
+Let $C(i, i+1)$ be a parameterized conjunction of 3 literal clauses
+such that each clause in $C(i, i+1)$ 
+consists of variables $u_k(i), u_k(i+1)$ with the constraint that at least one
+variable is of the form $u_k(i)$. 
+We refer to the clauses $C(i, i+1)$ as  {\em static narrow clauses}. 
+($C(i, i+1)$ is called  narrow because
+for all  $(w_1(i_1) \vee w_2(i_2) \vee w_3(i_3)) \in C(i,i+1) $, 
+$|i_s - i_r| \leq 1$ for $1 \leq r \leq s \leq 3$.)
+Let $C^{\infty}$ $= \bigwedge_{i = 0}^{i =\infty}C(i, i+1)$. 
+Given $U^{M}$ and $C^{\infty}$, let $C^{M}$ be a subset of $\cal C$ 
+with the following property: for each clause 
+$(w_1(i_1) \vee w_2(i_2) \vee w_3(i_3))  \in C^{M}$,
+$ w_1(i_1), w_2(i_2), w_3(i_3) \in U^{M}$.
+
+
+
+It is useful to imagine a narrow periodically specified formula
+$\Gamma^{\infty}$ as being obtained by placing a copy of the variable 
+set $U$
+at each integral point (also referred to as time unit) 
+on the X-axis (or the time line). 
+Furthermore, assume that the clauses $C(t, t+1)$ are placed at time $t$.
+With this notation, we can now refer to variables $U(t)$,
+as the set of variables at time $t$ 
+and the clauses $C(t, t+1)$ as the set of clauses at time $t$.
+
+
+
+
+\begin{definition}\label{fpn:sat}
+A 1-dimensional infinite (finite) 
+periodic narrow specification (denoted by 1-PN (FPN)-specification)
+of a  3CNF formula  $F^{\infty}(U^{\infty}, C^{\infty})$
+($F^{M}(U^{M}, C^{M})$) is given by 
+($~~\Gamma = (U,C(i,i+1))$,  ($~~\Gamma = (U,C(i, i+1), M)$),  
+where, $U$ is a  a finite set of variables,
+$C(i, i+1)$ is a collection of static narrow 3 literal clauses. 
+(In case of finite specifications $M$ is non-negative integers 
+specified in binary.)
+The size of the specification denoted by 
+$size(\Gamma) = |U| + |C(i, i+1)| $. (In case of finite specifications
+$size(\Gamma) =|U| + |C(i, i+1)| + bits(M)$,  
+where $bits(M)$ denote the number
+of bits used to represent $M$.)
+
+
+The problem 1-PN-3SAT (problem 3SAT when instances are specified using 
+1-FPN-specifications)  is the problem of determining if a 3CNF formula
+$F^{\infty}(U^{\infty}, C^{\infty})$ specified by $\Gamma= (U,C(i, i+1))$ 
+is satisfiable.
+
+Similarly, the problem 1-FPN-3SAT (problem 3SAT specified using 
+1-FPN-specifications)  is the problem of determining if a 3CNF formula
+$F^{M}(U^{M}, C^{M})$ specified by $\Gamma= (U,C(i, i+1),M)$ 
+is satisfiable.
+\end{definition}
+
+
+For each finite set {\sf S} of finite arity Boolean relations, 
+it is straightforward to extend the above 
+definition so as to define the problems {\sf 1-PN-SAT(S)}  
+and {\sf 1-FPN-SAT(S)}  and  hence we omit these
+definitions.  Observe that 
+{\sf 1-FPN}-specified graphs or formulas can be exponentially larger 
+than their input specifications. Finally, as in the previous subsection, 
+we use ${\cal N}$ to denote the size of the $F^m(U^m, C^m)$ represented
+using standard (non-succinct) specifications.
+
+
+	 
+\noindent
+{\bf Example 4:}
+Let $F= (U,C(i, i+1),3)$ be an instance of  {\sf 1-FPN-3SAT} 
+where the set of static clauses are given by
+$(x_1(i) + x_2(i) + x_3(i) )  \wedge 
+(x_1(i+1) + x_3(i)) \wedge (x_3(i+1) + x_2(i))$.
+The set of variables $U = \{ x_1, x_2, x_3 \}$.
+The formula $F^3(U^3,C^3)$ denoted by $\Gamma$ is given by 
+\[(x_1(0) + x_2(0) + x_3(0)) \wedge (x_1(1) + x_3(0)) \wedge (x_3(1) + x_2(0)) 
+\bigwedge \]
+\[(x_1(1) + x_2(1) + x_3(1)) \wedge (x_1(2) + x_3(1)) \wedge (x_3(2) + x_2(1)) 
+\bigwedge \]
+\[(x_1(2) + x_2(2) + x_3(2)) \wedge (x_1(3) + x_3(2)) \wedge (x_3(3) + x_2(2)) 
+\bigwedge \]
+\[(x_1(3) + x_2(3) + x_3(3)). \QED\]
+
+
+
+\subsubsection{1-FPN(BC)-specified Graphs and Formulas}
+Some instances of problems arising in practice involve a periodic specification
+of the graph or a formula along with explicit initial and final conditions.
+We call such periodic specifications as periodic specifications with boundary
+conditions ({\sf BC}). 
+Observe that for {\sf 1-PN}-specifications boundary conditions
+do not make any sense since the expanded graph or the formula is infinite.
+Hence boundary conditions are used to augment only {\sf 1-FPN}-specifications.
+
+In such a case we have a parameterized set of variables $V(i)$.
+We place a copy of the variables from time $\{ 0, \cdots m \}$.
+We also have explicit variables $INIT$ and $FIN$ 
+representing the variables at the
+two boundaries. There are three sets of clauses.
+The set of explicit clauses $C_1(INIT, V(0))$ contain variables from 
+$INIT \cup V(0)$  with the constraint that at least one variable in each clause
+is from the set $INIT$. Then we have the parameterized set of clauses
+$C_2(i, i+1)$ which are identical to the clauses used to specify 
+{\sf 1-FPN}-formulas. They contain variables from $V(i) \cup V(i+1)$.
+Finally we have explicit clauses $C_3(V(m), FIN)$ which contain variables from
+$FIN \cup V(m)$. 
+The specification of the {\sf 1-FPN(BC)-CNF}-formula is given by
+$\Gamma = ( F, m)$, where 
+\[F = C_1(INIT, V(0) \cup C_2(V(i) \cup V(i+1)) \cup C_3(V(m) \cup FIN). \]
+The formula specified by $\Gamma$ is given by 
+\[E(\Gamma) =  
+C_1(INIT, V(0)) \bigwedge \bigwedge_{i = 0}^{ i = m} C(i, i+1) \bigwedge 
+C_3(V(m), FIN)   \]

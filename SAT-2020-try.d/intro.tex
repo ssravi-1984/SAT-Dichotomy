@@ -1,0 +1,130 @@
+\section{Introduction}
+\label{sec:intro}
+
+Large objects with highly repetitive structure can often be represented
+succinctly.
+In the past, several methods have been proposed to succinctly 
+represent objects.
+Here we consider two of these methods, namely
+(i) hierarchical specifications  \cite{Ga82,GW83,LW92,BOW83,RH93},
+and (ii) periodic specifications 
+\cite{CM91,HW92,IS87,KO91,KS88,Or82a,Wa93}.
+ 
+
+
+Hierarchical specifications are useful in describing large scale systems with
+very regular structures. This is because, 
+by using hierarchical specifications, the overall design of an object can be 
+partitioned into the design of a collection of modules;
+which is a 
+much more manageable task than producing a complete design in one step.
+Such a top down (or hierarchical design) approach 
+also facilitates the development of computer aided design (CAD) systems, since
+low-level objects can be  incorporated into libraries and can thus be made
+available as submodules to designers of large scale  objects.
+Other areas where hierarchical specifications have found applications are
+VLSI layout \cite{HLW92,HW92,RH93},  
+finite element analysis, software engineering and datalog queries 
+(see \cite{HLW92,Ma94} and the references therein). 
+
+
+
+
+
+
+Periodic specifications
+can also be used to define large scale systems with highly regular structures.
+Using  periodic specifications, 
+large objects are  described as repetitive connections of a basic module.
+Frequently, the modules are connected in a straight line 
+but the basic modules can also  be repeated in two or higher
+dimensional patterns. Periodic specifications are also used to 
+model time variant  problems,  where the constraints
+or demands  for any one period is the same as those for preceeding or 
+succeeding periods. 
+ Periodic specifications 
+have applications in such diverse areas  as  transportation planning
+\cite{Or82a,HLW92,Ma94},
+parallel programming \cite{HLW92,KMW67} and 
+VLSI design \cite{IS87,IS88}.
+
+Orlin has studied periodically specified problems over an infinite 
+horizon; i.e the objects considered are infinite \cite{Or82a}. 
+Ford and Fulkerson \cite{FF58} and Wanke \cite{Wa93} have 
+studied the finite horizon
+versions of periodic problems and Gale \cite{Ga59} has studied problems for
+periodic specifications with fixed starting points. All the above mentioned
+studies are for 1-dimensional periodic specifications.
+Other 
+researchers have studied 2-dimensional and more generally $d$-dimensional
+periodic specifications. (See  \cite{CM91,IS87,KO91,KS88,Wa93}.) 
+
+An important feature of  both hierarchical and periodic 
+specifications is that they
+can be much  more concise in describing  objects than standard  specifications.
+In general, the size of an object can be exponential in the
+size of its periodic or hierarchical specifications.
+Since, the  complexity of solving a problem 
+is usually measured as a function of the size of the specification of the 
+problem instance, 
+the complexity of a problem when instances are specified using
+standard descriptions can
+be  different than the complexity of the same problem 
+when instances are specified hierarchically or periodically.
+For example, while the {\sf 3-COLORING} problem is 
+{\sf NP-}complete when the graphs are represented by adjacency matrices
+or by adjacency lists \cite{GJ79}, it is 
+{\sf PSPACE}-complete when instances are specified
+hierarchically or periodically \cite{LW92,Or84b}.
+On the other hand the {\sf 2-COLORING} problem is solvable in polynomial time
+{\em even} when instances are specified by the hierarchical
+specifications of Lengauer et al. \cite{LW92,LW87a} or by  the 
+1-dimensional periodic specifications of Orlin \cite{Or82a}.
+
+
+
+
+In this paper, we study the complexity of combinatorial, graph and 
+generalized {\sf CNF} satisfiability problems,
+when instances are specified using one of the following specifications:
+
+\begin{enumerate}
+\item
+the 1-dimensional finite periodic narrow specifications (denoted 
+{\sf 1-FPN}-specifications) of Ford and Fulkerson \cite{FF58}
+and of Wanke \cite{Wa93}; 
+\item
+the 1-dimensional finite periodic narrow specifications with explicit 
+boundary conditions (denoted {\sf 1-FPN(BC)}-specifications)
+of Gale \cite{Ga59}
+and others; 
+\item
+the 2-way infinite 1-dimensional narrow
+periodic (sometimes called dynamic) specifications  (denoted
+{\sf 1-PN}-specifications) 
+of Karp et al. and Orlin \cite{KMW67,Or82a}; and 
+\item
+the hierarchical specifications (denoted {\sf L}-specifications) of 
+Lengauer \cite{LW87a}. 
+
+\end{enumerate}
+
+
+Let $\Pi$ be a problem, whose instances are specified {\em non-succinctly} 
+using one of the standard specifications in the literature. For example,
+instances of {\sf CNF} satisfiability problems  are specified non-succinctly
+by {\sf CNF} formulas and by sets of clauses, each clause being a set of 
+literals.
+Here, we use {\sf 1-FPN-}, {\sf 1-FPN(BC)-}, {\sf 1-PN-} and {\sf L-}$\Pi$ to
+denote the problem $\Pi$ 
+when its instances are specified succinctly by {\sf 1-FPN-}, 
+{\sf 1-FPN(BC)-}, {\sf 1-PN-} and {\sf L-} specifications, respectively. 
+We use $\alpha$-$\Pi$ to denote the problems {\sf 1-FPN-}, {\sf 1-FPN(BC)-},
+ {\sf 1-PN-} and {\sf L-}$\Pi$; and we use {\em succinct} specification 
+to mean {\sf 1-FPN-}, {\sf 1-FPN(BC)-}, {\sf 1-PN-} and {\sf L-}specification. 
+Thus for example, {\sf 1-FPN-3SAT} denotes the problem {\sf 3SAT}
+when instances are specified  by {\sf 1-FPN-}specifications; and 
+$\alpha$-{\sf 3SAT} denotes the problems {\sf 1-FPN-}, {\sf 1-FPN(BC)-}, 
+{\sf 1-PN-} and {\sf L-3SAT}.
+
+We summarize our results in the next section.
