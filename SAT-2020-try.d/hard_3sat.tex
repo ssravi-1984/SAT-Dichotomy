@@ -12,7 +12,7 @@ Thus 1-FPN-3SAT is {\sf PSPACE}-complete.
 \end{theorem}
 
 \noindent
-{\bf Proof:}  See supplementay material. 
+{\bf Proof:}  See Section~\ref{sec:appA} of the supplementay material. 
 \iffalse
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {\em Part (1):}
@@ -225,7 +225,7 @@ LBA to L-3SAT. Thus the  problem L-3SAT is PSPACE-complete
 \end{corollary}
 
 \noindent
-{\bf Proof:} See supplementary material. 
+{\bf Proof:}  See Section~\ref{sec:appA} of the supplementay material. 
 
 \iffalse
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,7 +267,9 @@ the problem {\sf L-3SAT} in {\sf DSPACE(n)} follows.\QED
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fi
 
-The results yield a tight lower and upper bound (under certain complexity 
+\smallskip
+
+The above results yield a tight lower and upper bound (under certain complexity 
 theoretic assumptions)
 on the space required for solving the problem {\sf L-3SAT}. To see this, 
 observe that if the transformation from {\sf 1-FPN}-specifications to
@@ -280,14 +282,8 @@ result concerning simulating  non-deterministic space bounded
 Turning machines by deterministic space bounded Turning machines.
 
 
-
-
-
-
-
-
 \begin{corollary}\label{th:pn3sat}
-The problem 1-PN-3SAT is in NSPACE(n).
+The problem 1-PN-3SAT is in NSPACE$(n)$.
 There is a quasi-linear
 time linear size reduction from the membership problem for non-deterministic
 LBA to 1-FPN(BC)-3SAT.
@@ -295,7 +291,10 @@ Thus the  problem 1-PN-3SAT is PSPACE-complete.
 \end{corollary}
 
 \noindent
-{\bf Proof:}
+{\bf Proof:}  See Section~\ref{sec:appA} of the supplementay material. 
+
+\iffalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 Orlin \cite{Or82a} and Papadimitriou \cite{Pa94} have shown that
 the problem {\sf 1-PN-3SAT} is in {\sf NSPACE(n)}. 
 We only prove that the problem is {\sf PSPACE}-hard by a linear size
@@ -310,6 +309,10 @@ $(F(U,C(i, i+1)),m)$ where $n = |U|$   and $m = 2^{2n}$ we  see that
 $F^m$ is satisfiable if and only if $F^{\infty}$ is satisfiable.
 This completes the proof that the problem {\sf 1-PN-3SAT} is 
 {\sf PSPACE}-complete.\QED
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
+
+\smallskip
 
 
 \noindent
@@ -397,7 +400,9 @@ Thus the problems 1-FPN(BC)-3SATWN and  1-FPN(BC)-3SATWP PSPACE-complete
 
 
 \noindent
-{\bf Proof:} \\
+{\bf Proof:} See Section~\ref{sec:appA} of the supplementary material.
+\iffalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 Part (1):
 We prove  this part for the problem {\sf 1-FPN(BC)-3SATWN}. 
 The proof for {\sf 1-FPN(BC)-3SATWP} is similar.
@@ -481,8 +486,10 @@ Here,
 $N$ is suitably chosen large integer so that the simulation can be carried 
 out for enough number of steps. This completes the proof of the 
 first part.\QED
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
 
-
+\smallskip
 
 \noindent
 {\bf Remark 5:}
@@ -496,6 +503,6 @@ the circuit value problem for {\sf L}-specified and {\sf 1-FPN(BC)}-specified
 circuits.
 
 
-Although, we have a linear size reduction from the membership problem for
+Although we have a linear size reduction from the membership problem for
 a deterministic {\sf LBA}, we do not know how to solve the problem in 
-{\sf DSPACE(n)}.
+{\sf DSPACE$(n)$}.

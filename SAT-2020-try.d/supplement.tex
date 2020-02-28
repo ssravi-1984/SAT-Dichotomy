@@ -24,6 +24,7 @@ D.~J. Rosenkrantz and R.~E. Stearns
 \clearpage
 
 \section{Additional Material for Section~\ref{sec:hard_3sat}}
+\label{sec:appA}
 
 \subsection{Statement and Proof of Theorem~\ref{th:fpn-3sat}}
 
@@ -232,3 +233,185 @@ goes through the sequence $d_t =0, d_t = 1, d_t = 2, \cdots d_t = 2^{Dn}$.
 This implies that  the formulas $f_2(t)$ and $f_3(t)$
 would be true from then on 
 and therefore the  Turing machine $M$ accepts $x$. \hfill\QED
+
+\subsection{Statement and Proof of Corollary~\ref{th:l3sathard}}
+
+\noindent
+\textbf{Statement of Corolllary~\ref{th:l3sathard}:}~
+(1) The problem 1-FPN(BC)-3SAT is in NSPACE$(n)$.
+There is a quasi-linear
+time linear size reduction from the membership problem for non-deterministic
+LBA to 1-FPN(BC)-3SAT.
+Thus the  problem 1-FPN(BC)-3SAT is PSPACE-complete.~
+(2)
+The problem L-3SAT is in DSPACE$(n)$.
+There is a square time
+square size reduction from the membership problem for non-deterministic
+LBA to L-3SAT. Thus the  problem L-3SAT is PSPACE-complete.
+
+\medskip
+
+\noindent
+{\bf Proof:}~
+The {\sf PSPACE}-hardness of {\sf 1-FPN-3SAT(BC)} follows 
+immediately from Theorem \ref{th:fpn-3sat}.
+By arguments similar to those
+presented in the proof of Theorem \ref{th:fpn-3sat}, 
+the problem {\sf 1-FPN(BC)-3SAT}  is seen to be in {\sf NSPACE(n)}.
+
+The {\sf PSPACE}-hardness of  the problem {\sf L-3SAT} follows
+from Theorem \ref{th:fpn-3sat} and the Translation theorem. Specifically,
+there is a $O(n^2)$ size reduction from the membership problem for a  
+non-deterministic {\sf LBA} to the problem  {\sf L-3SAT}.
+We now show that {\sf L-3SAT} is solvable in {\sf DSPACE(n)}
+by using backtracking. 
+Let $\displaystyle{F_i(X^i)=(\bigwedge_{1 \leq j \leq  l_i} 
+F_{i_j}(X^i_j,Z^i_j)) \bigwedge f_i(X^i,Z^i)}$.
+Here $0 \leq i_j <i$.
+Given an assignment of $X^i$, 
+we evaluate $F_i(X^i)$ as follows:
+For each assignment of $Z^i$:
+For $1 \leq j \leq  l_i$, 
+check if $F_{i_j}(X^i_j,Z^i_j)$ is true and store the values of 
+$F_{i_j}(X^i_j,Z^i_j)$.
+These values require space linear in $l_i$. Finally evaluate $f_i(X^i,Z^i)$.
+This evaluation can be carried out in deterministic space linear in the size of
+$f_i$ since it is a {\sf CNF} formula.
+If no such assignment to $Z^i$ is found, 
+$F_i(X^i)$ is false. Otherwise, $F_i(X^i)$ is true.
+Thus, if $F_k$ for $k < i$, can be solved in space linear in their
+representation, $F_i$ can be solved in space linear in its representation,
+since the space needed to $F_i$ in the space to store the values of
+$X^i$, $Z^i$ and the intermediate results $F_{i_j}(X^i_j,Z^i_j)$. This
+allows us to do the backtracking in {\sf DSPACE(n)}.
+$F_1$ can be solved in {\sf DSPACE(n)}  since it is a {\sf CNF} formula.
+Hence by induction on the number of levels in the hierarchy, membership of
+the problem {\sf L-3SAT} in {\sf DSPACE(n)} follows. \hfill\QED
+
+\subsection{Statement and Proof of Corollary~\ref{th:pn3sat}}
+
+\noindent
+\textbf{Statement of Corollary~\ref{th:pn3sat}:}~
+The problem 1-PN-3SAT is in NSPACE$(n)$.
+There is a quasi-linear
+time linear size reduction from the membership problem for non-deterministic
+LBA to 1-FPN(BC)-3SAT.
+Thus the  problem 1-PN-3SAT is PSPACE-complete. 
+
+\noindent
+{\bf Proof:}  
+Orlin \cite{Or82a} and Papadimitriou \cite{Pa94} have shown that
+the problem {\sf 1-PN-3SAT} is in {\sf NSPACE(n)}. 
+We only prove that the problem is {\sf PSPACE}-hard by a linear size
+reduction from the membership problem for a non-deterministic {\sf LBA}.
+(In contrast, The reduction in \cite{Or82a} is a square size reduction.)  
+Observe that if an instance of {\sf 1-PN-3SAT} has a solution
+then the assignment to the variables is periodic. If there are $n$ variables
+in the static formula we can have no more than $2^{2n}$ distinct assignments to
+the variables to consider. 
+Hence starting from  an instance of {\sf 1-FPN-3SAT} 
+$(F(U,C(i, i+1)),m)$ where $n = |U|$   and $m = 2^{2n}$ we  see that 
+$F^m$ is satisfiable if and only if $F^{\infty}$ is satisfiable.
+This completes the proof that the problem {\sf 1-PN-3SAT} is 
+{\sf PSPACE}-complete. \hfill\QED
+
+\subsection{Statement and Proof of Theorem~\ref{th:fpn3satwnhard}}
+
+\noindent
+\textbf{Statement of Theorem~\ref{th:fpn3satwnhard}:}~
+There is a quasi-linear
+time linear size reduction from the membership problem for deterministic
+LBA to problems 1-FPN(BC)-3SATWN and  1-FPN(BC)-3SATWP.
+Thus the problems 1-FPN(BC)-3SATWN and  1-FPN(BC)-3SATWP PSPACE-complete.
+
+\medskip
+
+\noindent
+{\bf Proof:} 
+
+\smallskip
+
+\noindent
+Part (1):~
+We prove  this part for the problem {\sf 1-FPN(BC)-3SATWN}. 
+The proof for {\sf 1-FPN(BC)-3SATWP} is similar.
+
+The membership of the problem {\sf 1-FPN(BC)-3SATWN} in {\sf NSPACE(n)} 
+follows since the problem {\sf 1-FPN(BC)-3SAT} is in {\sf NSPACE(n)}.  
+To prove that {\sf 1-FPN(BC)-3SATWN} is {\sf PSPACE}-hard we give a linear size
+reduction from the acceptance problem of a {\bf deterministic} {\sf LBA}.
+Let $ID(t)$ denote the  instantaneous description of a
+a deterministic {\sf LBA} $M$ at time time $t$.
+Given $M$ and input $x$ such that $|x| = n$ we create
+an instance $(F(x,t,t+1),m)$ of {\sf 1-FPN(BC)-3SATWN}, such that 
+$\wedge_{t = 0}^{t = N} F(x, t, t+1)$ is 
+satisfiable if and only if $M$ accepts $x$. 
+The reduction is similar to one presented for  {\sf 1-FPN-3SAT}. 
+The formulas encoding $(ID(t) \vdash ID(t+1))$, and $start(ID(t))$
+can  be represented by a weakly negative formula
+as in the {\sf P}-hardness of {\sf UNIT} given in \cite{JL77}. 
+By negating all literals, we can 
+obtain a weakly positive formula proving the {\sf PSPACE}-hardness of 
+{\sf L-3SATWP}. Let $a \in \{ \# \} \cup T \cup  (S \times T)$, where 
+$T$ denotes the tape symbols and $S$ denotes the set of states. 
+Let $P^a_i(t)$ be a boolean variable which means that the contents
+of $i^{th}$ tape cell at time $t$ is $a$. Observe that for a given value of $t$
+the number of variables $P^a_i(t)$ is $O(n)$. 
+The formula $g(x,0)$ is now represented as
+\[g(x, 0) \equiv 
+\left( P_{1}^{(q_0,a_1)}(0) \wedge P_{2}^{a_2}(0),\ldots \wedge 
+P_{n}^{a_n}(0) \right) \bigwedge_{i} \left(\bigwedge_{a \neq b} 
+(~\overline{P_{i}^a(0)} \vee  ~\overline{P_{i}^b(0)}) \right)\]
+The first part represents the condition that the first ID corresponds to the
+input and the second part represents the condition that one position
+cannot contain two distinct symbols. Hence, the above formula represents the
+condition that the first $ID$ is correct.  Also observe that since the number 
+of tape symbols are constant, the size of $g(x,0)$ is linear in the size of 
+the input.
+
+Next, we represent  $(ID(t) {\vdash}_M ID(t+1))$
+as follows:
+Let $f:(T \cup (S \times T))^3 \rightarrow T \cup (S \times T)$ be the finite
+function such that if positions $i-1$, $i$ and $i+1$ of the $ID(t)$ 
+contain $a$, $b$ and $c$ respectively, then position $i$ of the $ID(t+1)$ 
+must contain $f(a,b,c)$. The determinism of $M$ ensures that
+$f$ is single valued. We express the requirement that $ID(t+1)$ 
+is appropriately  determined by $ID(t)$ as follows:
+
+
+\[g(x, t,t+1) \equiv  \bigwedge_{i =1}^{ i = n} ~~~ \bigwedge_{a,b,c \in T} 
+\left(\left(~P_{i-1}^{a}(t) \wedge P_{i}^{b}(t) \wedge 
+P_{i+1}^{c}(t) \right) \Rightarrow ~P_{i}^{f(a,b,c)}(t+1) \right) \]
+which can be written as an equivalent weakly negative formula as follows:
+
+\[g(x, t,t+1) \equiv  \bigwedge_{i =1}^{ i = n} ~~~ \bigwedge_{a,b,c \in T} 
+\left(~\overline{P_{i-1}^{a}(t)} \vee \overline{P_{i}^{b}(t)}
+\vee \overline{P_{i+1}^{c}(t)}  \vee ~P_{i}^{f(a,b,c)}(t+1) \right) \]
+
+Now, each four literal clauses replaced by equivalent three literals clauses
+by adding new auxiliary variables $T^{f(a,b,c)}_{i}(t)$. Therefore
+$g(x, t,t+1)$  is rewritten as 
+
+\[ \bigwedge_{i =1}^{ i = n} ~~~ \bigwedge_{a,b,c \in T} 
+\left(
+\left(~\overline{P_{i-1}^{a}(t)} \vee \overline{P_{i}^{b}(t)}
+\vee T_{i}^{f(a,b,c)}(t) \right)
+\wedge 
+\left( \overline{T_{i}^{f(a,b,c)}(t)} \vee
+\overline{P_{i+1}^{c}(t)}  \vee ~P_{i}^{f(a,b,c)}(t+1) \right)\right) \]
+
+
+$F(x,t,t+1) = g(x, 0) \cup g(x,t, t+1)$. Let $N = 2^{2Dn}$.
+The instance output by the reduction is $(F(x,t, t+1), N)$
+The corresponding expanded formula is given as 
+\[ F^N(x) = g(x, 0) \wedge \bigwedge_{t = 0}^{N}g(x, t, t+1). \] 
+Again observe that since the number of tape symbols are constant and $i$ 
+varies  from $1$ to $n$,  
+the size of the formula $g(x, t, t+1)$ is linear in the size of the input.
+Also, observe that representation of $N$ is of size $O(n)$. Therefore
+the size of the instance obtained as a result of the reduction is $O(n)$.
+Here, 
+$N$ is suitably chosen large integer so that the simulation can be carried 
+out for enough number of steps. This completes the proof of the 
+first part. \hfill\QED
+
