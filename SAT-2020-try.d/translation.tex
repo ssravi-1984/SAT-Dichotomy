@@ -16,9 +16,8 @@ $size(\Gamma_1) = (size(\Gamma))^2$.
 Given a {\sf 1-FPN}-specification  $\Gamma = G(V,E)$ of $G^m$ 
 we construct a {\sf L}-specification $H_G = (H_1, \cdots H_n)$ as follows. 
 The non-terminal $H_1$  consists of four copies of $G$ (i.e. $G^4$). 
-They are connected in series as shown in Figure \ref{translation1.fig}(a), 
+They are connected in series as shown in Figure \ref{translation1.fig}(a). 
 
-%\iffalse
 %%%%
 \begin{figure}[tbh]
 \centering
@@ -27,7 +26,6 @@ They are connected in series as shown in Figure \ref{translation1.fig}(a),
 \label{translation1.fig}
 \end{figure}
 %%%%
-%\fi
 
 
 
@@ -49,9 +47,9 @@ are connected to the components $l_i$, $r_i$ and  $m_i$ as shown in
 Figure \ref{translation1.fig}(b). 
 The condition that each $H_{i-1}$ have even number of copies of $G$ 
 implies that the construction should satisfy the following constraints.
-\[ |l_i|, ~ |r_i|, ~  |m_i| \geq 2 \]  
-\[~~~ p = 2m \] 
-\[2m + 2m + |l_i| + |r_i| +  |m_i| = 2k \]  
+\[ |l_i|, ~ |r_i|, ~  |m_i| \geq 2   
+~~~~~ p = 2m  
+~~~~~ 2m + 2m + |l_i| + |r_i| +  |m_i| = 2k \]  
 
 
 The first constraint is needed so that the resulting specification is 
@@ -81,5 +79,5 @@ There is a polynomial time transformation that maps a
 to a strongly 1-level-restricted 
 L-specification $\Gamma_1$ such that
 that the formulas represented by $\Gamma$ and $\Gamma_1$ are isomorphic and
-$size(\Gamma_1)= O((size(\Gamma))^2)$ 
+$size(\Gamma_1)= O((size(\Gamma))^2)$.
 \end{corollary}
