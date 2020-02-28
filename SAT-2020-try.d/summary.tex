@@ -39,7 +39,7 @@ of the problems $\alpha-${\sf SAT(S)}.
 %% in \cite{LW92}. 
 
  
-
+\vspace*{-0.15in}
 \subsection{Translation Theorem}\label{sec:trans}
 In Theorem 4.1(called the {\bf Translation Theorem}),
 we prove that a {\sf 1-FPN-} or {\sf 1-FPN(BC)-} specification of a graph
@@ -50,8 +50,9 @@ $\Pi$ including all problems considered here,  the problems
 {\sf 1-FPN-} or {\sf 1-FPN(BC)-}$\Pi$ are 
 polynomial time reducible to  the problem {\sf L-}$\Pi$.
 
-\subsection{ Complexity of Boolean Constraint Satisfaction Problems}\label{sec:sat}
-In Sections 5 through  7, we study the complexities 
+\vspace*{-0.15in}
+\subsection{Complexity of Boolean Constraint Satisfaction Problems}\label{sec:sat}
+In Sections \ref{sec:hard_3sat} through \ref{sec:char}, we study the complexities 
 of the 
  generalized {\sf CNF}  satisfiability problems {\sf SAT(S)} of \cite{Sc78},
 when instances are specified succinctly.
@@ -67,9 +68,7 @@ we prove that the problems {\sf 1-FPN-3SAT}, {\sf 1-FPN(BC)-3SATWP}, and
 Theorem, this implies that the problems {\sf L-3SAT}, {\sf L-3SATWP},
 and {\sf L-3SATWN} are also {\sf PSPACE-}hard.
 
-
-
-
+\vspace*{-0.15in}
 \subsection{A Step Towards a Complexity Theory for Succinctly Specified 
 Problems}
 In Section 8, we outline how a polynomial time reduction involving
@@ -97,8 +96,8 @@ bandwidth-bounded planar graphs.
 
 
 
-
-\subsection{Comparisons with Related Work}\label{sec:comp}
+\vspace*{-0.15in}
+\subsection{Comparison with Related Work}\label{sec:comp}
 Orlin \cite{Or82a} proved that the problem {\sf 1-PN-3SAT} is 
 {\sf PSPACE-}complete. He used this and known reductions from {\sf 3SAT} 
 to prove the {\sf PSPACE-}hardness of the problems 
@@ -116,37 +115,45 @@ Their {\sf PSPACE-}hardness results for the problems {\sf L-3COLORING, L-IS,}
 and {\sf L-HC} hold for $O(\log {\cal N})$ bandwidth-bounded instances. Several
 {\sf PSPACE-}hardness results for {\sf L-}specified unit disk graphs were 
 presented in our paper \cite{MR+93}. 
-
 Our results extend the results above from \cite{Or82a,LW92}  
-in the following several ways:
+in the following ways:
 
-\begin{enumerate}
-\item 
-Previously, the complexities of periodically- and hierarchically-specified
+%%\begin{enumerate}
+%%\item 
+\noindent
+1.~ Previously, the complexities of periodically- and hierarchically-specified
 problems have been studied separately. Our results show that there is a
  close correspondence between Orlin's {\sf PSPACE-}hardness results for {\sf 
 1-PN-}specified problems and Langauer and Wagner's {\sf PSPACE-}hardness 
 results for {\sf L-}specifies problems.
 
-\item 
+\smallskip
+\noindent
+2.~
 The only previous work on the complexities of the problems 
 $\alpha$-{\sf SAT(S)} is that of Orlin \cite{Or82a} on the 
 {\sf PSPACE-}hardness of the problem {\sf 1-PN-3SAT}. (Several references
 to the results in this paper occur in our paper \cite{MR+93}.)
 
-\item 
+\smallskip
+\noindent
+3.~
 No {\sf PSPACE-}hardness results, for succinctly presented 
 planar problems, have been presented previously. No {\sf PSPACE-}hardness 
 results of any kind have been presented previously, for problems specified
 succinctly by either {\sf 1-FPN-} or {\sf 1-FPN(BC)-}specifications.
 
-\item 
+\smallskip
+\noindent
+4.~
 Our {\sf PSPACE-}hardness results for {\sf L-}specified
 problems imply the {\sf PSPACE-}hardness of the problems 
 {\sf L-MCVP} and {\sf L-AGAP} for $O(\log {\cal N})$ 
 bandwidth-bounded instances.
 
-\item  
+\smallskip
+\noindent
+5.~
 Several of our  reductions  used to prove {\sf PSPACE-}hardness
 are more  efficient in both   time  and space than  the  corresponding
 reductions in \cite{Or82a,LW92}. For example,   our proof of the  {\sf
@@ -162,12 +169,14 @@ machines. That of Orlin only  implies that the problem {\sf 1-PN-3SAT}
 requires   $2^{\Omega(\frac{\sqrt{n}}{\log n})}$ time on deterministic
 Turing machines.
 
-\item
+\smallskip
+\noindent
+6.~
 Our proofs show that it is possible to use knowledge 
 about {\em local reductions} from generalized {\sf CNF} satisfiability problems
 in the standard case to predict the complexity of problems, when instances
 are succinctly specified. 
 
-We discuss points 5 and 6 in greater detail in Section 8.
-
-\end{enumerate}
+%% Commented out as the discussion is not in Section 8.
+%% We discuss points 5 and 6 in greater detail in Section 8.
+%\end{enumerate}
