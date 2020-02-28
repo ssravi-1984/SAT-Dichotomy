@@ -14,11 +14,11 @@ equivalent to some system of linear equations over the two-element field $Z_2$.
 
 \subsection{Basic technique}
 We use a variation of the {\it Bottom Up}
-method for processing hierarchicall specified graphs discussed 
+method for processing hierarchically  specified graphs discussed 
 in \cite{LW87a,Le88,Le89,Wi90}
 for designing efficient algorithms for hierarchically specified  graphs. 
 Given a {\sf L}-specification $G = (G_1, \ldots, G_n)$ of  a graph $E(G)$,
-the bottom up method processes the non-terminal $G_i$ in the $ith$ iteration
+the bottom up method processes the non-terminal $G_i$ in the $i^{\mathrm{th}}$ iteration
 and aims at finding a small graph $G_i^{b}$ called the 
 {\it burnt graph} which can replace $E(\Gamma_i)$ 
 (recall  that $ \Gamma_i = (G_1, \ldots, G_i)$) 
@@ -26,10 +26,10 @@ in such a way that $E(\Gamma_i)$ and $G_i^{b}$ behave
 identically with respect to the problem
 under consideration.
 The bottom up method should produce such burnt graphs efficiently.
-In this paper, we will consider polynomial time alorithms for solving
+In this paper, we will consider polynomial time algorithms for solving
 various satisfiability problems specified using {\sf L}- or 
 {\sf 1-FPN}-specifications. As in the case of {\sf L}-specified graphs, 
-our algorithms process the speification in a bottom up fashion. Specifically,
+our algorithms process the specification in a bottom up fashion. Specifically,
 given a {\sf L}-specification $F = (F_1, \ldots, F_n)$ of a {\sf CNF}
 formula, the algorithm processes nonterminal $F_i$ in iteration $i$. At the end
 of the iteration, the algorithm produces a {\em burnt formula} which will
@@ -404,7 +404,7 @@ Replace each of the $F_{i_j}$ by the smaller set of equations $F^b_{i_j}$
 that has been already computed.
 
 \noindent
-{\bf Remark:} Observe that $F_1$ does not calll any non-teminal. 
+{\bf Remark:} Observe that $F_1$ does not call any non-terminal. 
 The sizes of $F_{i_j}$, $ 1 \leq j \leq k$ is $O(n_{i_j}^2)$, since
 there can be only $O(n^2)$ distinct {\sf 2CNF}  that can be formed
 from a set of $n$ variables. 
@@ -424,7 +424,7 @@ using  Algorithm \ref{dp:alg} to
 remove one literal and two literal clauses to obtain $F^b_i$.
 
 \noindent
-{\bf Renmark:} The variables of $F^b_i$ are the input variables of $F_i$
+{\bf Remark:} The variables of $F^b_i$ are the input variables of $F_i$
 and the size of $F^b_i$ is bounded by $O(n_i^2)$, where $n_i$ represent
 the temporary variables in the specification of $F_i$.
 
@@ -506,8 +506,8 @@ We now consider the problems $\alpha$-{\sf 3SAT1WN}, $\alpha$-{\sf 3SAT1WP} and
 those $\alpha$-{\sf 3SAT(S)}, for which 
 every relation in {\sf S} is 1-weakly positive or
 every relation in {\sf S} is 1-weakly negative. We first prove a technical
-lemma about representing every 1-weakly postive or 1-weakly negative relation
-as a 1-weakly postive or a 1-weakly negative formula respectively.
+lemma about representing every 1-weakly positive or 1-weakly negative relation
+as a 1-weakly positive or a 1-weakly negative formula respectively.
 
 \begin{lemma}\label{le:satwnto3wn}
 Every 1-weakly positive relation can be expressed as an existentially
@@ -525,7 +525,7 @@ We consider the case of a 1-weakly positive relation. This relation can be
 expressed as a {\sf CNF} formula in which each clause has at most one negated
 literal. Moreover, any such clause with a negated literal has no more than 
 1 unnegated literal.
-Observe that by preceeding discussion it is clear that 
+Observe that by preceding discussion it is clear that 
 each clause with more than 3 literals only has unnegated
 literals. For each such clause (with at least 3 literals),
 $c=(v_1 \vee v_2 \vee \ldots \vee v_k)$, 
@@ -574,7 +574,7 @@ that has been already computed.
 This is because the total number of distinct {\sf 3CNF} clauses that can be
 constructed from a set of $n$ variables is $O(n^3)$.
 Also note that, formula resulting by substituting each non-terminal with 
-its correpsonding burnt formula is a 1-weakly positive {\sf CNF} formula 
+its corresponding burnt formula is a 1-weakly positive {\sf CNF} formula 
 whose size is polynomial in the original representation of $F_i$.
 
 \item 
@@ -738,7 +738,7 @@ Pick a single literal clause $\overline{x_i(r)}$, $1 \leq i \leq n$.
 
 \noindent
 {\bf Remark:} Existence of such a clause follows from 
-(i) the definition of 3CNF weakly postive formula, and 
+(i) the definition of 3CNF weakly positive formula, and 
 (ii) Conditions for executing Step 2(b) are not satisfied.
 
 
@@ -837,7 +837,7 @@ $F^{\infty}(k)$ is satisfiable. We prove the basis case. The induction step
 follows a similar argument and is left to the reader.
 Consider   the first iteration. 
 We consider the possible cases depending on the Steps 
-2(a), 2(b) or 2(c) exceuted by the algorithm.
+2(a), 2(b) or 2(c) executed by the algorithm.
 
 \begin{enumerate}
 
@@ -949,7 +949,7 @@ only $F^m$ is satisfiable. We then show that $F$ is satisfiable if and
 only if $\forall i$ $F^m(i)$ is satisfiable.
 
 Consider the first loop of the algorithm. Clearly if there is a variable which
-occurs as a single literal postive as well as negative clause, then the
+occurs as a single literal positive as well as negative clause, then the
 formula $F^m(1)$ as well as the problem $F'$ is unsatisfiable.
 
 Now for induction step assume that after $i$ iteration, we have a formula
@@ -1242,7 +1242,7 @@ The problems 1-FPN-3SATWN and  1-FPN-3SATWP are  in P.
 \end{theorem}
 
 
-Before, we discuss the proof we point out the intuitive differrence between the
+Before, we discuss the proof we point out the intuitive difference between the
 two algorithms. In the
 two way infinite periodic case, when we found a clause of type 
 $\overline{x_i(t+1)}$
@@ -1286,7 +1286,7 @@ only $F^m$ is satisfiable. We then show that $F$ is satisfiable if and
 only if $\forall i$ $F^m(i)$ is satisfiable.
 
 Consider the first loop of the algorithm. Clearly if there is a variable which
-occurs as a single literal postive as well as negative clause, then the
+occurs as a single literal positive as well as negative clause, then the
 formula $F^m(1)$ as well as the problem $F$ is unsatisfiable.
 
 Now for induction step assume that after $i$ iteration, we have a formula
@@ -1370,7 +1370,7 @@ $\overline{x_i}$ delete it from the clause.
 
 
 
-The intuitive reson for this contrast is to do with the semantics of 
+The intuitive reason for this contrast is to do with the semantics of 
 {\em implication}. 
 A chain of implications of the form $A_1 \rightarrow A_2 \ldots A_m$ 
 holds when $A_1 = 0$ and $ A_i = \{0,1\}$, $ 1 \leq i \leq m$.  
