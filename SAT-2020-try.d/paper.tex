@@ -23,6 +23,8 @@
 \usepackage{multicol}        % used for the two-column index
 \usepackage[bottom]{footmisc}% places footnotes at page bottom
 
+\usepackage{breakcites}      %% To prevent line overflows due to many refs.
+
 
 
 \newcommand{\partg}{\mbox{$\Pi_{G}$}}
@@ -261,13 +263,13 @@ We study the complexity of various combinatorial and satisfiability problems
 when instances are specified using one of the following succinct 
 specifications:
 (1) the 1-dimensional finite periodic narrow specifications 
-({\sf 1-FPN}-specifications)  of  
+(denoted by {\sf 1-FPN}-specifications)  of  
  Ford  et al. and Wanke \cite{FF58,Wa93};
 (2) the 1-dimensional finite periodic narrow specifications with explicit
 boundary conditions 
-({\sf 1-FPN(BC)}-specifications) of Gale \cite{Ga59}; 
+(denoted by {\sf 1-FPN(BC)}-specifications) of Gale \cite{Ga59}; 
 and  
-(3) the hierarchical specifications ({\sf L}-specifications)
+(3) the hierarchical specifications (denoted by {\sf L}-specifications)
 of Lengauer et al. \cite{LW87a}.
 First, we prove that there is a polynomial time algorithm that,
 given a {\sf 1-FPN}- or {\sf 1-FPN(BC)}-specification of a graph 
