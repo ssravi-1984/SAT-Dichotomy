@@ -12,7 +12,10 @@ Also recall that,
 a logical relation $R$ is {\bf affine} if $R(x_1,x_2,\ldots)$ is logically 
 equivalent to some system of linear equations over the two-element field $Z_2$.
 
-\subsection{Basic technique}
+\smallskip
+
+\noindent
+\textbf{Basic technique:}~
 We use a variation of the {\it Bottom Up}
 method for processing hierarchically  specified graphs discussed 
 in \cite{LW87a,Le88,Le89,Wi90}
@@ -35,21 +38,19 @@ formula, the algorithm processes nonterminal $F_i$ in iteration $i$. At the end
 of the iteration, the algorithm produces a {\em burnt formula} which will
 be used in place of the formula $E(F_i)$ in all the subsequent calls to $F_i$.
 
+\smallskip
 
-
-
-
-\subsection{Affine relations}
-We consider the case when every relation in {\sf S} are affine. 
+\noindent
+\textbf{Affine relations:}~
+We consider the case when every relation in {\sf S} is affine. 
 Algorithm~\ref{laffinesat:alg} gives the method for solving this problem in 
 polynomial time.
-
 
 \smallspacing
 
 {\small
 \begin{figure}[tbp]
-\rule{10cm}{0.01in}
+\rule{\textwidth}{0.01in}
 
 \noindent
 {\bf Algorithm ALG-AFFINESAT} 
@@ -71,7 +72,6 @@ Repeat the following steps for $1 \leq i \leq n$.
 \item
 Replace each explicit clause in $F_i$ by an equivalent equation over 
 {\bf Z}$_2$.
-
 
 \item
 Let $F_{i_1}, \ldots, F_{i_{r_i}}$ denote the non-terminals called in $F_i$.
@@ -113,14 +113,14 @@ Algorithm~\ref{laffinesat:alg}: Details of the algorithm to solve {\sf L-SAT(S)
 when every relation in {\sf S} is affine.}
 \end{center}
 \vspace*{-.2in}
-\rule{10cm}{0.01in}
+\rule{\textwidth}{0.01in}
 \end{figure}
 }
 
 \newspacing
 
 
-\subsubsection{Proof of correctness and running time}
+%%\subsubsection{Proof of correctness and running time}
 
 \begin{theorem}\label{th:haffineeasy}
 Given an instance $F = (F_1, \ldots, F_n)$ of the problem L-SAT(S), where
@@ -147,19 +147,24 @@ In the $i^{th}$ iteration, Step 1(c) takes $O(n_i^3)$ time.
 In the $i^{th}$ iteration, Step 1(d) takes $O(n_i^3)$ time.
 Hence the $i^{th}$ iteration takes $O(n_i^3)$ time. Hence the algorithm takes
 \[ \sum_{i=1}^n n_i^3 = O(N^3) \]
-Hence the algorithm runs in $O(N^3)$ time.\QED
+Hence the algorithm runs in $O(N^3)$ time. \hfill\QED
 
 
+\smallskip
 
-
-\subsection{Solvability of $\alpha$-2SAT,
-$\alpha$-{\sf 3SAT1WN} and $\alpha$-{\sf 3SAT1WP}}
-
-We discuss the polynomial time solvability of the problems 
+\noindent
+\textbf{Solvability of $\alpha$-2SAT,
+$\alpha$-{\sf 3SAT1WN} and $\alpha$-{\sf 3SAT1WP}:}~
+We also establish the polynomial time solvability of the problems 
 $\alpha$-{\sf 2SAT},$\alpha$-{\sf 3SAT1WN} and $\alpha$-{\sf 3SAT1WP} 
 and $\alpha$-{\sf SAT(S)} 
 when every relation in {\sf S} is bijunctive or weakly positive or 
 weakly negative.
+For space reasons, these results are discussed in Section~\ref{sec:appB}
+of the supplemental material.
+
+\iffalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Our algorithms are based on the work of Davis and Putnam \cite{DP},
 who gave a polynomial time algorithm to solve the problem {\sf 2SAT}.
 
@@ -171,7 +176,7 @@ are described  in the procedure \ref{dp:alg}.
 \smallspacing
 {\small
 \begin{figure}[tbp]
-\rule{10cm}{0.01in}
+\rule{\textwidth}{0.01in}
 
 \noindent
 {\bf Procedure Clause-Elimination} 
@@ -296,7 +301,7 @@ variables from a {\sf 3CNF} formula in which the conditions of Lemma
 \ref{le:putback} hold.
 \end{center}
 \vspace*{-.2in}
-\rule{10cm}{0.01in}
+\rule{\textwidth}{0.01in}
 \end{figure}
 }
 
@@ -378,7 +383,7 @@ The procedure is described in Algorithm~\ref{l2sat:alg}.
 \smallspacing
 {\small
 \begin{figure}[tbp]
-\rule{10cm}{0.01in}
+\rule{\textwidth}{0.01in}
 
 \noindent
 {\bf Algorithm ALG-L2SAT} 
@@ -443,7 +448,7 @@ Output {\bf Yes} if and only if the formula $G_n$ is satisfiable.
 Algorithm~\ref{l2sat:alg}: Details of the algorithm to solve {\sf L-2SAT}.
 \end{center}
 \vspace*{-.2in}
-\rule{10cm}{0.01in}
+\rule{\textwidth}{0.01in}
 \end{figure}
 }
 \newspacing
@@ -548,7 +553,7 @@ from a 1-weakly negative relation. This completes the proof of the lemma.\QED
 \smallspacing
 {\small
 \begin{figure}[tbp]
-\rule{16.4cm}{0.01in}
+\rule{\textwidth}{0.01in}
 
 \noindent
 {\bf Algorithm ALG-L3SAT1WP} 
@@ -610,7 +615,7 @@ Algorithm~\ref{l3sat1wp:alg}: Details of the algorithm to solve
 {\sf L-3SAT1WP}.
 \end{center}
 \vspace*{-.2in}
-\rule{16.4cm}{0.01in}
+\rule{\textwidth}{0.01in}
 \end{figure}
 }
 
@@ -680,7 +685,7 @@ $x_i(t)$.
 \smallspacing
 {\small
 \begin{figure}[tbp]
-\rule{16.4cm}{0.01in}
+\rule{\textwidth}{0.01in}
 
 \noindent
 {\bf Algorithm ALG-1-PN-3SATWP} 
@@ -800,7 +805,7 @@ Algorithm~\ref{1pn3satwp:alg}:
 Details of the algorithm to solve an instance of  {\sf 1-PN-3SAT1WP}.
 \end{center}
 \vspace*{-.2in}
-\rule{16.4cm}{0.01in}
+\rule{\textwidth}{0.01in}
 \end{figure}
 }
 
@@ -1054,7 +1059,7 @@ Algorithm~\ref{1fpn3satwp:alg} outlines the method to solve the problem.
 
 {\footnotesize
 \begin{figure}[tbp]
-\rule{16.4cm}{0.01in}
+\rule{\textwidth}{0.01in}
 
 \noindent
 {\bf Algorithm ALG-1-FPN-3SATWP} 
@@ -1228,7 +1233,7 @@ Details of the algorithm to solve an instance of
 {\sf 1-FPN-3SAT1WP}.
 \end{center}
 \vspace*{-.2in}
-\rule{16.4cm}{0.01in}
+\rule{\textwidth}{0.01in}
 \end{figure}
 }
 
@@ -1389,3 +1394,5 @@ using {\sf 1-FPN} or
 problems {\sf 1-FPN(BC)-3SATWN} and 
 {\sf 1-FPN(BC)-3SATWP} are {\sf PSPACE}-hard the problems
 {\sf 1-FPN-3SATWN} and {\sf 1-FPN-3SATWP} are in {\sf P}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
