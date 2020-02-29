@@ -3,7 +3,7 @@
 \begin{theorem}\label{th:fpn-3sat}
 %%\begin{enumerate}
 (1) 1-FPN-3SAT is in NSPACE$(n)$.~
-(2) There is a $\theta(n)$ size 
+(2) There is a $\Theta(n)$ size and
 quasi linear time reduction from the membership problem
 for  non-deterministic linearly space bounded machine (LBA) 
 to the problem 1-FPN-3SAT. 
@@ -213,14 +213,14 @@ and therefore the  Turing machine $M$ accepts $x$.\QED
 (1) 
 The problem 1-FPN(BC)-3SAT is in NSPACE(n).
 There is a quasi-linear
-time linear size reduction from the membership problem for non-deterministic
+time and linear size reduction from the membership problem for non-deterministic
 LBA to 1-FPN(BC)-3SAT.
-Thus the  problem 1-FPN(BC)-3SAT is PSPACE-complete.~
+Thus, the  problem 1-FPN(BC)-3SAT is PSPACE-complete.~
 (2)
 The problem L-3SAT is in DSPACE(n).
 There is a square time
 square size reduction from the membership problem for non-deterministic
-LBA to L-3SAT. Thus the  problem L-3SAT is PSPACE-complete 
+LBA to L-3SAT. Thus, the  problem L-3SAT is PSPACE-complete 
 %\end{enumerate}
 \end{corollary}
 
@@ -273,11 +273,11 @@ theoretic assumptions)
 on the space required for solving the problem {\sf L-3SAT}. To see this, 
 observe that if the transformation from {\sf 1-FPN}-specifications to
 {\sf L}-specifications yielded instances smaller than $O(n^2)$ size,  or
-if {\sf L-3SAT} could be solved in time less than {\sf DSPACE(n)}, 
-then it would immediately imply that {\sf NSPACE(n)} can be simulated  in 
+if {\sf L-3SAT} could be solved in time less than {\sf DSPACE}$(n)$, 
+then it would immediately imply that {\sf NSPACE}$(n)$ can be simulated  in 
 deterministic space less than $O(n^2)$. 
 This would improve Savitch's \cite{Sa70} 
-result concerning simulating  non-deterministic space bounded 
+result concerning the simulation of non-deterministic space bounded 
 Turning machines by deterministic space bounded Turning machines.
 
 
@@ -286,13 +286,13 @@ The problem 1-PN-3SAT is in NSPACE$(n)$.
 There is a quasi-linear
 time linear size reduction from the membership problem for non-deterministic
 LBA to 1-FPN(BC)-3SAT.
-Thus the  problem 1-PN-3SAT is PSPACE-complete. 
+Thus, the  problem 1-PN-3SAT is PSPACE-complete. 
 \end{corollary}
 
 \noindent
 {\bf Proof:}~  
 Orlin \cite{Or82a} and Papadimitriou \cite{Pa94} have shown that
-the problem {\sf 1-PN-3SAT} is in {\sf NSPACE(n)}. 
+the problem {\sf 1-PN-3SAT} is in {\sf NSPACE}$(n)$. 
 We only prove that the problem is {\sf PSPACE}-hard by a linear size
 reduction from the membership problem for a non-deterministic {\sf LBA}.
 (In contrast, The reduction in \cite{Or82a} is a square size reduction.)  
@@ -304,7 +304,7 @@ Hence starting from  an instance of {\sf 1-FPN-3SAT}
 $(F(U,C(i, i+1)),m)$ where $n = |U|$   and $m = 2^{2n}$ we  see that 
 $F^m$ is satisfiable if and only if $F^{\infty}$ is satisfiable.
 This completes the proof that the problem {\sf 1-PN-3SAT} is 
-{\sf PSPACE}-complete.\QED
+{\sf PSPACE}-complete. \hfill\QED
 
 \smallskip
 
@@ -314,6 +314,8 @@ The basic technique underlying the proof of {\sf PSPACE}-hardness of
 {\sf 1-FPN-3SAT}
 is the ability to use a counter to implicitly make sure that there is a
 sequence of formulas which check if the TM starts right. 
+
+\smallskip
 
 \noindent
 {\bf Remark 2:} 
@@ -325,6 +327,8 @@ repetitive structure that can be represented
 by {\sf 1-PN} as well as the {\sf L}-specification 
 makes the problems {\sf PSPACE}-hard.  
 
+\smallskip
+
 As our next corollary shows, {\sf 1-FPN-3SAT} is {\sf PSPACE}-hard 
 even when restricted to formulas with bandwidth $O(\log {\cal N})$. 
 Recall that ${\cal N}$ denotes the size of the encoding of the expanded formula
@@ -332,7 +336,7 @@ using standard encodings.
 
 \begin{corollary}
 There is a quasi-linear
-time linear size reduction from the membership problem for non-deterministic
+time and linear size reduction from the membership problem for non-deterministic
 LBA to 1-FPN-3SAT even when restricted to formulas with bandwidth
 $O(\log {\cal N})$.
 Thus the  problem 1-FPN-3SAT is PSPACE-complete even when restricted
@@ -346,8 +350,9 @@ scheme yields a $O(\log {\cal N})$ bandwidth layout.
 Let $C(i, i+1)$ have $p$ clauses.
 Then number the clauses at time $t$ using numbers from $pt$ to $(p+1)t$.
 The numbering of clauses at a given time $t$ can be carried out in
-any arbitrary order.\QED
+any arbitrary order. \hfill\QED
 
+\smallskip
 
 \noindent
 {\bf Remark 3:} The above corollary in conjunction with local replacement
@@ -359,15 +364,15 @@ strongly 1-level-restricted {\sf L}-specifications (since the
 {\sf L}-specification obtained by the translation theorem represents an
 isomorphic graph (formula)). 
 
-
+\smallskip
 
 Next, we discuss the {\sf PSPACE}-hardness of the problems 
 {\sf 1-FPN(BC)-3SATWP}, {\sf 1-FPN(BC)-3SATWP} and 
 {\sf 1-FPN(BC)-3SAT(S)}, such that every relation in {\sf S} is 
 weakly positive or every relation in {\sf S} is weakly negative.
-Recall that, a logical relation $R$ is {\bf weakly negative} if
+Recall that a logical relation $R$ is {\bf weakly negative} if
 $R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
-most one unnegated variable in each conjunct. Also recall that,
+most one unnegated variable in each conjunct. Also recall that
 {\sf 1-FPN-3SATWP} (problem 3SATWP specified using 
 {\sf 1-FPN}-specifications)  is the problem of determining if a 3CNF formula
 $F^{M}(U^{M}, C^{M})$ which contains at most one negated 
@@ -379,10 +384,8 @@ literal per clause and is specified by $\Gamma= (U,C(i),M)$ is satisfiable.
 There is a quasi-linear
 time linear size reduction from the membership problem for deterministic
 LBA to problems 1-FPN(BC)-3SATWN and  1-FPN(BC)-3SATWP.
-Thus the problems 1-FPN(BC)-3SATWN and  1-FPN(BC)-3SATWP PSPACE-complete
+Thus, the problems 1-FPN(BC)-3SATWN and  1-FPN(BC)-3SATWP PSPACE-complete.
 \end{theorem}
-
-
 
 \noindent
 {\bf Proof:} See Section~\ref{sec:appA} of the supplementary material.
@@ -477,16 +480,17 @@ first part.\QED
 \smallskip
 
 \noindent
-{\bf Remark 5:}
+{\bf Remark 4:}
 The above result serves as a useful starting point for proving 
 {\sf PSPACE}-hardness of several {\sf L}-specified 
 and {\sf 1-FPN(BC)}-specified 
 problems whose corresponding non-succinct versions are $\log$-complete
 for {\sf P}. For example, we get a direct proof of the {\sf PSPACE}-hardness
-of {\sf L-MCVP} and {\sf 1-FPN(BC)-MCVP}; 
+of {\sf L-MCVP} and {\sf 1-FPN(BC)-MCVP}, that is, 
 the circuit value problem for {\sf L}-specified and {\sf 1-FPN(BC)}-specified
 circuits.
 
+\smallskip
 
 Although we have a linear size reduction from the membership problem for
 a deterministic {\sf LBA}, we do not know how to solve the problem in 
