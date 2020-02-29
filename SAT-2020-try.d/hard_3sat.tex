@@ -85,10 +85,10 @@ we need to consider only $2^{Dn}$ different ID's for
 our reduction. (Here $D$ is an appropriately chosen constant.)  
 We can choose
 an encoding of states and symbols of $M_1$ into words in $\{0,1\}^*$ so
-that every ID of $M_1$ will consist of $c_1 \cdot n$ boolean variables where
+that every ID of $M_1$ will consist of $c_1 \cdot n$ Boolean variables where
 $n=|x|$ and $c_1$ is a constant independent of $x$. Let $ID(t)$ denote
 the {\sf ID} of the Turing machine at time $t$. We also have 
-a set of $Dn+1$ boolean variables encoding a counter $\gamma(t)$. The counter
+a set of $Dn+1$ Boolean variables encoding a counter $\gamma(t)$. The counter
 values range from $0$ to $2^{Dn}$. 
 $F(x, t,t+1) = f_1(x,t,t+1) \wedge f_2(x,t,t+1) \wedge f_3(x, t, t+1)$. 
 We discuss each of the three formulas $f_i(t,t+1)$, $1 \leq i \leq 3$.
@@ -103,10 +103,10 @@ It is easy to see that the counter
 can be simulated by a {\sf CNF} formula, in which each clause
 has variables  that are no more than one time unit apart.
 We briefly discuss how to simulate a counter here.  Let $q = Dn$
-We use boolean
+We use Boolean
 variables $d_q, d_{q-1}, \ldots d_0$ to simulate a counter.
 The variable $d_0$ encodes the lowest order bit and the bit $d_q$ denotes the
-highest order bit. We also use  boolean
+highest order bit. We also use  Boolean
 variables $c_q, c_{q-1}, \ldots c_0$ to keep track of the carry bits 
 required to do the addition. Let $d_i(t)$ denote
 the copy of the variable $d_i$ at time unit $t$.
@@ -140,11 +140,11 @@ as a conjunction of the following clauses
 \[\left( c_0(t+1) = d_0(t) \right) \wedge  \bigwedge_{i =1}^{ i = q}  
 \left(c_{i+1}(t+1) = d_i(t) \wedge c_i(t+1) \right) \]
 
-Observe that we have $O(n)$ boolean variables encoding the counter.
+Observe that we have $O(n)$ Boolean variables encoding the counter.
 Therefore, the size of each of the formulas $g_1, h_1$ and $h_2$ is linear
 in the size of the input.
 Furthermore each of the formulas $g_1$, $h_1$ and $h_2$ contain a linear
-(in the number of boolean variables used to simulate the counter)  number
+(in the number of Boolean variables used to simulate the counter)  number
 of clauses.  As a result, the implications 
 $ (g_1 \Rightarrow h_1)$ and $(\overline{g_1} \Rightarrow h_2)$ can be written
 in equivalent {\sf 3CNF} form using additional temporary variables.
@@ -411,7 +411,7 @@ By negating all literals, we can
 obtain a weakly positive formula proving the {\sf PSPACE}-hardness of 
 {\sf L-3SATWP}. Let $a \in \{ \# \} \cup T \cup  (S \times T)$, where 
 $T$ denotes the tape symbols and $S$ denotes the set of states. 
-Let $P^a_i(t)$ be a boolean variable which means that the contents
+Let $P^a_i(t)$ be a Boolean variable which means that the contents
 of $i^{th}$ tape cell at time $t$ is $a$. Observe that for a given value of $t$
 the number of variables $P^a_i(t)$ is $O(n)$. 
 The formula $g(x,0)$ is now represented as
