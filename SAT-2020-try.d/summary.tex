@@ -6,7 +6,7 @@ The rest of the paper is organized as follows.  In Subsections
 we summarize our  results and discuss their relationship with related 
 results in the literature. Section \ref{sec:def} gives both the 
 definitions and examples of the kinds of  succinct 
-specifications considered.
+specifications considered in this paper.
 In Section \ref{sec:translation}
 we  prove a translation theorem  relating the 
 {\sf 1-FPN-} and {\sf 1-FPN(BC)-}specifications 
@@ -20,10 +20,9 @@ we prove the {\sf PSPACE}-hardness of the problems
 In Section \ref{sec:poly} we discuss several kinds of  
 {\sf L-} and {\sf 1-FPN-}specified generalized {\sf CNF} 
  satisfiability problems that are solvable in 
-polynomial time. In Section \ref{sec:char} assuming 
-{\sf P}$\neq${\sf PSPACE}, we complete the 
-characterization of the polynomial time solvability
-of the problems $\alpha-${\sf SAT(S)}. 
+polynomial time. In Section \ref{sec:char} 
+we complete the characterization of the polynomial time solvability
+of the problems $\alpha-${\sf SAT(S)}, assuming that {\sf P}$\neq${\sf PSPACE}. 
 %%%%
 %%%% The current version does not include proofs of the results mentioned below.
 %%%%
@@ -39,39 +38,45 @@ of the problems $\alpha-${\sf SAT(S)}.
 %% in \cite{LW92}. 
 
  
-\vspace*{-0.15in}
+%\vspace*{-0.15in}
 \subsection{Translation Theorem}\label{sec:trans}
+
 In Theorem 4.1(called the {\bf Translation Theorem}),
 we prove that a {\sf 1-FPN-} or {\sf 1-FPN(BC)-} specification of a graph
 or  formula can be translated in polynomial time into an
 {\sf L}-specification of an isomorphic  graph or formula, respectively.
-This theorem implies, for many problems
+This theorem implies that for many problems
 $\Pi$ including all problems considered here,  the problems 
 {\sf 1-FPN-} or {\sf 1-FPN(BC)-}$\Pi$ are 
 polynomial time reducible to  the problem {\sf L-}$\Pi$.
 
-\vspace*{-0.15in}
+%\vspace*{-0.15in}
 \subsection{Complexity of Boolean Constraint Satisfaction Problems}\label{sec:sat}
-In Sections \ref{sec:hard_3sat} through \ref{sec:char}, we study the complexities 
-of the 
- generalized {\sf CNF}  satisfiability problems {\sf SAT(S)} of \cite{Sc78},
-when instances are specified succinctly.
-Assuming {\sf P} $\neq$ {\sf PSPACE}, we characterize completely 
-the polynomial time solvability of the problems  $\alpha$-{\sf SAT(S)} as follows. We give sufficient conditions on a finite set {\sf S} of finite-arity 
-Boolean relations for the problem  $\alpha$-{\sf SAT(S)} to be 
-{\sf PSPACE-}complete. We also show, for all such {\sf S} {\em not}
- satisfying 
-these conditions, that the problem $\alpha$-{\sf SAT(S)} is polynomial 
-time solvable. In Section 6 as steps in obtaining this characterization,
-we prove that the problems {\sf 1-FPN-3SAT}, {\sf 1-FPN(BC)-3SATWP}, and 
-{\sf 1-FPN(BC)-3SATWN} are {\sf PSPACE-}hard. By the Translation
+
+In Sections \ref{sec:hard_3sat} through \ref{sec:char}, we study
+the complexities of the generalized {\sf CNF}  satisfiability
+problems {\sf SAT(S)} of \cite{Sc78}, when instances are specified
+succinctly.  (A definition of {\sf SAT(S)} is given in
+Section~\ref{sec:def}.) Assuming {\sf P} $\neq$ {\sf PSPACE}, we
+characterize completely the polynomial time solvability of the
+problems  $\alpha$-{\sf SAT(S)} as follows. We give sufficient
+conditions on a finite set {\sf S} of finite-arity Boolean relations
+for the problem  $\alpha$-{\sf SAT(S)} to be {\sf PSPACE-}complete.
+We also show, for all such {\sf S} {\em not} satisfying these
+conditions, that the problem $\alpha$-{\sf SAT(S)} is polynomial
+time solvable. 
+As a step in obtaining this characterization,
+we prove in Section 6 
+that the problems {\sf 1-FPN-3SAT}, {\sf 1-FPN(BC)-3SATWP},
+and {\sf 1-FPN(BC)-3SATWN} are {\sf PSPACE-}hard. By the Translation
 Theorem, this implies that the problems {\sf L-3SAT}, {\sf L-3SATWP},
 and {\sf L-3SATWN} are also {\sf PSPACE-}hard.
 
-\vspace*{-0.15in}
+%\vspace*{-0.15in}
 \subsection{A Step Towards a Complexity Theory for Succinctly Specified 
 Problems}
-In Section 8, we outline how a polynomial time reduction involving
+In Section~\ref{sec:conclusion}, we briefly outline how a 
+polynomial time reduction involving
 local replacement \cite{GJ79} from the problem 
 {\sf 3SAT, NAE 3SAT, Pl-3SAT,} etc., to a problem $\Pi$ can be extended
 to obtain a polynomial time reduction from the corresponding problem 
@@ -96,7 +101,7 @@ bandwidth-bounded planar graphs.
 
 
 
-\vspace*{-0.15in}
+%\vspace*{-0.15in}
 \subsection{Comparison with Related Work}\label{sec:comp}
 Orlin \cite{Or82a} proved that the problem {\sf 1-PN-3SAT} is 
 {\sf PSPACE-}complete. He used this and known reductions from {\sf 3SAT} 
@@ -106,7 +111,7 @@ to prove the {\sf PSPACE-}hardness of the problems
 {\sf 1-PN-3DM}.
 \end{quote}
 Wanke \cite{Wa93} has also proved {\sf PSPACE-}hardness results for periodically-specified problems; but his results do not hold for 1-dimensional 
-periodically-specified problems. Lengauer and Wagner \cite{LW92} have proved
+periodically-specified problems. Lengauer and Wagner \cite{LW92} proved
 the {\sf PSPACE}-hardness of the problems 
 \begin{quote}
 {\sf L-3COLORING, L-INDEPENDENT SET(L-IS), L-HAMILTON CIRCUIT(L-HC), L-MONOTONE CIRCUIT  VALUE PROBLEM(L-MCVP), L-NETWORK FLOW(L-NF),} and {\sf L-ALTERNATING GRAPH ACCESSIBILITY PROBLEM(LAGAP).}
@@ -125,7 +130,7 @@ in the following ways:
 problems have been studied separately. Our results show that there is a
  close correspondence between Orlin's {\sf PSPACE-}hardness results for {\sf 
 1-PN-}specified problems and Lengauer and Wagner's {\sf PSPACE-}hardness 
-results for {\sf L-}specifies problems.
+results for {\sf L-}specified problems.
 
 \smallskip
 \noindent
@@ -141,7 +146,7 @@ to the results in this paper occur in our paper \cite{MR+93}.)
 No {\sf PSPACE-}hardness results, for succinctly presented 
 planar problems, have been presented previously. No {\sf PSPACE-}hardness 
 results of any kind have been presented previously, for problems specified
-succinctly by either {\sf 1-FPN-} or {\sf 1-FPN(BC)-}specifications.
+by either {\sf 1-FPN-} or {\sf 1-FPN(BC)-}specifications.
 
 \smallskip
 \noindent
@@ -159,14 +164,14 @@ are more  efficient in both   time  and space than  the  corresponding
 reductions in \cite{Or82a,LW92}. For example,   our proof of the  {\sf
 PSPACE-}hardness  of  {\sf  1-PN-3SAT}  is   by an  $O(n\log n)$  time
 reduction of the acceptance problem  for a nondeterministic {\sf LBA}.
-That of Orlin  \cite{Or82a} is  by  an $\Omega(n^2 \log n)$  time  and
+The proof by Orlin \cite{Or82a} uses  an $\Omega(n^2 \log n)$  time  and
 space reduction  of the same  problem. Under the  plausible assumption
 that  there exist   {\sf  LBA}s   whose acceptance  problems   require
 $2^{\Omega(n)}$ time  on deterministic Turing machines,  our reduction
 implies    that     the    problem     {\sf    1-PN-3SAT}     requires
-$2^{\Omega(\frac{n}{\log    n})}$   time  on   deterministic    Turing
-machines. That of Orlin only  implies that the problem {\sf 1-PN-3SAT}
-requires   $2^{\Omega(\frac{\sqrt{n}}{\log n})}$ time on deterministic
+$2^{\Omega(n/\log{n})}$   time  on   deterministic    Turing
+machines. Orlin's reduction only  implies that the problem {\sf 1-PN-3SAT}
+requires   $2^{\Omega(\sqrt{n}/{\log {n}})}$ time on deterministic
 Turing machines.
 
 \smallskip
@@ -174,7 +179,7 @@ Turing machines.
 6.~
 Our proofs show that it is possible to use knowledge 
 about {\em local reductions} from generalized {\sf CNF} satisfiability problems
-in the standard case to predict the complexity of problems, when instances
+in the standard case to predict the complexity of problems when instances
 are succinctly specified. 
 
 %% Commented out as the discussion is not in Section 8.
