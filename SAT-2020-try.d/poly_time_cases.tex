@@ -8,7 +8,7 @@ are also polynomial time solvable.
 Recall that a logical relation $R$ is {\bf bijunctive} if
 $R(x_1,x_2,\ldots)$ is logically equivalent to some CNF formula having at
 most two literals in each conjunct.
-Also recall that, 
+Also recall that 
 a logical relation $R$ is {\bf affine} if $R(x_1,x_2,\ldots)$ is logically 
 equivalent to some system of linear equations over the two-element field $Z_2$.
 
@@ -20,7 +20,7 @@ We use a variation of the {\it Bottom Up}
 method for processing hierarchically  specified graphs discussed 
 in \cite{LW87a,Le88,Le89,Wi90}
 for designing efficient algorithms for hierarchically specified  graphs. 
-Given a {\sf L}-specification $G = (G_1, \ldots, G_n)$ of  a graph $E(G)$,
+Given an {\sf L}-specification $G = (G_1, \ldots, G_n)$ of  a graph $E(G)$,
 the bottom up method processes the non-terminal $G_i$ in the $i^{\mathrm{th}}$ iteration
 and aims at finding a small graph $G_i^{b}$ called the 
 {\it burnt graph} which can replace $E(\Gamma_i)$ 
@@ -33,7 +33,7 @@ In this paper, we will consider polynomial time algorithms for solving
 various satisfiability problems specified using {\sf L}- or 
 {\sf 1-FPN}-specifications. As in the case of {\sf L}-specified graphs, 
 our algorithms process the specification in a bottom up fashion. Specifically,
-given a {\sf L}-specification $F = (F_1, \ldots, F_n)$ of a {\sf CNF}
+given an {\sf L}-specification $F = (F_1, \ldots, F_n)$ of a {\sf CNF}
 formula, the algorithm processes nonterminal $F_i$ in iteration $i$. At the end
 of the iteration, the algorithm produces a {\em burnt formula} which will
 be used in place of the formula $E(F_i)$ in all the subsequent calls to $F_i$.
@@ -45,6 +45,8 @@ be used in place of the formula $E(F_i)$ in all the subsequent calls to $F_i$.
 We consider the case when every relation in {\sf S} is affine. 
 Algorithm~\ref{laffinesat:alg} gives the method for solving this problem in 
 polynomial time.
+The correctness of the algorithm and its running time are addressed in
+the following theorem.
 
 \smallspacing
 
@@ -88,29 +90,27 @@ and $Z^i$ is the set of explicit variables of $G_i$.
 
 \item
 Using Gaussian elimination, eliminate all the variables which are not
-in $X^i$, to obtain a set of equations $F^b_i$ only using variables in $X^i$.\\
-{\bf Remark:}The number of independent equations obtained 
-is no more than $|X^i|$ and
+in $X^i$ to obtain a set of equations $F^b_i$ only using variables in $X^i$.\\
+{\bf Remark:} The number of independent equations obtained 
+is at most $|X^i|$ and
 each equation can have at most all the variables in $X^i$.
 Hence the size of $F^b_i$ is $O(n_i^2)$.
 
 \item
 Check if $F^b_i$ is satisfiable. If not then output {\bf unsatisfiable} and 
-Stop.
-
+\textbf{stop}.
 \end{enumerate}
 
 %Venky if you have a satisfying assignment say how you can construct a 
 % hierarchical specification of the assignment.
 
 \item
-F is satisfiable if $F_n^b$ is consistent.
-
+$F$ is satisfiable if $F_n^b$ is consistent.
 \end{enumerate}
 \refstepcounter{xalgcount}\label{laffinesat:alg}
 \begin{center}
-Algorithm~\ref{laffinesat:alg}: Details of the algorithm to solve {\sf L-SAT(S)
-when every relation in {\sf S} is affine.}
+Algorithm~\ref{laffinesat:alg}: Details of the algorithm to solve {\sf L-SAT(S)}
+when every relation in {\sf S} is affine.
 \end{center}
 \vspace*{-.2in}
 \rule{\textwidth}{0.01in}
@@ -134,29 +134,31 @@ satisfiable. Moreover, the running time of the algorithm is $O(N^3)$.
 The correctness of Algorithm \ref{laffinesat:alg} 
 follows in a straightforward fashion by induction on the number of 
 non-terminals in the specification.
+We now analyze its running time.
 
 In the $i^{th}$ iteration,
-Step 1(a) takes $O(n_i^2)$ time since the size of each 
+Step 1(a) uses $O(n_i^2)$ time since the size of each 
 $F_{i_j}$ is $O(p_{i_j}^2)$.
 The number of nonterminals in $G_i$ is $r_i$. Hence the time 
-required for Step 1(a) is
+used in Step 1(a) is
 \[ \sum_{j=1}^{r_i} F_{i_j} = 
-\sum_{j=1}^{r_i} O(p_{i_j}^2) = \sum_{j=1}^{r_i} n_i^2 = O(n_i^3)\]
-In the $i^{th}$ iteration, Step 1(b) takes less time than Step 1(a).
-In the $i^{th}$ iteration, Step 1(c) takes $O(n_i^3)$ time.
-In the $i^{th}$ iteration, Step 1(d) takes $O(n_i^3)$ time.
-Hence the $i^{th}$ iteration takes $O(n_i^3)$ time. Hence the algorithm takes
-\[ \sum_{i=1}^n n_i^3 = O(N^3) \]
-Hence the algorithm runs in $O(N^3)$ time. \hfill\QED
+\sum_{j=1}^{r_i} O(p_{i_j}^2) = \sum_{j=1}^{r_i} n_i^2 = O(n_i^3).\]
+In the $i^{th}$ iteration, Step 1(b) uses less time than Step 1(a).
+Also, in the $i^{th}$ iteration, Step 1(c) uses $O(n_i^3)$ time and
+Step 1(d) uses $O(n_i^3)$ time.
+Hence, the $i^{th}$ iteration uses $O(n_i^3)$ time. 
+Hence the total time used by the algorithm is given by
+\[ \sum_{i=1}^n n_i^3 = O(N^3). \]
+In other words, the algorithm runs in $O(N^3)$ time. \hfill\QED
 
 
 \smallskip
 
 \noindent
-\textbf{Solvability of $\alpha$-2SAT,
+\textbf{Solvability of $\alpha$-2SAT,~
 $\alpha$-{\sf 3SAT1WN} and $\alpha$-{\sf 3SAT1WP}:}~
 We also establish the polynomial time solvability of the problems 
-$\alpha$-{\sf 2SAT},$\alpha$-{\sf 3SAT1WN} and $\alpha$-{\sf 3SAT1WP} 
+$\alpha$-{\sf 2SAT}, $\alpha$-{\sf 3SAT1WN} and $\alpha$-{\sf 3SAT1WP} 
 and $\alpha$-{\sf SAT(S)} 
 when every relation in {\sf S} is bijunctive or weakly positive or 
 weakly negative.
