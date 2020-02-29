@@ -225,16 +225,15 @@ LBA to L-3SAT. Thus the  problem L-3SAT is PSPACE-complete
 \end{corollary}
 
 \noindent
-{\bf Proof:}  See Section~\ref{sec:appA} of the supplementay material. 
+{\bf Proof:}~ See Section~\ref{sec:appA} of the supplementary material.
 
 \iffalse
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The {\sf PSPACE}-hardness of {\sf 1-FPN-3SAT(BC)} follows 
 immediately from Theorem \ref{th:fpn-3sat}.
 By arguments similar to those
 presented in the proof of Theorem \ref{th:fpn-3sat}, 
 the problem {\sf 1-FPN(BC)-3SAT}  is seen to be in {\sf NSPACE(n)}.
-
 
 The {\sf PSPACE}-hardness of  the problem {\sf L-3SAT} follows
 from Theorem \ref{th:fpn-3sat} and the Translation theorem. Specifically,
@@ -264,7 +263,7 @@ allows us to do the backtracking in {\sf DSPACE(n)}.
 $F_1$ can be solved in {\sf DSPACE(n)}  since it is a {\sf CNF} formula.
 Hence by induction on the number of levels in the hierarchy, membership of
 the problem {\sf L-3SAT} in {\sf DSPACE(n)} follows.\QED
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fi
 
 \smallskip
@@ -291,10 +290,7 @@ Thus the  problem 1-PN-3SAT is PSPACE-complete.
 \end{corollary}
 
 \noindent
-{\bf Proof:}  See Section~\ref{sec:appA} of the supplementay material. 
-
-\iffalse
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\bf Proof:}~  
 Orlin \cite{Or82a} and Papadimitriou \cite{Pa94} have shown that
 the problem {\sf 1-PN-3SAT} is in {\sf NSPACE(n)}. 
 We only prove that the problem is {\sf PSPACE}-hard by a linear size
@@ -309,11 +305,8 @@ $(F(U,C(i, i+1)),m)$ where $n = |U|$   and $m = 2^{2n}$ we  see that
 $F^m$ is satisfiable if and only if $F^{\infty}$ is satisfiable.
 This completes the proof that the problem {\sf 1-PN-3SAT} is 
 {\sf PSPACE}-complete.\QED
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-\fi
 
 \smallskip
-
 
 \noindent
 {\bf Remark 1:}
@@ -321,8 +314,6 @@ The basic technique underlying the proof of {\sf PSPACE}-hardness of
 {\sf 1-FPN-3SAT}
 is the ability to use a counter to implicitly make sure that there is a
 sequence of formulas which check if the TM starts right. 
-
-
 
 \noindent
 {\bf Remark 2:} 
@@ -333,12 +324,6 @@ and in Orlin
 repetitive structure that can be represented  
 by {\sf 1-PN} as well as the {\sf L}-specification 
 makes the problems {\sf PSPACE}-hard.  
-
-
-
-
-
-
 
 As our next corollary shows, {\sf 1-FPN-3SAT} is {\sf PSPACE}-hard 
 even when restricted to formulas with bandwidth $O(\log {\cal N})$. 

@@ -2,13 +2,13 @@
 
 \appendix
 
-\vspace*{3in}
+\vspace*{2in}
 
 \begin{center}
 \fbox{\fbox{\Large{\textbf{Supplementary Material}}}}
 \end{center}
 
-\bigskip\bigskip
+\bigskip\bigskip\bigskip
 
 
 \noindent
@@ -288,6 +288,10 @@ $F_1$ can be solved in {\sf DSPACE(n)}  since it is a {\sf CNF} formula.
 Hence by induction on the number of levels in the hierarchy, membership of
 the problem {\sf L-3SAT} in {\sf DSPACE(n)} follows. \hfill\QED
 
+\iffalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Decided to keep this proof in the main part.
+%%%
 \subsection{Statement and Proof of Corollary~\ref{th:pn3sat}}
 
 \noindent
@@ -297,6 +301,8 @@ There is a quasi-linear
 time linear size reduction from the membership problem for non-deterministic
 LBA to 1-FPN(BC)-3SAT.
 Thus the  problem 1-PN-3SAT is PSPACE-complete. 
+
+\medskip
 
 \noindent
 {\bf Proof:}  
@@ -314,6 +320,8 @@ $(F(U,C(i, i+1)),m)$ where $n = |U|$   and $m = 2^{2n}$ we  see that
 $F^m$ is satisfiable if and only if $F^{\infty}$ is satisfiable.
 This completes the proof that the problem {\sf 1-PN-3SAT} is 
 {\sf PSPACE}-complete. \hfill\QED
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
 
 \subsection{Statement and Proof of Theorem~\ref{th:fpn3satwnhard}}
 
@@ -1658,3 +1666,307 @@ problems {\sf 1-FPN(BC)-3SATWN} and
 {\sf 1-FPN(BC)-3SATWP} are {\sf PSPACE}-hard the problems
 {\sf 1-FPN-3SATWN} and {\sf 1-FPN-3SATWP} are in {\sf P}.
 
+\section{Additional Material for Section~\ref{sec:char}}
+\label{sec:appC}
+
+\subsection{Statement and Proof of Theorem~\ref{th:hsatshard}}
+
+\noindent
+\textbf{Statement of Theorem~\ref{th:hsatshard}:}~
+\begin{enumerate}
+\item
+If Rep(S) is the set of all finite arity boolean relations, then\\
+(a) the problem 1-FPN-SAT$_c$(S) is PSPACE-complete.
+(b) The problems 1-FPN-SAT(S) and 1-PN-SAT(S) are  in P if each relation
+in S is 0-valid or each relation in $S$ is 1-valid, otherwise
+the problems 1-FPN-SAT(S) 1-PN-SAT(S) are  PSPACE-complete.
+\item
+Let S be a finite set of finite arity Boolean relations such that
+Rep(S) is the set of all weakly positive or Rep(S) is the set
+of all weakly negative relations. Then
+the problems 1-FPN(BC)-SAT(S) and 1-FPN(BC)-SAT$_c$(S) are PSPACE-complete
+\end{enumerate}
+
+\noindent
+{\bf Proof:} 
+
+\smallskip
+
+\noindent
+{\bf  Part 1:}
+First, we give a polynomial time reduction 
+from {\sf 1-FPN-3SAT} to {\sf 1-FPN-SAT$_c$(S)} as follows:
+Since {\sf Rep(S)} is the set of all finite arity Boolean relations,
+for each such $S$ and 3CNF clause $c$,
+there is an existentially quantified (but not necessarily constant-free)
+$S$-formula $f_c$ such that $c=[f_c]$.
+Again up to an easy renaming of variables, there are only fourteen such
+formulae.
+
+Let $F = (U, C(i, i+1), m)$ be an instance of {\sf 1-FPN-3SAT}. 
+Obtain a static  formula $F'$
+by replacing every clause $c \in C(i, i+1)$ with the 
+existentially quantified (but not necessarily constant-free)
+{\sf S}-formula $f_c$ such that $c=[f_c]$. For each of these clauses,
+let $f'_c$ be the {\sf S}-formula (again, possibly with
+of constants) resulting from $f_{c}$ by deleting
+all quantifiers after making sure that all quantified variables are
+distinct from each other and from all free variables.  Without loss of
+generality, we assume that, for all clauses $c$,
+all variables of $f'_c$, that are not variables
+of $f$, are local to $f'_c$.
+We have now obtained an instance $F'$ of {\sf 1-FPN-SAT$_c$(S)}, 
+which is satisfiable if and only if $F$ was satisfiable.
+
+\noindent
+Next, we now reduce {\sf 1-FPN-SAT$_c$(S)} to {\sf 1-FPN-SAT(S)}. 
+We consider the four possible cases as discussed in Lemma \ref{le:sch4.3}.
+
+
+\noindent
+{\bf Cases (1) and (2):} 
+In both these cases it is easy to see that {\sf 1-FPN-SAT(S)}  and
+{\sf 1-PN-SAT(S)} are  polynomial time solvable.\\
+
+\noindent
+{\bf Case (3):} $[x]$ and $[\overline{x}]$ are contained in 
+{\sf Rep$_{NC}$(S)}.\\
+In this case, we modify $F'$ to obtain $F''$ as follows.
+We introduce a new variable $x$ and replace all occurrences of
+0 by $[x]$ and replace all occurrences of 1 by $[\overline{x}]$ and 
+replace all existentially quantified variables by new variables. \\
+
+\noindent
+{\bf Case (4):} $[x \not\equiv y] \in$  {\sf Rep$_{NC}$(S)}.\\
+In this case, each relation in $S$ is complementive.
+We modify $F'$ as follows to obtain $F''$.
+We introduce two new variables $x(t)$ and $y(t)$ and replace all occurrences of
+0   by $x(t)$ and 
+replace all occurrences of 1  by $y(t)$. We then add 
+the $S$-formulas $[x_t \not\equiv y_t] \wedge [x_t \not \equiv r_{t}]
+[r_t \not \equiv x_{t+1}] \wedge [y_t \not\equiv s_{t}]
+[s_t \not\equiv y_{t+1}]$.  
+to the static $S$-formula, and 
+replacing all existentially quantified variables by new variables
+$z_1(t), \ldots z_p(t)$.
+Since $F'$ is complementive, $F''$ is also complementive.
+
+
+
+Therefore, we have now obtained an instance $F''$ 
+of {\sf 1-FPN-SAT(S)}, which is satisfiable
+if and only if $F'$ was satisfiable. Clearly the hardness of
+{\sf 1-FPN-SAT(S)} implies the hardness of the corresponding problems 
+{\sf 1-PN-SAT(S)}.
+
+
+\noindent
+{\bf Part (2): }
+We prove  this part for the problem {\sf 1-FPN(BC)-3SAT(S)}, when 
+{\sf S} represents the set of all weakly negative relations.
+The proof for {\sf 1-FPN(BC)-3SAT(S)} when {\sf S} represents 
+the set of all weakly positive relations is similar and omitted.
+
+We first prove the {\sf PSPACE}-hardness of {\sf 1-FPN-SAT$_c$(S)}
+when {\sf Rep(S)} is the set of all weakly negative relations.
+Since {\sf Rep(S)} is the set of all weakly negative  boolean relations,
+for each such {\sf S} and {\sf 3CNF} clause $c$,
+there is an existentially quantified (but not necessarily constant-free)
+{\sf S}-formula $f_c$ such that $c=[f_c]$. 
+
+Let $F$ be an instance of {\sf 1-FPN-3SATWN}. 
+Obtain a {\sf 1-FPN}-specification $F'$ 
+by replacing every clause $c \in C(i, i+1)$ with the 
+existentially quantified (but not necessarily constant-free)
+{\sf S}-formula $f_c$ such that $c=[f_c]$. For each of these clauses,
+let $f'_c$ be the {\sf S}-formula (again, possibly with
+constants) resulting from $f_{c}$ by deleting
+all quantifiers after making sure that all quantified variables are
+distinct from each other and from all free variables.  Without loss of
+generality, we assume that, for all clauses $c$,
+all variables of $f'_c$, that are not variables
+of $f$, are local to $f'_c$.
+Observe that the transformation is carried out by introducing temporary
+variables $x_1(i), \ldots, x_r(i)$.
+We have now obtained an instance $F'$ of {\sf 1-FPN-SAT$_c$(S)}, 
+which is satisfiable if and only if $F$ was satisfiable. 
+
+Next, we consider the case  of {\sf 1-FPNSAT(S)} when $Rep(S)$ 
+represent all weakly positive relations. 
+Clearly $[x]$ and $[\overline{x}]$  are in {\sf Rep(S)}.
+This implies that 
+\begin{enumerate}
+\item
+Each relation in {\sf S} is not 0-valid and
+
+\item
+Each relation in {\sf S} is not 1-valid.
+\end{enumerate}
+By Theorem \ref{le:sch4.3}, we have to consider two possible cases:
+(a) {\em when $[x]$ and $[\overline{x}]$ is in {\sf Rep}$_{NC}$({\sf S}}) and
+(b) {\em when $[x \not\equiv y ]$  is in {\sf Rep}$_{NC}$({\sf S}}).
+The proof in both the cases is similar to that in Part 1. \hfill\QED
+
+\subsection{Statement and Proof of Theorem~\ref{th:hsat_charcterize4}}
+
+\noindent
+\textbf{Statement of Theorem~\ref{th:hsat_charcterize4}:}~
+Let S be a finite set of finite arity boolean relations. Let conditions
+(a) through (e) be defined as follows.
+%\begin{description}
+%\item{(a)}
+(a) Every relation in S is 0-valid or every relation in $S$ is 1-valid.
+%%\item{(b)}
+(b) Every relation in S is 1-weakly positive or
+every relation in S is 1-weakly negative.
+%%\item{(c)}
+(c) Every relation in S is weakly positive or
+every relation in S is weakly negative.
+%%\item{(d)}
+(d) Every relation in S is affine.
+%%\item{(e)}
+(e) Every relation in S is bijunctive.
+%%\end{description}
+\begin{enumerate}
+\item
+If $S$ satisfies one of the conditions (b), (d) or (e)
+then L-SAT$_c$(S) and 1-FPN(BC)-SAT$_c$(S) are in P; otherwise,
+L-SAT$_c$(S), 1-FPN(BC)-SAT$_c$(S) are  PSPACE-complete.
+
+\item
+If $S$ satisfies one of the conditions (a), (b), (d) or (e)
+then L-SAT(S) and 1-FPN(BC)-SAT(S) are in P; otherwise, L-SAT(S)and 
+1-FPN(BC)-SAT(S) are PSPACE-complete.
+
+\item
+If {\bf S} satisfies conditions (a), (b), (c), (d) or  (e), then the problems  
+{\sf 1-FPN-SAT(S)} and PN-SAT(S)  are in P. Otherwise, 
+the problems  {\sf 1-FPN-SAT(S)} and PN-SAT(S)  are  PSPACE-complete.
+\end{enumerate}
+
+\noindent
+\textbf{Proof:} 
+
+\noindent
+{\bf Proof of Part 1.}\\
+We first prove the theorem for the problems L-SAT$_c$(S).
+By Theorem~\ref{th:sch3.0}, we have to consider five possible cases
+depending on the type of relations in $S$. In the rest of the proof we
+consider each of these cases in detail.
+
+\noindent
+{\em 1. Every relation in {\sf S} is weakly positive.}\\
+By Theorem \ref{th:sch3.0} this implies that 
+every relation in {\sf Rep(S)} is weakly positive. 
+We need to consider two subcases in order to characterize weakly positive
+relations:
+
+{\em  1(a). Every relation in {\sf S} is 1-weakly positive.}\\
+In this case, 
+{\sf L-SAT$_c$(S)} is in {\sf P} by Theorem~\ref{th:h3sat1wneasy}.
+
+{\em   1(b). Some relation in {\sf S} is not 1-weakly positive.}\\
+In this case by Theorem~\ref{th:sch5.1}, 
+{\sf Rep(S)} is the set of all weakly positive relations.
+Hence, {\sf L-SAT$_c$(S)} 
+is {\sf PSPACE}-complete by Theorems~\ref{th:fpn3satwnhard}
+and \ref{th:translate}.
+
+\noindent
+{\em 2. Every relation in {\sf S} is weakly negative.}\\
+Similar to Case 1.
+
+\noindent
+{\em 3. Every relation in {\sf S} is affine.}\\
+By Theorem~\ref{th:sch3.0}, this implies that
+every relation in {\sf Rep(S)} is affine. Hence, 
+by Theorem~\ref{th:haffineeasy}
+{\sf L-SAT$_c$(S)} is in {\sf P}. 
+
+\noindent
+{\em 4.  Every relation in {\sf S} is bijunctive.}\\
+By Theorem~\ref{th:sch3.0}, if every relation in {\sf S} is bijunctive,
+then every relation in {\sf Rep(S)} is bijunctive. Hence, {\sf L-SAT$_c$(S)} 
+is in {\sf P}  by Theorem~\ref{th:h2satseasy}.
+
+\noindent
+{\em 5. {\sf Rep(S)} is the set of all logical relations.}\\
+In this case {\sf L-SAT$_c$(S)} 
+is {\sf PSPACE}-complete by Theorem~\ref{th:hsatshard}.
+
+
+Next we prove the theorem for {\sf 1-FPN(BC)-SAT$_c$(S)}.
+By our translation theorem, we know that whenever a {\sf L}-specified
+problem is in {\sf P}, the corresponding {\sf 1-FPN(BC)}-specified problem 
+is also in {\sf P}.
+next, observe that the cases for which an L-specified problem has been
+proved to be {\sf PSPACE}-complete, the proof actually consists of showing that
+the corresponding problems are {\sf PSPACE}-complete for {\sf 1-FPN(BC)} 
+specified instances. The proof now follows by these two facts.\\
+
+
+
+\noindent
+{\bf Proof of Part 2.}
+We now prove the theorem for the problems {\sf L-SAT(S)} and
+{\sf 1-FPN(BC)-SAT(S)}.  Since the problems
+{\sf L-SAT(S)} are a subset of the problems {\sf L-SAT$_c$(S)} 
+we get that whenever a problem {\sf L-SAT$_c$(S)} is  in 
+P the corresponding problem {\sf L-SAT(S)} is also
+in {\sf P}. Hence we need to consider three possible cases.
+
+\noindent
+{\em 1.  Every relation in {\sf S} is weakly positive and at least one relation
+in {\sf S} is not weakly positive.}\\
+In this case, by Theorems \ref{th:fpn3satwnhard} and \ref{th:translate}, 
+we have that {\sf L-SAT(S)} is {\sf PSPACE}-complete.
+
+\noindent
+{\em 2. Every relation in {\sf S} is weakly negative and at least one relation
+in {\sf S} is not weakly negative.}\\
+In this case, by Theorems \ref{th:fpn3satwnhard} and \ref{th:translate}, 
+we have that {\sf L-SAT(S)} is
+{\sf PSPACE}-complete.
+
+\noindent
+{\em  3. {\sf Rep(S)}  is the set of all logical relations.}\\
+By Theorem~\ref{th:hsatshard}, we have that if 
+every relation in {\sf S} is 0-valid or every relation 
+in {\sf S} is 1-valid then {\sf L-SAT(S)} is in {\sf P}
+else the problem is {\sf PSPACE}-complete.
+
+
+
+Next, consider {\sf 1-FPN(BC)-SAT(S)}. 
+As in the proof of Part 1, we know that whenever a {\sf L}-specified
+problem is in {\sf P}, 
+the corresponding {\sf 1-FPN(BC)}-specified problem is also in {\sf P}.
+next, observe that the cases for which an {\sf L}-specified problem has been
+proved to be {\sf PSPACE}-complete, the proof actually consists of showing that
+the corresponding problems are {\sf PSPACE}-complete for {\sf 1-FPN(BC)} 
+specified instances. The proof of this part now follows by these two facts.\\
+
+
+\noindent
+{\bf Proof of Part 3.}
+If {\sf S} satisfies conditions (a), (b), (d) or (e) then 
+by the proof of Part 2 above, the problems
+{\sf 1-FPN-SAT(S)} and {\sf 1-PN-SAT(S)} are in {\sf P}. 
+Therefore we need to consider only the following cases to complete the proof.
+
+
+\noindent
+{\em 1. Every relation in {\sf S} is weakly positive or every relation in
+{\sf S} is weakly negative}.\\
+In this case by Theorems \ref{th:fpn3satwneasy} and \ref{th:pn3satwneasy}
+the problems {\sf 1-FPN-3SATWP} , {\sf 1-FPN-3SATWN}, {\sf 1-PN-3SATWP}  and
+{\sf 1-PN-3SATWN}  are in {\sf P}.
+
+\noindent
+{\em 2. When none of (a), (b), (c), (d) and (e) hold}\\
+In this case we know that {\sf Rep(S)} is equal to the set
+of all finite arity boolean relations. Since condition (a) does not hold,
+by Theorem \ref{th:hsatshard}, we have that 
+{\sf 1-FPN-SAT(S)} and {\sf 1-PN-SAT(S)} are {\sf PSPACE}-complete.
+
+This completes the proof of the theorem. \hfill\QED

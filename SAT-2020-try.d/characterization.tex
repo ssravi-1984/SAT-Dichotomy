@@ -3,17 +3,17 @@
 We are now ready to complete the characterization of the problems 
 {\sf L-SAT(S)},
 {\sf 1-FPN-SAT(S), 1-FPN(BC)-SAT(S)} and {\sf PN-SAT(S)}. 
-To do this we need the  following results from Schaefer \cite{Sc78}.
+To do this, we need the  following results from Schaefer \cite{Sc78}.
 
 
 \begin{theorem}\label{th:sch3.0}
 Let S 
 be any set of logical relations. If S satisfies one of the conditions
 (a)-(d) below, then Rep(S) satisfies the same condition. Otherwise,
-Rep(S) is the set of all logical relations.\\
-(a) Every relation in  S is weakly positive.\\
-(b) Every relation in S is weakly negative.\\
-(c) Every relation in S is affine.\\
+Rep(S) is the set of all logical relations.~
+(a) Every relation in  S is weakly positive.~
+(b) Every relation in S is weakly negative.~
+(c) Every relation in S is affine.~
 (d) Every relation in S  is bijunctive.
 \end{theorem}
 
@@ -27,26 +27,21 @@ that is not 1-weakly negative, then Rep(S) is the set of all weakly negative
 relations.
 \end{theorem}
 
-
-
 \begin{lemma}\label{le:sch4.3}
 Let $S$ be a set of nonempty logical relations. Then at least one of the 
 following holds:
 \oldspacing
-\begin{enumerate}
-\item
-Every relation in S is 0-valid.
-\item
-Every relation in S is 1-valid.
-\item
-$[x]$ and $[\overline{x}]$ are contained in Rep$_{NC}$(S).
-
-\item
-$[x \not\equiv y] \in$ Rep$_{NC}$(S).
-\end{enumerate}
+%%\begin{enumerate}
+%%\item
+(1) Every relation in S is 0-valid.~
+%%\item
+(2)Every relation in S is 1-valid.~
+%%\item
+(3) $[x]$ and $[\overline{x}]$ are contained in Rep$_{NC}$(S).~
+%%\item
+(4) $[x \not\equiv y] \in$ Rep$_{NC}$(S).
+%%\end{enumerate}
 \end{lemma}
-
-
 
 
 \begin{theorem}\label{th:hsatshard}
@@ -66,7 +61,10 @@ the problems 1-FPN(BC)-SAT(S) and 1-FPN(BC)-SAT$_c$(S) are PSPACE-complete
 \end{theorem}
 
 \noindent
-{\bf Proof:}
+{\bf Proof:}~ See Section~\ref{sec:appC} of the supplementary material.
+
+\iffalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {\bf  Part 1:}
 First, we give a polynomial time reduction 
 from {\sf 1-FPN-3SAT} to {\sf 1-FPN-SAT$_c$(S)} as follows:
@@ -184,56 +182,50 @@ By Theorem \ref{le:sch4.3}, we have to consider two possible cases.
 \noindent
 {\em When $[x \not\equiv y ]$  is in {\sf Rep}$_{NC}$({\sf S}}).
 The proof in both the cases is similar to proof in Part 1.\QED
-
-
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
 
 
 \begin{theorem}\label{th:hsat_charcterize4}
 Let S be a finite set of finite arity boolean relations. Let conditions
 (a) through (e) be defined as follows.
-
-\begin{description}
-\item{(a)}
-Every relation in S is 0-valid or every relation in $S$ is 1-valid.
-\item{(b)}
-Every relation in S is 1-weakly positive or
+%\begin{description}
+%\item{(a)}
+(a) Every relation in S is 0-valid or every relation in $S$ is 1-valid.
+%%\item{(b)}
+(b) Every relation in S is 1-weakly positive or
 every relation in S is 1-weakly negative.
-\item{(c)}
-Every relation in S is weakly positive or
+%%\item{(c)}
+(c) Every relation in S is weakly positive or
 every relation in S is weakly negative.
-\item{(d)}
-Every relation in S is affine.
-\item{(e)}
-Every relation in S is bijunctive.
-\end{description}
-
+%%\item{(d)}
+(d) Every relation in S is affine.
+%%\item{(e)}
+(e) Every relation in S is bijunctive.
+%%\end{description}
 \begin{enumerate}
 \item
-If $S$ satisfies one of the conditions (b) (d) or (e)
-then L-SAT$_c$(S) and 1-FPN(BC)-SAT$_c$(S) are  in P otherwise
-L-SAT$_c$(S) 1-FPN(BC)-SAT$_c$(S) are  PSPACE-complete.
+If $S$ satisfies one of the conditions (b), (d) or (e)
+then L-SAT$_c$(S) and 1-FPN(BC)-SAT$_c$(S) are in P; otherwise,
+L-SAT$_c$(S), 1-FPN(BC)-SAT$_c$(S) are  PSPACE-complete.
 
 \item
-If $S$ satisfies one of the conditions (a) (b) (d) or (e)
-then L-SAT(S) and 1-FPN(BC)-SAT(S are  in P. Otherwise, L-SAT(S)and 
-1-FPN(BC)-SAT(S  are PSPACE-complete.
-
+If $S$ satisfies one of the conditions (a), (b), (d) or (e)
+then L-SAT(S) and 1-FPN(BC)-SAT(S) are in P; otherwise, L-SAT(S)and 
+1-FPN(BC)-SAT(S) are PSPACE-complete.
 
 \item
 If {\bf S} satisfies conditions (a), (b), (c), (d) or  (e), then the problems  
 {\sf 1-FPN-SAT(S)} and PN-SAT(S)  are in P. Otherwise, 
 the problems  {\sf 1-FPN-SAT(S)} and PN-SAT(S)  are  PSPACE-complete.
-
 \end{enumerate}
-
 \end{theorem}
 
+\noindent
+\textbf{Proof:}~ See Section~\ref{sec:appC} of the supplementary material.
 
-
-
+\iffalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent
 {\bf Proof of Part 1.}\\
 We first prove the theorem for the problems L-SAT$_c$(S).
@@ -356,4 +348,6 @@ of all finite arity boolean relations. Since condition (a) does not hold,
 by Theorem \ref{th:hsatshard}, we have that 
 {\sf 1-FPN-SAT(S)} and {\sf 1-PN-SAT(S)} are {\sf PSPACE}-complete.
 
-This completes the proof of the theorem.\QED
+This completes the proof of the theorem. \hfill\QED
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
